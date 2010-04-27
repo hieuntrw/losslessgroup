@@ -12,7 +12,7 @@ public class Account {
     private int accountID;
     private String username;
     private String password;
-    private int roleID;
+    private Role role;
     private boolean status;
     private String lassError;
 
@@ -33,7 +33,7 @@ public class Account {
     }
 
     /**
-     * @param accountID the accountID to set
+     * @param accountID, the accountID to set
      */
     public void setAccountID(int accountID) {
         this.accountID = accountID;
@@ -47,7 +47,7 @@ public class Account {
     }
 
     /**
-     * @param username the username to set
+     * @param username, the username to set
      */
     public void setUsername(String username) {
         this.username = username;
@@ -61,26 +61,13 @@ public class Account {
     }
 
     /**
-     * @param password the password to set
+     * @param password, the password to set
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     * @return the roleID
-     */
-    public int getRoleID() {
-        return roleID;
-    }
-
-    /**
-     * @param roleID the roleID to set
-     */
-    public void setRoleID(int roleID) {
-        this.roleID = roleID;
-    }
-
+    
     /**
      * @return the status
      */
@@ -89,7 +76,7 @@ public class Account {
     }
 
     /**
-     * @param status the status to set
+     * @param status, the status to set
      */
     public void setStatus(boolean status) {
         this.status = status;
@@ -103,9 +90,23 @@ public class Account {
     }
 
     /**
-     * @param lassError the lassError to set
+     * @param lassError, the lassError to set
      */
     public void setLassError(String lassError) {
         this.lassError = lassError;
+    }
+
+    /**
+     * @return the role
+     */
+    public Role getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
