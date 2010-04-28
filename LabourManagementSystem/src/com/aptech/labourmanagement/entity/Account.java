@@ -109,4 +109,22 @@ public class Account {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public boolean validateAccount(){
+        if(this.username.length() == 0){
+            this.setLassError("Username can not empty!");
+            return false;
+        }
+        if(this.password.length() == 0){
+            this.setLassError("Password can not empty!");
+            return false;
+        }
+        if(this.getRole() == null){
+            this.setLassError("Role can not null!");
+            return false;
+        }
+        return true;
+    }
+
+
 }
