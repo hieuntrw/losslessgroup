@@ -109,7 +109,9 @@ public class Account {
     public void setRole(Role role) {
         this.role = role;
     }
-
+/*
+ * @return true or false
+ */
     public boolean validateAccount(){
         if(this.username.length() == 0){
             this.setLassError("Username can not empty!");
