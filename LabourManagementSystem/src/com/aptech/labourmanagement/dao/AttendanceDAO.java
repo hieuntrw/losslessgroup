@@ -10,7 +10,7 @@ package com.aptech.labourmanagement.dao;
  */
 public class AttendanceDAO {
 
-    private String lassError;
+    private String lastError;
     //khai bao cac bien
 
     //add new attendance
@@ -19,16 +19,16 @@ public class AttendanceDAO {
     //get all attendance by WorkerID
     //get all attendance by Work date
     /**
-     * @return the lassError
+     * @return the lastError
      */
-    public String getLassError() {
-        return lassError;
+    public String getLastError() {
+        return lastError;
     }
 
     /**
-     * @param lassError the lassError to set
+     * @param lastError the lastError to set
      */
-    public void setLassError(String lassError) {
-        this.lassError = lassError;
+    public void setLastError(String lastError) {
+        this.lastError = lastError;
     }
 }

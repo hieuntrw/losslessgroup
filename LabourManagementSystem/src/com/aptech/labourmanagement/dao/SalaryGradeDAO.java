@@ -35,16 +35,16 @@ public class SalaryGradeDAO {
     //get all salary grade
 
     /**
-     * @return the lassError
+     * @return the lastError
      */
     public String getLastError() {
         return lastError;
     }
 
     /**
-     * @param lassError the lassError to set
+     * @param lastError the lastError to set
      */
-    public void setLastError(String lassError) {
-        this.lastError = lassError;
+    public void setLastError(String lastError) {
+        this.lastError = lastError;
     }
 }
