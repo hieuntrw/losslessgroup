@@ -4,14 +4,28 @@
  */
 package com.aptech.labourmanagement.dao;
 
+import com.aptech.labourmanagement.util.PassEncryption;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import util.ConfigureDB;
+
 /**
  *
  * @author JONNY
  */
 public class SalaryGradeDAO {
 
-    private String lassError;
+    private String lastError;
     //Khai bao cac bien
+    private ConfigureDB db = null;
+    private PassEncryption pe = null;
+    private Connection con = null;
+    private PreparedStatement pst = null;
+    private ResultSet rs = null;
+    private final String SQL_ADD = "INSERT INTO [User] VALUES(?,?)";
+    private final String SQL_LOGIN = "SELECT * FROM [User] WHERE Username = ? AND Password = ?";
+
 
     
     //add new salary grade
@@ -23,14 +37,14 @@ public class SalaryGradeDAO {
     /**
      * @return the lassError
      */
-    public String getLassError() {
-        return lassError;
+    public String getLastError() {
+        return lastError;
     }
 
     /**
      * @param lassError the lassError to set
      */
-    public void setLassError(String lassError) {
-        this.lassError = lassError;
+    public void setLastError(String lassError) {
+        this.lastError = lassError;
     }
 }
