@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class AccountServives {
 
     private PassEncryption pe = null;
-    private String lassError;
+    private String lastError;
     AccountDAO accDao;
 
     public AccountServives() {
@@ -25,17 +25,17 @@ public class AccountServives {
     }
 
     /**
-     * @return the lassError
+     * @return the lastError
      */
-    public String getLassError() {
-        return lassError;
+    public String getLastError() {
+        return lastError;
     }
 
     /**
-     * @param lassError the lassError to set
+     * @param lastError the lastError to set
      */
-    public void setLassError(String lassError) {
-        this.lassError = lassError;
+    public void setLastError(String lastError) {
+        this.lastError = lastError;
     }
 
     /**
@@ -48,10 +48,10 @@ public class AccountServives {
         //add account
         ac.setPassword(pe.encryptPass(ac.getPassword()));
         if (accDao.addAccount(ac)) {
-            this.setLassError(accDao.getLastError());
+            this.setLastError(accDao.getLastError());
             return true;
         } else {
-            this.setLassError(accDao.getLastError());
+            this.setLastError(accDao.getLastError());
             return false;
         }
     }
@@ -62,10 +62,10 @@ public class AccountServives {
 
     public boolean checkUsername(String username) {
         if (accDao.checkUsername(username)) {
-            this.setLassError(accDao.getLastError());
+            this.setLastError(accDao.getLastError());
             return true;
         } else {
-            this.setLassError(accDao.getLastError());
+            this.setLastError(accDao.getLastError());
             return false;
         }
     }
@@ -77,10 +77,10 @@ public class AccountServives {
     public boolean updateAccount(Account ac) {
         ac.setPassword(pe.encryptPass(ac.getPassword()));
         if (accDao.updateAccount(ac)) {
-            this.setLassError(accDao.getLastError());
+            this.setLastError(accDao.getLastError());
             return true;
         } else {
-            this.setLassError(accDao.getLastError());
+            this.setLastError(accDao.getLastError());
             return false;
         }
     }
@@ -91,10 +91,10 @@ public class AccountServives {
      */
     public boolean deleteAccount(String username) {
         if (accDao.deleteAccount(username)) {
-            this.setLassError(accDao.getLastError());
+            this.setLastError(accDao.getLastError());
             return true;
         } else {
-            this.setLassError(accDao.getLastError());
+            this.setLastError(accDao.getLastError());
             return false;
         }
     }
@@ -122,10 +122,10 @@ public class AccountServives {
      */
     public boolean loginSystem(String username, String password) {
         if (accDao.loginSystem(username, pe.encryptPass(password))) {
-            this.setLassError(accDao.getLastError());
+            this.setLastError(accDao.getLastError());
             return true;
         } else {
-            this.setLassError(accDao.getLastError());
+            this.setLastError(accDao.getLastError());
             return false;
         }
     }
