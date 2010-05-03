@@ -40,7 +40,7 @@ public class AccountServives {
         if (accDao.addAccount(acc)) {
             return true;
         } else {
-            this.setLassError(accDao.getLassError());
+            this.setLassError(accDao.getLastError());
             return false;
         }
 
