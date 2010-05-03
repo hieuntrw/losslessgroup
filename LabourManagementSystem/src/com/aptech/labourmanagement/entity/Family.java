@@ -21,6 +21,23 @@ public class Family {
     private String address;
     private String lassError;
 
+    /*
+     * Constructor
+     */
+    public Family() {
+    }
+
+    public Family(int familyID, Worker worker, String ralateName, String fullName, String workName, Date dayOfBirth, String address) {
+        this.familyID = familyID;
+        this.worker = worker;
+        this.ralateName = ralateName;
+        this.fullName = fullName;
+        this.workName = workName;
+        this.dayOfBirth = dayOfBirth;
+        this.address = address;
+
+    }
+
     /**
      * @return the familyID
      */

@@ -22,6 +22,27 @@ public class Refer {
     private String contactNumber;
     private String lassError;
 
+    
+    /*
+     * Constructor
+     */
+    public Refer() {
+    }
+
+    public Refer(int referID, String firstName, String lastName, Date dayOfBirth, String address, String workName, String position, String contactNumber) {
+        this.referID = referID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dayOfBirth = dayOfBirth;
+        this.address = address;
+        this.workName = workName;
+        this.position = position;
+        this.contactNumber = contactNumber;
+
+    }
+
+
+
     /**
      * @return the referID
      */

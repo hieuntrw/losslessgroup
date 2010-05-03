@@ -20,6 +20,26 @@ public class Attendance {
     private boolean isExtraShift;
     private String lassError;
 
+    /*
+     * Constructor full
+     */
+    public Attendance(int ID, Shift shift, Date workDay, Worker worker, boolean status, boolean isExtraShift) {
+        this.ID = ID;
+        this.shift = shift;
+        this.workDay = workDay;
+        this.worker = worker;
+        this.status = status;
+        this.isExtraShift = isExtraShift;
+      
+    }
+
+    /*
+     * Constructor 
+     */
+
+    public Attendance() {
+    }
+
     /**
      * @return the ID
      */

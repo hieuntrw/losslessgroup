@@ -27,6 +27,28 @@ public class Worker {
     private boolean status;
     private String lassError;
 
+    /*
+     * Constructor
+     */
+    public Worker() {
+    }
+
+    public Worker(int workerID, Refer refer, String firstName, String lastName, String address, Date dayOfBirth, SalaryGrade salaryGrade, String contactNumber, int experience, boolean isTemporaryWorker, float weight, float height, boolean status) {
+        this.workerID = workerID;
+        this.refer = refer;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.dayOfBirth = dayOfBirth;
+        this.salaryGrade = salaryGrade;
+        this.contactNumber = contactNumber;
+        this.experience = experience;
+        this.isTemporaryWorker = isTemporaryWorker;
+        this.weight = weight;
+        this.height = height;
+        this.status = status;
+    }
+
     /**
      * @return the workerID
      */

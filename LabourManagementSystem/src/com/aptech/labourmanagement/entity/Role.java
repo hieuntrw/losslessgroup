@@ -24,7 +24,27 @@ public class Role {
     private boolean isWeeklyAttendanceReport;
     private String lassError;
 
+
+    /*
+     * Constructor
+     */
     public Role() {
+    }
+
+    public Role(int roleID, String roleName, boolean isLoginSystem, boolean isChangePassword, boolean isConfigSystem, boolean isAccountManagement, boolean isRoleFunctionManagement, boolean isWorkerManagement, boolean isRefersManagement, boolean isSalaryGradeManagement, boolean isAttendanceManagement, boolean isWeeklyAttendanceReport) {
+        this.roleID = roleID;
+        this.roleName = roleName;
+        this.isLoginSystem = isLoginSystem;
+        this.isChangePassword = isChangePassword;
+        this.isConfigSystem = isConfigSystem;
+        this.isAccountManagement = isAccountManagement;
+        this.isRoleFunctionManagement = isRoleFunctionManagement;
+        this.isWorkerManagement = isWorkerManagement;
+        this.isRefersManagement = isRefersManagement;
+        this.isSalaryGradeManagement = isSalaryGradeManagement;
+        this.isAttendanceManagement = isAttendanceManagement;
+        this.isWeeklyAttendanceReport = isWeeklyAttendanceReport;
+       
     }
 
     /**
@@ -208,5 +228,4 @@ public class Role {
     public void setLassError(String lassError) {
         this.lassError = lassError;
     }
-
 }

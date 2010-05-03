@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.aptech.labourmanagement.entity;
 
 /**
@@ -10,10 +9,21 @@ package com.aptech.labourmanagement.entity;
  * @author Noi Nho
  */
 public class SalaryGrade {
+
     private int salaryGradeID;
     private String gradeName;
     private float gradeNum;
     private String lassError;
+
+    /*
+     * Constructor    
+     */
+    public SalaryGrade(int salaryGradeID, String gradeName, float gradeNum) {
+        this.salaryGradeID = salaryGradeID;
+        this.gradeName = gradeName;
+        this.gradeNum = gradeNum;
+        
+    }
 
     public SalaryGrade() {
     }
@@ -73,9 +83,4 @@ public class SalaryGrade {
     public void setLassError(String lassError) {
         this.lassError = lassError;
     }
-
-
-    
-
-
 }

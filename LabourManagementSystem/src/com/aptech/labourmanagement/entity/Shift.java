@@ -22,6 +22,15 @@ public class Shift {
     public Shift() {
     }
 
+    public Shift(int shiftID, String shiftName, String timeIn, String timeOut) {
+        this.shiftID = shiftID;
+        this.shiftName = shiftName;
+        this.timeIn = timeIn;
+        this.timeOut = timeOut;
+       
+    }
+
+    
     /**
      * @return the shiftID
      */
