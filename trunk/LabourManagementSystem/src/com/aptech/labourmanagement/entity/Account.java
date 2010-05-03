@@ -9,6 +9,7 @@ package com.aptech.labourmanagement.entity;
  * @author Noi Nho
  */
 public class Account {
+
     private int accountID;
     private String username;
     private String password;
@@ -19,11 +20,18 @@ public class Account {
     /*
      * Constructor
      */
+    public Account(int accountID, String username, String password, Role role, boolean status) {
+        this.accountID = accountID;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.status = status;
+       
+    }
 
     public Account() {
         setLassError("");
     }
-
 
     /**
      * @return the accountID
@@ -67,7 +75,6 @@ public class Account {
         this.password = password;
     }
 
-    
     /**
      * @return the status
      */
@@ -109,24 +116,23 @@ public class Account {
     public void setRole(Role role) {
         this.role = role;
     }
-/*
- * @return true or false
- */
-    public boolean validateAccount(){
-        if(this.username.length() == 0){
+    /*
+     * @return true or false
+     */
+
+    public boolean validateAccount() {
+        if (this.username.length() == 0) {
             this.setLassError("Username can not empty!");
             return false;
         }
-        if(this.password.length() == 0){
+        if (this.password.length() == 0) {
             this.setLassError("Password can not empty!");
             return false;
         }
-        if(this.getRole() == null){
+        if (this.getRole() == null) {
             this.setLassError("Role can not null!");
             return false;
         }
         return true;
     }
-
-
 }

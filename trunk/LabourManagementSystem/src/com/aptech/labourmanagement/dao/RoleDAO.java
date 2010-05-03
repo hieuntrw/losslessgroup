@@ -4,6 +4,8 @@
  */
 package com.aptech.labourmanagement.dao;
 
+import com.aptech.labourmanagement.entity.Role;
+
 /**
  *
  * @author JONNY
@@ -16,10 +18,14 @@ public class RoleDAO {
     //add new role
     //edit role
     //delete role
-    //get role by role name
+    //get role by RoleID
     //get all role
 
-    
+    public Role getRoleByID(int roleID){
+        Role role = new Role();
+        //code
+        return role;
+    }
     /**
      * @return the lassError
      */
