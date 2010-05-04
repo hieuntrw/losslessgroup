@@ -42,12 +42,12 @@ public class AccountServives {
      * @return true or false
      * @param ac the ac to insert into table Account
      */
-    public boolean addAccount(Account ac) {
+    public boolean create(Account ac) {
         //acc da validate trong form!
         //Create instance AccountDAO
         //add account
         ac.setPassword(pe.encryptPass(ac.getPassword()));
-        if (accDao.addAccount(ac)) {
+        if (accDao.create(ac)) {
             this.setLastError(accDao.getLastError());
             return true;
         } else {
@@ -74,9 +74,9 @@ public class AccountServives {
      * @return true or false
      * @param ac the ac to update to table Account
      */
-    public boolean updateAccount(Account ac) {
+    public boolean store(Account ac) {
         ac.setPassword(pe.encryptPass(ac.getPassword()));
-        if (accDao.updateAccount(ac)) {
+        if (accDao.update(ac)) {
             this.setLastError(accDao.getLastError());
             return true;
         } else {
@@ -89,8 +89,8 @@ public class AccountServives {
      * @return true or false
      * @param username the username to delete from table Account
      */
-    public boolean deleteAccount(String username) {
-        if (accDao.deleteAccount(username)) {
+    public boolean remove(String username) {
+        if (accDao.delete(username)) {
             this.setLastError(accDao.getLastError());
             return true;
         } else {
@@ -103,16 +103,16 @@ public class AccountServives {
      * @return account
      * @param username,the username to get account
      */
-    public Account getAccountByUsername(String username) {
-        Account ac = accDao.getAccountByUsername(username);
+    public Account findByUsername(String username) {
+        Account ac = accDao.readByUsername(username);
         return ac;
     }
 
     /**
      *@return a list account
      */
-    public ArrayList<Account> getAllAccount() {
-        ArrayList<Account> listAccount = accDao.getAllAccount();
+    public ArrayList<Account> findByAll() {
+        ArrayList<Account> listAccount = accDao.readByAll();
         return listAccount;
     }
 

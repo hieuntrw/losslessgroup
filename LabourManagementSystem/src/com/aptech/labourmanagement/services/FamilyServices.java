@@ -39,7 +39,7 @@ public class FamilyServices {
      * @param fa the ac to insert into table Family
      */
     public boolean addFamily(Family fa){
-        if(faDao.addFamily(fa)){
+        if(faDao.create(fa)){
             this.setLastError(fa.getLassError());
             return true;
         }else{
@@ -54,7 +54,7 @@ public class FamilyServices {
      * @param fa the ac to insert into table Family
      */
     public boolean updateFamily(Family fa){
-        if(faDao.updateFamily(fa)){
+        if(faDao.update(fa)){
             this.setLastError(fa.getLassError());
             return true;
         }else{
@@ -68,8 +68,8 @@ public class FamilyServices {
      * @param fa the ac to insert into table Family
      */
 
-//    public boolean deleteFamily(Family fa ,int WorkerID){
-//        if(faDao.deleteFamily(fa)){
+//    public boolean delete(Family fa ,int WorkerID){
+//        if(faDao.delete(fa)){
 //            this.setLastError(fa.getLassError());
 //            return true;
 //        }
