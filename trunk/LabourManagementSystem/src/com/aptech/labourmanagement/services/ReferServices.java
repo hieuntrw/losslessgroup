@@ -40,7 +40,7 @@ public class ReferServices {
      *@param fa, the re to update into Refer table
      */
      public boolean addRefer(Refer re){
-         if(reDao.addRefer(re)){
+         if(reDao.create(re)){
              this.setLastError(re.getLassError());
              return true;
          }else{
@@ -54,7 +54,7 @@ public class ReferServices {
      *@param fa, the ac to update into Family table
      */
     public boolean updateRefer(Refer re){
-        if(reDao.updateRefer(re)){
+        if(reDao.update(re)){
              this.setLastError(re.getLassError());
              return true;
          }else{

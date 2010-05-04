@@ -22,6 +22,7 @@ public class Role {
     private boolean isSalaryGradeManagement;
     private boolean isAttendanceManagement;
     private boolean isWeeklyAttendanceReport;
+    private boolean IsWeeklyHightestLowestSalaryReport;
     private String lassError;
 
 
@@ -31,7 +32,7 @@ public class Role {
     public Role() {
     }
 
-    public Role(int roleID, String roleName, boolean isLoginSystem, boolean isChangePassword, boolean isConfigSystem, boolean isAccountManagement, boolean isRoleFunctionManagement, boolean isWorkerManagement, boolean isRefersManagement, boolean isSalaryGradeManagement, boolean isAttendanceManagement, boolean isWeeklyAttendanceReport) {
+    public Role(int roleID, String roleName, boolean isLoginSystem, boolean isChangePassword, boolean isConfigSystem, boolean isAccountManagement, boolean isRoleFunctionManagement, boolean isWorkerManagement, boolean isRefersManagement, boolean isSalaryGradeManagement, boolean isAttendanceManagement, boolean isWeeklyAttendanceReport, boolean IsWeeklyHightestLowestSalaryReport) {
         this.roleID = roleID;
         this.roleName = roleName;
         this.isLoginSystem = isLoginSystem;
@@ -44,8 +45,11 @@ public class Role {
         this.isSalaryGradeManagement = isSalaryGradeManagement;
         this.isAttendanceManagement = isAttendanceManagement;
         this.isWeeklyAttendanceReport = isWeeklyAttendanceReport;
-       
+        this.IsWeeklyHightestLowestSalaryReport = IsWeeklyHightestLowestSalaryReport;
+
     }
+
+    
 
     /**
      * @return the roleID
@@ -227,5 +231,19 @@ public class Role {
      */
     public void setLassError(String lassError) {
         this.lassError = lassError;
+    }
+
+    /**
+     * @return the IsWeeklyHightestLowestSalaryReport
+     */
+    public boolean isIsWeeklyHightestLowestSalaryReport() {
+        return IsWeeklyHightestLowestSalaryReport;
+    }
+
+    /**
+     * @param IsWeeklyHightestLowestSalaryReport the IsWeeklyHightestLowestSalaryReport to set
+     */
+    public void setIsWeeklyHightestLowestSalaryReport(boolean IsWeeklyHightestLowestSalaryReport) {
+        this.IsWeeklyHightestLowestSalaryReport = IsWeeklyHightestLowestSalaryReport;
     }
 }

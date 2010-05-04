@@ -4,6 +4,8 @@
  */
 package com.aptech.labourmanagement.dao;
 
+import com.aptech.labourmanagement.entity.Worker;
+
 /**
  *
  * @author JONNY
@@ -26,6 +28,11 @@ public class WorkerDAO {
         return lastError;
     }
 
+    public Worker readByID(int workerID){
+        Worker worker = new Worker();
+        //code
+        return worker;
+    }
     /**
      * @param lastError the lastError to set
      */

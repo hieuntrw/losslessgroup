@@ -24,10 +24,9 @@ public class AccountDAO {
     private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
-    private String lastError = null;
-    
-    //khai bao ca cau lenh SQL
-    private final String SQL_ADD = "INSERT INTO ACCOUNT(Username, Password, RoleID,Status) VALUES(?,?,?,?)";
+    private String lastError;
+    // SQL statements
+    private final String SQL_CREATE = "INSERT INTO ACCOUNT(Username, Password, RoleID,Status) VALUES(?,?,?,?)";
     private final String SQL_UPDATE = "UPDATE ACCOUNT set Password=?,RoleID=?,Status=? where AccountID=?";
     private final String SQL_DELETE = "DELETE FROM ACCOUNT WHERE username =?";
     private final String SQL_READ = "SELECT * FROM ACCOUNT";
@@ -43,27 +42,25 @@ public class AccountDAO {
      * @return true or false
      * @param ac, the ac to add into Account table
      */
-    public boolean addAccount(Account ac) {
-        //code
-        //String pass = pe.encryptPass(ac.getPassword()); encrypt in services
+    public boolean create(Account ac) {
         try {
             con = db.getConnection();
-            pst = con.prepareStatement(SQL_ADD);
+            pst = con.prepareStatement(SQL_CREATE);
             pst.setString(1, ac.getUsername());
             pst.setString(2, ac.getPassword());
             pst.setInt(3, ac.getRole().getRoleID());
             pst.setBoolean(4, ac.isStatus());
             if (pst.executeUpdate() == 1) {
-                setLastError("Add successfully!");
+                setLastError("Create successfully!");
                 db.closeConnection();
                 return true;
             }
         } catch (SQLException ex) {
-            setLastError("Add fail, error: " + ex.getMessage());
+            setLastError("Create fail, error: " + ex.getMessage());
             db.closeConnection();
             return false;
         }
-        setLastError("Add fail!");
+        setLastError("Create fail!");
         db.closeConnection();
         return false;
     }
@@ -73,8 +70,7 @@ public class AccountDAO {
      *@return true or false
      *@param ac, the ac to update into Account table
      */
-    public boolean updateAccount(Account ac) {
-        //String pass = pe.encryptPass(ac.getPassword());encrypt in services
+    public boolean update(Account ac) {
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_UPDATE);
@@ -103,7 +99,7 @@ public class AccountDAO {
      * @return true or false
      * @param username,the username to delete account
      */
-    public boolean deleteAccount(String username) {
+    public boolean delete(String username) {
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_DELETE);
@@ -119,7 +115,7 @@ public class AccountDAO {
             db.closeConnection();
             return false;
         }
-        this.setLastError("Delete fail, error: ");
+        this.setLastError("Delete fail");
         db.closeConnection();
         return false;
 
@@ -156,7 +152,7 @@ public class AccountDAO {
      * @return account
      * @param username,the username to get account
      */
-    public Account getAccountByUsername(String username) {
+    public Account readByUsername(String username) {
         Account ac = new Account();
         try {
             con = db.getConnection();
@@ -170,28 +166,30 @@ public class AccountDAO {
                 ac.setPassword(rs.getString("Password"));
                 ac.setRole(roleDAO.getRoleByID(rs.getInt("RoleID")));
                 ac.setStatus(rs.getBoolean("Status"));
-                db.closeConnection();
             }
+            db.closeConnection();
+            return ac;
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
             this.setLastError("get account fail!");
             db.closeConnection();
+            return ac;
         }
-        return ac;
+
     }
 
-    //getAllAccount
+    //readByAll
     /**
      *@return a list account
      */
-    public ArrayList<Account> getAllAccount() {
+    public ArrayList<Account> readByAll() {
         ArrayList<Account> list = new ArrayList<Account>();
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ);
             rs = pst.executeQuery();
+            RoleDAO roleDAO = new RoleDAO();
             while (rs.next()) {
-                RoleDAO roleDAO = new RoleDAO();
                 Account ac = new Account();
                 ac.setAccountID(rs.getInt("AccountID"));
                 ac.setUsername(rs.getString("Username"));
@@ -201,20 +199,20 @@ public class AccountDAO {
                 list.add(ac);
             }
             db.closeConnection();
+            return list;
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
             setLastError("Get all account fail, error: " + ex.getMessage());
             db.closeConnection();
+            return list;
         }
-        return list;
     }
-    
+
 //Login system
     /**
      * @return true or false
      * @param username, password. username, password to check 
      */
-
     public boolean loginSystem(String username, String password) {
         //String pass = pe.encryptPass(password);encrypt in services
         try {
