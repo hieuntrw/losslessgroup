@@ -155,6 +155,13 @@ public class ShiftDAO {
             return list;
         }
     }
+
+     public Shift readByID(int ShiftID){
+        Shift si = new Shift();
+        //code
+        return si;
+    }
+
     /**
      * @return the lastError
      */
