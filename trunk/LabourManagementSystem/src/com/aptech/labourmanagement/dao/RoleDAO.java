@@ -184,7 +184,7 @@ public class RoleDAO {
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
             this.setLastError("Get rolefunction fail");
-            return role;
+            return null;
         }
     }
 

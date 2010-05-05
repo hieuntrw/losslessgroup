@@ -173,7 +173,7 @@ public class AccountDAO {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
             this.setLastError("get account fail!");
             db.closeConnection();
-            return ac;
+            return null;
         }
 
     }
