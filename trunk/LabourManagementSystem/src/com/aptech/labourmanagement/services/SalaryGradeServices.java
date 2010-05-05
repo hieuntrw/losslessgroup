@@ -10,5 +10,5 @@ package com.aptech.labourmanagement.services;
  * @author Noi Nho
  */
 public class SalaryGradeServices {
-
+//create, update phai validate salary grade name
 }

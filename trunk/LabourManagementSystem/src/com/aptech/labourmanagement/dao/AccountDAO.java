@@ -126,7 +126,7 @@ public class AccountDAO {
      * @return true or false
      * @param username,the username to check account
      */
-    public boolean checkUsername(String username) {
+    public boolean isExist(String username) {
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_CHECK_USER);

@@ -61,7 +61,7 @@ public class AccountServives {
      */
 
     public boolean checkUsername(String username) {
-        if (accDao.checkUsername(username)) {
+        if (accDao.isExist(username)) {
             this.setLastError(accDao.getLastError());
             return true;
         } else {
