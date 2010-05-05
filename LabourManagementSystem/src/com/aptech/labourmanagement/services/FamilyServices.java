@@ -40,10 +40,10 @@ public class FamilyServices {
      */
     public boolean addFamily(Family fa){
         if(faDao.create(fa)){
-            this.setLastError(fa.getLassError());
+            this.setLastError(fa.getLastError());
             return true;
         }else{
-            this.setLastError(fa.getLassError());
+            this.setLastError(fa.getLastError());
             return false;
         }
     }
@@ -55,10 +55,10 @@ public class FamilyServices {
      */
     public boolean updateFamily(Family fa){
         if(faDao.update(fa)){
-            this.setLastError(fa.getLassError());
+            this.setLastError(fa.getLastError());
             return true;
         }else{
-            this.setLastError(fa.getLassError());
+            this.setLastError(fa.getLastError());
             return false;
         }
     }
@@ -70,7 +70,7 @@ public class FamilyServices {
 
 //    public boolean delete(Family fa ,int WorkerID){
 //        if(faDao.delete(fa)){
-//            this.setLastError(fa.getLassError());
+//            this.setLastError(fa.getLastError());
 //            return true;
 //        }
 //    }

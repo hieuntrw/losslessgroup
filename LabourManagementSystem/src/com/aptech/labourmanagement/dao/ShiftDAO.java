@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 import util.ConfigureDB;
 
 /**
- *
- * @author JONNY
+ * 
+ * @author Noi Nho
  */
 public class ShiftDAO {
 
@@ -25,7 +25,7 @@ public class ShiftDAO {
     private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
-    private String lastError = null;
+    private String lastError;
     //SLQ statements
     private final String SQL_CREATE = "INSERT INTO SHIFT(ShiftName,TimeIn,TimeOut) VALUES(?,?,?)";
     private final String SQL_UPDATE = "UPDATE SHIFT set ShiftName=?,TimeIn=?,TimeOut=? WHERE ShiftID=?";
@@ -35,9 +35,8 @@ public class ShiftDAO {
     private final String SQL_READ_BY_SHIFTID = "SELECT * FROM SHIFT WHERE ShiftID =?";
     private final String SQL_READ_BY_SHIFT_NAME = "SELECT * FROM SHIFT WHERE ShiftName =?";
 
-    //create new shift
     /**
-     *
+     * create new shift
      * @param si, si to add into Shift table
      * @return true or false
      */
@@ -64,10 +63,10 @@ public class ShiftDAO {
         return false;
     }
 
-    //edit shift
     /**
-     *@return true or false
-     *@param si, the si to update into Shift table
+     * update shift
+     * @return true or false
+     * @param si, the si to update into Shift table
      */
     public boolean update(Shift si) {
         try {
@@ -93,8 +92,8 @@ public class ShiftDAO {
         return false;
     }
 
-    //delete shift
     /**
+     * delete shift
      * @return true or false
      * @param shiftID,the shiftID to delete Shift
      */
@@ -115,14 +114,13 @@ public class ShiftDAO {
             db.closeConnection();
             return false;
         }
-        this.setLastError("Delete fail, error: ");
+        this.setLastError("Delete fail!");
         db.closeConnection();
         return false;
     }
 
-    //get shiftName
     /**
-     *
+     * get shiftName
      * @return list shift name
      */
     public ArrayList<String> readByName() {
@@ -144,9 +142,8 @@ public class ShiftDAO {
         }
     }
 
-    //get all shift
     /**
-     *
+     * get all shift
      * @return Shift list
      */
     public ArrayList<Shift> readByAll() {
@@ -173,18 +170,17 @@ public class ShiftDAO {
         }
     }
 
-    //read shift by shift id
     /**
-     *
+     * read shift by shift id
      * @param ShiftID
      * @return Shift
      */
-    public Shift readByID(int ShiftID) {
+    public Shift readByID(int shiftID) {
         Shift si = new Shift();
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_BY_SHIFTID);
-            pst.setInt(1, ShiftID);
+            pst.setInt(1, shiftID);
             rs = pst.executeQuery();
             if (rs.next()) {
                 si.setShiftID(rs.getInt("ShiftID"));
@@ -202,9 +198,8 @@ public class ShiftDAO {
         }
     }
 
-    //get shift by shift name
     /**
-     *
+     * get shift by shift name
      * @param ShiftName
      * @return Shift
      */
@@ -232,7 +227,7 @@ public class ShiftDAO {
     }
 
     /**
-     *
+     * check shift name is exist
      * @param shiftName
      * @return true or false
      */

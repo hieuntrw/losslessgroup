@@ -15,7 +15,7 @@ public class Account {
     private String password;
     private Role role;
     private boolean status;
-    private String lassError;
+    private String lastError;
 
     /*
      * Constructor
@@ -30,7 +30,7 @@ public class Account {
     }
 
     public Account() {
-        setLassError("");
+        setLastError("");
     }
 
     /**
@@ -90,17 +90,17 @@ public class Account {
     }
 
     /**
-     * @return the lassError
+     * @return the lastError
      */
-    public String getLassError() {
-        return lassError;
+    public String getLastError() {
+        return lastError;
     }
 
     /**
-     * @param lassError, the lassError to set
+     * @param lastError, the lastError to set
      */
-    public void setLassError(String lassError) {
-        this.lassError = lassError;
+    public void setLastError(String lastError) {
+        this.lastError = lastError;
     }
 
     /**
@@ -122,15 +122,15 @@ public class Account {
 
     public boolean validateAccount() {
         if (this.username.length() == 0) {
-            this.setLassError("Username can not empty!");
+            this.setLastError("Username can not empty!");
             return false;
         }
         if (this.password.length() == 0) {
-            this.setLassError("Password can not empty!");
+            this.setLastError("Password can not empty!");
             return false;
         }
         if (this.getRole() == null) {
-            this.setLassError("Role can not null!");
+            this.setLastError("Role can not null!");
             return false;
         }
         return true;
