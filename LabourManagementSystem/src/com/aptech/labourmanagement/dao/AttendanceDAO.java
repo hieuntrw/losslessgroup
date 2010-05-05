@@ -33,8 +33,8 @@ public class AttendanceDAO {
     private final String SQL_READ_BY_WORKERID = "SELECT * FROM ATTENDANCE WHERE WorkerID =?";
     private final String SQL_READ_BY_DATE = "SELECT * FROM ATTENDANCE WHERE WorkDay =?";
 
-    //create attendance
     /**
+     * create attendance
      * @return true or false
      * @param at, the at to create into Attendance table
      */
@@ -63,9 +63,8 @@ public class AttendanceDAO {
         return false;
     }
 
-    //edit
     /**
-     *
+     *update attendance
      * @param at at to update
      * @return true or false
      */
@@ -94,8 +93,9 @@ public class AttendanceDAO {
         return false;
     }
 
-    //delete attendance
+    
     /**
+     * delete attendance
      * @return true or false
      * @param ID,the ID to delete Attendance
      */
@@ -121,8 +121,9 @@ public class AttendanceDAO {
         return false;
     }
 
-    //get all attendance by WorkerID
+    
     /**
+     * get all attendance by WorkerID
      * @param workerID
      * @return list Attendance
      */
@@ -157,7 +158,11 @@ public class AttendanceDAO {
 
     }
 
-    //get all attendance by date
+    /**
+     * get all attendance by date
+     * @param date
+     * @return list attendance
+     */
     public ArrayList<Attendance> readAttendanceByDate(Date date) {
         ArrayList<Attendance> listAttendance = new ArrayList<Attendance>();
         try {

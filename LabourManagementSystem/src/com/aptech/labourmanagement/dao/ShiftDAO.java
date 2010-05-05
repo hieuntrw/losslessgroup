@@ -26,7 +26,7 @@ public class ShiftDAO {
     private PreparedStatement pst = null;
     private ResultSet rs = null;
     private String lastError = null;
-    //khai bao ca cau lenh SQL
+    //SLQ statements
     private final String SQL_CREATE = "INSERT INTO SHIFT(ShiftName,TimeIn,TimeOut) VALUES(?,?,?)";
     private final String SQL_UPDATE = "UPDATE SHIFT set ShiftName=?,TimeIn=?,TimeOut=? WHERE ShiftID=?";
     private final String SQL_DELETE = "DELETE FROM SHIFT WHERE ShiftID =?";
@@ -236,7 +236,7 @@ public class ShiftDAO {
      * @param shiftName
      * @return true or false
      */
-    public boolean checkShiftName(String shiftName) {
+    public boolean isExist(String shiftName) {
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_BY_SHIFT_NAME);
