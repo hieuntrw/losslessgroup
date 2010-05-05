@@ -6,6 +6,7 @@ package com.aptech.labourmanagement.dao;
 
 import com.aptech.labourmanagement.entity.Attendance;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,28 +27,26 @@ public class AttendanceDAO {
     private ResultSet rs = null;
     private String lastError;
     // SQL statements
-    private final String SQL_CREATE = "INSERT INTO ATTENDANCE(ID, shift, workDay,worker, status, isExtraShift) VALUES(?,?,?,?,?,?)";
-    private final String SQL_UPDATE = "UPDATE ATTENDANCE set shift=?,workDay=?,worker=?, status=?, isExtraShift=? where ID=?";
+    private final String SQL_CREATE = "INSERT INTO ATTENDANCE(ShiftID,WorkDay,WorkerID,Status,IsExtraShift) VALUES(?,?,?,?,?)";
+    private final String SQL_UPDATE = "UPDATE ATTENDANCE set ShiftID =?,WorkDay =?,Status =?,IsExtraShift =? WHERE ID=?";
     private final String SQL_DELETE = "DELETE FROM ATTENDANCE WHERE ID =?";
-    private final String SQL_READ = "SELECT * FROM ATTENDANCE";
-    //private final String SQL_CHECK_USER = "SELECT * FROM ACCOUNT WHERE username =?";
-    //private final String SQL_LOGIN = "SELECT * FROM ACCOUNT WHERE Username =? AND Password =?";
+    private final String SQL_READ_BY_WORKERID = "SELECT * FROM ATTENDANCE WHERE WorkerID =?";
+    private final String SQL_READ_BY_DATE = "SELECT * FROM ATTENDANCE WHERE WorkDay =?";
 
-   //create famlily
+    //create attendance
     /**
      * @return true or false
-     * @param at, the fa to add into Attendance table
+     * @param at, the at to create into Attendance table
      */
     public boolean create(Attendance at) {
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_CREATE);
-            pst.setInt(1, at.getID());
-            pst.setInt(2, at.getShift().getShiftID());
-            pst.setDate(3, at.getWorkDay());
-            pst.setInt(4, at.getWorker().getWorkerID());
-            pst.setBoolean(5, at.isStatus());
-            pst.setBoolean(6, at.isIsExtraShift());
+            pst.setInt(1, at.getShift().getShiftID());
+            pst.setDate(2, at.getWorkDay());
+            pst.setInt(3, at.getWorker().getWorkerID());
+            pst.setBoolean(4, at.isStatus());
+            pst.setBoolean(5, at.isIsExtraShift());
             if (pst.executeUpdate() == 1) {
                 setLastError("Create successfully!");
                 db.closeConnection();
@@ -64,23 +63,21 @@ public class AttendanceDAO {
         return false;
     }
 
-
-
-     //edit
+    //edit
     /**
-     *@return true or false
-     *@param at, the ac to update into Attendance table
+     *
+     * @param at at to update
+     * @return true or false
      */
     public boolean update(Attendance at) {
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_UPDATE);
-            pst.setInt(1, at.getID());
-            pst.setInt(2, at.getShift().getShiftID());
-            pst.setDate(3, at.getWorkDay());
-            pst.setInt(4, at.getWorker().getWorkerID());
-            pst.setBoolean(5, at.isStatus());
-            pst.setBoolean(6, at.isIsExtraShift());
+            pst.setInt(1, at.getShift().getShiftID());
+            pst.setDate(2, at.getWorkDay());
+            pst.setBoolean(3, at.isStatus());
+            pst.setBoolean(4, at.isIsExtraShift());
+            pst.setInt(5, at.getID());
             if (pst.executeUpdate() == 1) {
                 this.setLastError("Update successfuly!");
                 db.closeConnection();
@@ -96,9 +93,9 @@ public class AttendanceDAO {
         db.closeConnection();
         return false;
     }
-    //delete attendance (validate edit date)
 
-     /**
+    //delete attendance
+    /**
      * @return true or false
      * @param ID,the ID to delete Attendance
      */
@@ -125,15 +122,15 @@ public class AttendanceDAO {
     }
 
     //get all attendance by WorkerID
-     /**
+    /**
      * @param workerID
-     * @return list Family
+     * @return list Attendance
      */
     public ArrayList<Attendance> readAttendanceByWorkerID(int workerID) {
         ArrayList<Attendance> listAttendance = new ArrayList<Attendance>();
         try {
             con = db.getConnection();
-            pst = con.prepareStatement(SQL_READ);
+            pst = con.prepareStatement(SQL_READ_BY_WORKERID);
             pst.setInt(1, workerID);
             rs = pst.executeQuery();
             WorkerDAO workerDAO = new WorkerDAO();
@@ -153,15 +150,44 @@ public class AttendanceDAO {
             return listAttendance;
         } catch (SQLException ex) {
             Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, null, ex);
-            this.setLastError("Get family by workerId fail, error: " + ex.getMessage());
+            this.setLastError("Get attendance by workerId fail, error: " + ex.getMessage());
             db.closeConnection();
             return listAttendance;
         }
 
     }
 
+    //get all attendance by date
+    public ArrayList<Attendance> readAttendanceByDate(Date date) {
+        ArrayList<Attendance> listAttendance = new ArrayList<Attendance>();
+        try {
+            con = db.getConnection();
+            pst = con.prepareStatement(SQL_READ_BY_DATE);
+            pst.setDate(1, date);
+            rs = pst.executeQuery();
+            WorkerDAO workerDAO = new WorkerDAO();
+            ShiftDAO siDao = new ShiftDAO();
+            while (rs.next()) {
+                Attendance at = new Attendance();
+                at.setID(rs.getInt("ID"));
+                at.setWorker(workerDAO.readByID(rs.getInt("WorkerID")));
+                at.setWorkDay(rs.getDate("WorkerDay"));
+                at.setShift(siDao.readByID(rs.getInt("ShiftID")));
+                at.setStatus(rs.getBoolean("Status"));
+                at.setIsExtraShift(rs.getBoolean("IsExtraShift"));
 
-    //get all attendance by Work date
+                listAttendance.add(at);
+            }
+            db.closeConnection();
+            return listAttendance;
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, null, ex);
+            this.setLastError("Get attendance by workerId fail, error: " + ex.getMessage());
+            db.closeConnection();
+            return listAttendance;
+        }
+    }
+
     /**
      * @return the lastError
      */
