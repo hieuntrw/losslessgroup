@@ -41,10 +41,10 @@ public class ReferServices {
      */
      public boolean addRefer(Refer re){
          if(reDao.create(re)){
-             this.setLastError(re.getLassError());
+             this.setLastError(re.getLastError());
              return true;
          }else{
-             this.setLastError(re.getLassError());
+             this.setLastError(re.getLastError());
              return false;
          }
      }
@@ -55,10 +55,10 @@ public class ReferServices {
      */
     public boolean updateRefer(Refer re){
         if(reDao.update(re)){
-             this.setLastError(re.getLassError());
+             this.setLastError(re.getLastError());
              return true;
          }else{
-             this.setLastError(re.getLassError());
+             this.setLastError(re.getLastError());
              return false;
         }
     }

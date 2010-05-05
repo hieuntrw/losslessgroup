@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 import util.ConfigureDB;
 
 /**
- *
- * @author JONNY
+ * 
+ * @author Noi Nho
  */
 public class SalaryGradeDAO {
 
@@ -149,27 +149,29 @@ public class SalaryGradeDAO {
      * @param salaryGradeID
      * @return float
      */
-    public float readByID(int salaryGradeID) {
-        float gradeNumber = 0;
+    public SalaryGrade readByID(int salaryGradeID) {
+        SalaryGrade sg = new SalaryGrade();
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_GRADE_NUMBER);
             pst.setInt(1, salaryGradeID);
             rs = pst.executeQuery();
             if (rs.next()) {
-                gradeNumber = rs.getFloat("GradeNumber");
+                sg.setSalaryGradeID(rs.getInt("SalaryGradeID"));
+                sg.setGradeName(rs.getString("GradeName"));
+                sg.setGradeNum(rs.getFloat("GradeNum"));
                 db.closeConnection();
-                return gradeNumber;
+                return sg;
             }
         } catch (SQLException ex) {
             Logger.getLogger(SalaryGradeDAO.class.getName()).log(Level.SEVERE, null, ex);
-            this.setLastError("Get salary grade number fail, error: " + ex.getMessage());
+            this.setLastError("Get salary grade fail, error: " + ex.getMessage());
             db.closeConnection();
-            return gradeNumber;
+            return sg;
         }
-        this.setLastError("Get salary grade number fail");
+        this.setLastError("Get salary grade fail");
         db.closeConnection();
-        return gradeNumber;
+        return sg;
     }
 
     /**

@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 import util.ConfigureDB;
 
 /**
- *
- * @author JONNY
+ * 
+ * @author Noi Nho
  */
 public class ReferDAO {
     //khai bao cac bien
@@ -29,10 +29,11 @@ public class ReferDAO {
     private final String SQL_CREATE = "INSERT INTO REFER(FirstName, LastName,DayOfBirth, Address,WorkName ,Position, ContactNumber) VALUES(?,?,?,?,?,?,?)";
     private final String SQL_UPDATE = "UPDATE REFER set FirstName=?,LastName=?,DayOfBirth=?,Address=?,WorkName=?,Position=?,ContactNumber=?  where ReferID=?";
     private final String SQL_DELETE = "DELETE FROM REFER WHERE ReferID =?";
-    //private final String SQL_READ = "SELECT * FROM REFER WHERE ReferID =?";
+    private final String SQL_READ_BY_ALL = "SELECT * FROM REFER";
+    private final String SQL_READ_BY_ReferID = "SELECT * FROM REFER WHERE ReferID =?";
 
-    //add new
     /**
+     * create new refer
      *@return true or false
      *@param fa, the re to update into Refer table
      */
@@ -63,8 +64,8 @@ public class ReferDAO {
         return false;
     }
 
-    //edit
     /**
+     * update refer
      *@return true or false
      *@param fa, the ac to update into Family table
      */
@@ -95,9 +96,8 @@ public class ReferDAO {
         return false;
     }
 
-    //delete
     /**
-     *
+     * delete refer
      * @param referID
      * @return true or false
      */
@@ -122,7 +122,31 @@ public class ReferDAO {
         return false;
     }
 
-    
+    public Refer readByID(int referID){
+        Refer refer = new Refer();
+        try {
+            con = db.getConnection();
+            pst = con.prepareStatement(SQL_READ_BY_ReferID);
+            pst.setInt(1, referID);
+            if (rs.next()) {
+                refer.setReferID(rs.getInt("ReferID"));
+                refer.setFirstName(rs.getString("FirstName"));
+                refer.setLastName(rs.getString("LastName"));
+                refer.setDayOfBirth(rs.getDate("DayOfBirth"));
+                refer.setContactNumber(rs.getString("ContactNumber"));
+                refer.setAddress(rs.getString("Address"));
+                refer.setWorkName(rs.getString("WorkName"));
+                refer.setPosition(rs.getString("Position"));
+            }
+            db.closeConnection();
+            return refer;
+        } catch (SQLException ex) {
+            Logger.getLogger(ReferDAO.class.getName()).log(Level.SEVERE, null, ex);
+            this.setLastError("Get refer by ReferID fail, error: " + ex.getMessage());
+            db.closeConnection();
+            return null;
+        }
+    }
     
     /**
      * @return the lastError

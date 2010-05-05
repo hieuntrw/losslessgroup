@@ -25,7 +25,7 @@ public class Worker {
     private float weight;
     private float height;
     private boolean status;
-    private String lassError;
+    private String lastError;
 
     /*
      * Constructor
@@ -232,16 +232,16 @@ public class Worker {
     }
 
     /**
-     * @return the lassError
+     * @return the lastError
      */
-    public String getLassError() {
-        return lassError;
+    public String getLastError() {
+        return lastError;
     }
 
     /**
-     * @param lassError the lassError to set
+     * @param lastError the lastError to set
      */
-    public void setLassError(String lassError) {
-        this.lassError = lassError;
+    public void setLastError(String lastError) {
+        this.lastError = lastError;
     }
 }

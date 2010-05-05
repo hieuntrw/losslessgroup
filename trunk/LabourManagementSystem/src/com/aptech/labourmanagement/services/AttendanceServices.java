@@ -40,10 +40,10 @@ public class AttendanceServices {
      */
     public boolean create(Attendance at){
         if(atDao.create(at)){
-            this.setLastError(at.getLassError());
+            this.setLastError(at.getLastError());
             return true;
         }else{
-            this.setLastError(at.getLassError());
+            this.setLastError(at.getLastError());
             return false;
         }
     }
@@ -55,10 +55,10 @@ public class AttendanceServices {
      */
     public boolean update(Attendance at){
         if(atDao.update(at)){
-            this.setLastError(at.getLassError());
+            this.setLastError(at.getLastError());
             return true;
         }else{
-            this.setLastError(at.getLassError());
+            this.setLastError(at.getLastError());
             return false;
         }
     }
