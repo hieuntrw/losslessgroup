@@ -226,6 +226,35 @@ public class ShiftDAO {
         }
     }
 
+    public int readHourByID(int shiftID) {
+        Shift si = new Shift();
+        int hour = 0;
+        try {
+            con = db.getConnection();
+            pst = con.prepareStatement(SQL_READ_BY_SHIFTID);
+            pst.setInt(1, shiftID);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                si.setShiftID(rs.getInt("ShiftID"));
+                si.setShiftName(rs.getString("ShiftName"));
+                si.setTimeIn(rs.getString("TimeIn"));
+                si.setTimeOut(rs.getString("TimeOut"));
+                String[] strIn = si.getTimeIn().split(":");
+                String[] strOut = si.getTimeOut().split(":");
+                int hourIn = Integer.parseInt(strIn[0]);
+                int hourOut = Integer.parseInt(strOut[0]);
+                hour = hourOut - hourIn;
+            }
+            db.closeConnection();
+            return hour;
+        } catch (SQLException ex) {
+            Logger.getLogger(ShiftDAO.class.getName()).log(Level.SEVERE, null, ex);
+            this.setLastError("Get shift by shiftID fail, error: " + ex.getMessage());
+            db.closeConnection();
+            return hour;
+        }
+    }
+
     /**
      * check shift name is exist
      * @param shiftName
