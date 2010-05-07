@@ -13,11 +13,6 @@ package com.aptech.labourmanagement.gui.main;
 import com.aptech.labourmanagement.component.AppStatusBar;
 import com.aptech.labourmanagement.component.LookAndFeel;
 import java.awt.Toolkit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -35,6 +30,7 @@ public class MainFrm extends javax.swing.JFrame {
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+       // this.setSize(900, 700);
         new LookAndFeel(this);
     }
 
@@ -42,6 +38,7 @@ public class MainFrm extends javax.swing.JFrame {
         AppStatusBar status = new AppStatusBar();
         this.pnlStatus.add(status.getBar());
     }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -52,6 +49,7 @@ public class MainFrm extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jPanel2 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnAccount = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
@@ -62,6 +60,8 @@ public class MainFrm extends javax.swing.JFrame {
         btnWeeklySalary = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
         btnWeeklyAttendance = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         pnlStatus = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnSystem = new javax.swing.JMenu();
@@ -95,7 +95,9 @@ public class MainFrm extends javax.swing.JFrame {
         setTitle("Labour Management System");
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jToolBar1.setRollover(true);
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        jToolBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/id_card.png"))); // NOI18N
         btnAccount.setText("Account");
@@ -139,22 +141,45 @@ public class MainFrm extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 28;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.02;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 375);
-        getContentPane().add(jToolBar1, gridBagConstraints);
+        gridBagConstraints.weighty = 0.15;
+        jPanel2.add(jToolBar1, gridBagConstraints);
 
-        pnlStatus.setLayout(new java.awt.BorderLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        getContentPane().add(jPanel2, gridBagConstraints);
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        jLabel1.setText("jLabel1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel1.add(jLabel1, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weighty = 0.02;
-        gridBagConstraints.insets = new java.awt.Insets(259, 0, 0, 0);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.7;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        getContentPane().add(jPanel1, gridBagConstraints);
+
+        pnlStatus.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlStatus.setLayout(new java.awt.BorderLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.15;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(pnlStatus, gridBagConstraints);
 
         mnSystem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/window_time.png"))); // NOI18N
@@ -307,7 +332,10 @@ public class MainFrm extends javax.swing.JFrame {
     private javax.swing.JButton btnLabor;
     private javax.swing.JButton btnWeeklyAttendance;
     private javax.swing.JButton btnWeeklySalary;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
