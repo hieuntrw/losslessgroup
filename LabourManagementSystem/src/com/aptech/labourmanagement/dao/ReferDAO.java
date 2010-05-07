@@ -29,8 +29,13 @@ public class ReferDAO {
     private final String SQL_CREATE = "INSERT INTO REFER(FirstName, LastName,DayOfBirth, Address,WorkName ,Position, ContactNumber) VALUES(?,?,?,?,?,?,?)";
     private final String SQL_UPDATE = "UPDATE REFER set FirstName=?,LastName=?,DayOfBirth=?,Address=?,WorkName=?,Position=?,ContactNumber=?  where ReferID=?";
     private final String SQL_DELETE = "DELETE FROM REFER WHERE ReferID =?";
-    private final String SQL_READ_BY_ALL = "SELECT * FROM REFER";
+    //private final String SQL_READ_BY_ALL = "SELECT * FROM REFER";
     private final String SQL_READ_BY_ReferID = "SELECT * FROM REFER WHERE ReferID =?";
+
+    public ReferDAO() {
+        db = new ConfigureDB();
+    }
+
 
     /**
      * create new refer

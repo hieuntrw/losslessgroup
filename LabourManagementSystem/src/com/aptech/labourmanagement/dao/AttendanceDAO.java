@@ -33,6 +33,11 @@ public class AttendanceDAO {
     private final String SQL_READ_BY_WORKERID = "SELECT * FROM ATTENDANCE WHERE WorkerID =?";
     private final String SQL_READ_BY_DATE = "SELECT * FROM ATTENDANCE WHERE WorkDay =?";
 
+    public AttendanceDAO() {
+        db = new ConfigureDB();
+    }
+
+
     /**
      * create attendance
      * @return true or false

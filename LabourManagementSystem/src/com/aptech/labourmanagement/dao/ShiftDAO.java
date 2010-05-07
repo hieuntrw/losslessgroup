@@ -35,6 +35,12 @@ public class ShiftDAO {
     private final String SQL_READ_BY_SHIFTID = "SELECT * FROM SHIFT WHERE ShiftID =?";
     private final String SQL_READ_BY_SHIFT_NAME = "SELECT * FROM SHIFT WHERE ShiftName =?";
 
+    public ShiftDAO() {
+        db = new ConfigureDB();
+    }
+
+
+
     /**
      * create new shift
      * @param si, si to add into Shift table

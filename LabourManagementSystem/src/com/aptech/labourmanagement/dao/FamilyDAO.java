@@ -32,6 +32,11 @@ public class FamilyDAO {
     private final String SQL_DELETE = "DELETE FROM FAMILY WHERE FamilyID =?";
     private final String SQL_READ = "SELECT * FROM FAMILY WHERE WorkerID =?";
 
+    public FamilyDAO() {
+        db = new ConfigureDB();
+    }
+
+
     //create famlily
     /**
      * @return true or false
