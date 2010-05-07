@@ -12,6 +12,7 @@
 package com.aptech.labourmanagement.gui;
 
 import com.aptech.labourmanagement.component.LookAndFeel;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -23,6 +24,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     public RoleManagementDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
         new LookAndFeel(this);
     }
 
@@ -40,8 +42,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         lblTitle = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblRoleName = new javax.swing.JLabel();
-        ckbLogin = new javax.swing.JCheckBox();
-        ckbChangePass = new javax.swing.JCheckBox();
+        ckbAll = new javax.swing.JCheckBox();
         ckbAccountManagement = new javax.swing.JCheckBox();
         ckbRoleManagement = new javax.swing.JCheckBox();
         ckbReferManagement = new javax.swing.JCheckBox();
@@ -64,12 +65,13 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
         lblTitle.setText("Role Management");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -98,25 +100,14 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel2.add(lblRoleName, gridBagConstraints);
 
-        ckbLogin.setSelected(true);
-        ckbLogin.setText("Is Login");
+        ckbAll.setText("All");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
-        jPanel2.add(ckbLogin, gridBagConstraints);
-
-        ckbChangePass.setSelected(true);
-        ckbChangePass.setText("Is change password");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
-        jPanel2.add(ckbChangePass, gridBagConstraints);
+        jPanel2.add(ckbAll, gridBagConstraints);
 
         ckbAccountManagement.setText("Is account management");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -208,9 +199,11 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel2.add(txtRoleName, gridBagConstraints);
 
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btnSave.setText("Save");
         jPanel3.add(btnSave);
 
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
         btnCancel.setText("Cancel");
         jPanel3.add(btnCancel);
 
@@ -226,20 +219,22 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.4;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         getContentPane().add(jPanel2, gridBagConstraints);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List of role", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Role list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(350, 335));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(350, 260));
 
         tblRole.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Role ID", "Role name"
+                "No.", "Role ID", "Role name"
             }
         ));
         jScrollPane1.setViewportView(tblRole);
@@ -254,12 +249,25 @@ public class RoleManagementDlg extends javax.swing.JDialog {
 
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/add.png"))); // NOI18N
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnAdd);
 
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnEdit);
 
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete2.png"))); // NOI18N
         btnDelete.setText("Delete");
         jPanel5.add(btnDelete);
 
@@ -275,11 +283,21 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.6;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         getContentPane().add(jPanel4, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditActionPerformed
 
     /**
     * @param args the command line arguments
@@ -306,11 +324,10 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
     private javax.swing.JCheckBox ckbAccountManagement;
+    private javax.swing.JCheckBox ckbAll;
     private javax.swing.JCheckBox ckbAttendanceManagement;
-    private javax.swing.JCheckBox ckbChangePass;
     private javax.swing.JCheckBox ckbFamilyManagement;
     private javax.swing.JCheckBox ckbLaborManagement;
-    private javax.swing.JCheckBox ckbLogin;
     private javax.swing.JCheckBox ckbReferManagement;
     private javax.swing.JCheckBox ckbRoleManagement;
     private javax.swing.JCheckBox ckbSalaryGrade;

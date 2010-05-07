@@ -12,11 +12,7 @@ package com.aptech.labourmanagement.gui;
 
 import com.aptech.labourmanagement.component.LookAndFeel;
 import java.awt.Toolkit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -28,6 +24,7 @@ public class Logindlg extends javax.swing.JDialog {
     public Logindlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
         // Cach lam cho form xuat hien giua man hinh
         int width = this.getWidth();
         int heigh = this.getHeight();
@@ -63,11 +60,13 @@ public class Logindlg extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login System");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImage(null);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Login Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
+        lblPassword.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblPassword.setText("Password:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -95,6 +94,7 @@ public class Logindlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(7, 2, 7, 7);
         jPanel1.add(txtPassword, gridBagConstraints);
 
+        lblUsername.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblUsername.setText("Username:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -113,6 +113,7 @@ public class Logindlg extends javax.swing.JDialog {
 
         btncancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btncancel.setText("Ok");
+        btncancel.setPreferredSize(new java.awt.Dimension(68, 25));
         btncancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btncancelActionPerformed(evt);

@@ -12,6 +12,7 @@ package com.aptech.labourmanagement.gui;
 
 import com.aptech.labourmanagement.component.LookAndFeel;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -23,6 +24,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     public AccountManagementDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
         int width = this.getWidth();
         int heigh = this.getHeight();
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -72,7 +74,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
         lblTitle.setText("Account Management");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -88,10 +90,11 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 20, 7);
         getContentPane().add(jPanel1, gridBagConstraints);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List of account", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Account list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(380, 200));
@@ -101,7 +104,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Num.", "Username", "Grant", "Status"
+                "No.", "Username", "Grant", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -125,10 +128,16 @@ public class AccountManagementDlg extends javax.swing.JDialog {
 
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
+        btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/add.png"))); // NOI18N
         btnCreate.setText("Add");
+        btnCreate.setMaximumSize(new java.awt.Dimension(83, 25));
+        btnCreate.setMinimumSize(new java.awt.Dimension(83, 25));
         jPanel4.add(btnCreate);
 
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
+        btnEdit.setMaximumSize(new java.awt.Dimension(83, 25));
+        btnEdit.setMinimumSize(new java.awt.Dimension(83, 25));
         jPanel4.add(btnEdit);
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete2.png"))); // NOI18N
@@ -148,6 +157,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.6;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         getContentPane().add(jPanel3, gridBagConstraints);
 
@@ -158,10 +168,10 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         lblUsername.setText("Username:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 2);
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 0);
         jPanel2.add(lblUsername, gridBagConstraints);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
@@ -174,57 +184,58 @@ public class AccountManagementDlg extends javax.swing.JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 2);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 7, 5, 5);
         jPanel2.add(jPanel5, gridBagConstraints);
 
         lblPassword.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblPassword.setText("Password:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 2);
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 0);
         jPanel2.add(lblPassword, gridBagConstraints);
 
         lblGrant.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblGrant.setText("Grant:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 2);
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 0);
         jPanel2.add(lblGrant, gridBagConstraints);
 
         txtUsername.setColumns(20);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 2, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
         jPanel2.add(txtUsername, gridBagConstraints);
 
         txtPassword.setColumns(20);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 2, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
         jPanel2.add(txtPassword, gridBagConstraints);
 
         cbbGrant.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 2, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
         jPanel2.add(cbbGrant, gridBagConstraints);
 
         ckbIsUsing.setSelected(true);
@@ -232,10 +243,10 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         ckbIsUsing.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(5, 7, 5, 5);
         jPanel2.add(ckbIsUsing, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -243,6 +254,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.4;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         getContentPane().add(jPanel2, gridBagConstraints);
 

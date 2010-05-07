@@ -12,11 +12,7 @@ package com.aptech.labourmanagement.gui;
 
 import com.aptech.labourmanagement.component.LookAndFeel;
 import java.awt.Toolkit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -27,8 +23,8 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
     /** Creates new form ChangePassword */
     public ChangePasswordDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
         // Cach lam cho form xuat hien giua man hinh
         int width = this.getWidth();
         int heigh = this.getHeight();
@@ -128,7 +124,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 2, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 7);
         jPanel2.add(txtOldPass, gridBagConstraints);
 
         txtNewPass.setColumns(20);
@@ -138,7 +134,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 2, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 7);
         jPanel2.add(txtNewPass, gridBagConstraints);
 
         txtCofirmPass.setColumns(20);
@@ -148,7 +144,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 2, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 7);
         jPanel2.add(txtCofirmPass, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -161,6 +157,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
 
         btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btnOk.setText("Ok");
+        btnOk.setPreferredSize(new java.awt.Dimension(68, 25));
         btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOkActionPerformed(evt);
