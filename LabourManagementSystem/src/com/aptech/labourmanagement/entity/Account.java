@@ -4,11 +4,13 @@
  */
 package com.aptech.labourmanagement.entity;
 
+import com.aptech.student.component.PropertyIndex;
+
 /**
  *
  * @author Noi Nho
  */
-public class Account {
+public class Account implements PropertyIndex {
 
     private int accountID;
     private String username;
@@ -26,7 +28,7 @@ public class Account {
         this.password = password;
         this.role = role;
         this.status = status;
-       
+
     }
 
     public Account() {
@@ -134,5 +136,36 @@ public class Account {
             return false;
         }
         return true;
+    }
+
+    public Object getPropertyValue(int index) {
+        String value = "";
+        switch (index) {
+            case 1:
+                value = String.valueOf(this.getAccountID());
+                break;
+            case 2:
+                value = this.getUsername();
+                break;
+            case 3:
+                value = this.getRole().getRoleName();
+                break;
+            case 4:
+                if (isStatus()) {
+                    value = "Yes";
+                } else {
+                    value = "No";
+                }
+        }
+        return value;
+
+    }
+
+    public void setPropertyValue(int index, Object value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Class getPropertyClass(int index) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

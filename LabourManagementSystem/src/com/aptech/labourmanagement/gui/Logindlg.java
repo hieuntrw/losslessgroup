@@ -10,6 +10,7 @@
  */
 package com.aptech.labourmanagement.gui;
 
+import com.aptech.labourmanagement.component.LookAndFeel;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,10 +22,10 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Noi Nho
  */
-public class dlgLogin extends javax.swing.JDialog {
+public class Logindlg extends javax.swing.JDialog {
 
     /** Creates new form dlgLogin */
-    public dlgLogin(java.awt.Frame parent, boolean modal) {
+    public Logindlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         // Cach lam cho form xuat hien giua man hinh
@@ -34,18 +35,7 @@ public class dlgLogin extends javax.swing.JDialog {
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
         this.setSize(350, 300);
-        try {
-            UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(dlgLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(dlgLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(dlgLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(dlgLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        new LookAndFeel(this);
 
     }
 
@@ -75,7 +65,7 @@ public class dlgLogin extends javax.swing.JDialog {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Login Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Login Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         lblPassword.setText("Password:");
@@ -84,7 +74,7 @@ public class dlgLogin extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 0);
         jPanel1.add(lblPassword, gridBagConstraints);
 
         txtUsername.setColumns(20);
@@ -93,7 +83,7 @@ public class dlgLogin extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(7, 2, 7, 7);
         jPanel1.add(txtUsername, gridBagConstraints);
 
         txtPassword.setColumns(20);
@@ -102,7 +92,7 @@ public class dlgLogin extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(7, 2, 7, 7);
         jPanel1.add(txtPassword, gridBagConstraints);
 
         lblUsername.setText("Username:");
@@ -111,7 +101,7 @@ public class dlgLogin extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 0);
         jPanel1.add(lblUsername, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -123,9 +113,6 @@ public class dlgLogin extends javax.swing.JDialog {
 
         btncancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btncancel.setText("Ok");
-        btncancel.setMaximumSize(new java.awt.Dimension(65, 25));
-        btncancel.setMinimumSize(new java.awt.Dimension(65, 25));
-        btncancel.setPreferredSize(new java.awt.Dimension(65, 25));
         btncancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btncancelActionPerformed(evt);
@@ -146,7 +133,7 @@ public class dlgLogin extends javax.swing.JDialog {
 
         jPanel3.setPreferredSize(new java.awt.Dimension(233, 70));
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Login System");
         lblTitle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -155,9 +142,9 @@ public class dlgLogin extends javax.swing.JDialog {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 262, Short.MAX_VALUE)
+            .addGap(0, 250, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
+                .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,9 +175,10 @@ public class dlgLogin extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                dlgLogin dialog = new dlgLogin(new javax.swing.JFrame(), true);
+                Logindlg dialog = new Logindlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }

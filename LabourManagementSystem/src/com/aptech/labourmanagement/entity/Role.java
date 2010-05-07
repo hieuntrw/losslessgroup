@@ -14,7 +14,6 @@ public class Role {
     private String roleName;
     private boolean isLoginSystem;
     private boolean isChangePassword;
-    private boolean isConfigSystem;
     private boolean isAccountManagement;
     private boolean isRoleFunctionManagement;
     private boolean isWorkerManagement;
@@ -22,7 +21,7 @@ public class Role {
     private boolean isSalaryGradeManagement;
     private boolean isAttendanceManagement;
     private boolean isWeeklyAttendanceReport;
-    private boolean IsWeeklyHightestLowestSalaryReport;
+    private boolean IsWeeklySalaryReport;
     private String lastError;
 
 
@@ -32,12 +31,11 @@ public class Role {
     public Role() {
     }
 
-    public Role(int roleID, String roleName, boolean isLoginSystem, boolean isChangePassword, boolean isConfigSystem, boolean isAccountManagement, boolean isRoleFunctionManagement, boolean isWorkerManagement, boolean isRefersManagement, boolean isSalaryGradeManagement, boolean isAttendanceManagement, boolean isWeeklyAttendanceReport, boolean IsWeeklyHightestLowestSalaryReport) {
+    public Role(int roleID, String roleName, boolean isLoginSystem, boolean isChangePassword, boolean isAccountManagement, boolean isRoleFunctionManagement, boolean isWorkerManagement, boolean isRefersManagement, boolean isSalaryGradeManagement, boolean isAttendanceManagement, boolean isWeeklyAttendanceReport, boolean IsWeeklySalaryReport) {
         this.roleID = roleID;
         this.roleName = roleName;
         this.isLoginSystem = isLoginSystem;
         this.isChangePassword = isChangePassword;
-        this.isConfigSystem = isConfigSystem;
         this.isAccountManagement = isAccountManagement;
         this.isRoleFunctionManagement = isRoleFunctionManagement;
         this.isWorkerManagement = isWorkerManagement;
@@ -45,11 +43,9 @@ public class Role {
         this.isSalaryGradeManagement = isSalaryGradeManagement;
         this.isAttendanceManagement = isAttendanceManagement;
         this.isWeeklyAttendanceReport = isWeeklyAttendanceReport;
-        this.IsWeeklyHightestLowestSalaryReport = IsWeeklyHightestLowestSalaryReport;
+        this.IsWeeklySalaryReport = IsWeeklySalaryReport;
 
     }
-
-    
 
     /**
      * @return the roleID
@@ -105,20 +101,6 @@ public class Role {
      */
     public void setIsChangePassword(boolean isChangePassword) {
         this.isChangePassword = isChangePassword;
-    }
-
-    /**
-     * @return the isConfigSystem
-     */
-    public boolean isIsConfigSystem() {
-        return isConfigSystem;
-    }
-
-    /**
-     * @param isConfigSystem the isConfigSystem to set
-     */
-    public void setIsConfigSystem(boolean isConfigSystem) {
-        this.isConfigSystem = isConfigSystem;
     }
 
     /**
@@ -234,16 +216,16 @@ public class Role {
     }
 
     /**
-     * @return the IsWeeklyHightestLowestSalaryReport
+     * @return the IsWeeklySalaryReport
      */
-    public boolean isIsWeeklyHightestLowestSalaryReport() {
-        return IsWeeklyHightestLowestSalaryReport;
+    public boolean isIsWeeklySalaryReport() {
+        return IsWeeklySalaryReport;
     }
 
     /**
-     * @param IsWeeklyHightestLowestSalaryReport the IsWeeklyHightestLowestSalaryReport to set
+     * @param IsWeeklySalaryReport the IsWeeklySalaryReport to set
      */
-    public void setIsWeeklyHightestLowestSalaryReport(boolean IsWeeklyHightestLowestSalaryReport) {
-        this.IsWeeklyHightestLowestSalaryReport = IsWeeklyHightestLowestSalaryReport;
+    public void setIsWeeklySalaryReport(boolean IsWeeklySalaryReport) {
+        this.IsWeeklySalaryReport = IsWeeklySalaryReport;
     }
 }

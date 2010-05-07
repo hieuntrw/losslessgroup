@@ -4,12 +4,14 @@
  */
 
 /*
- * frmMain.java
+ * MainFrm.java
  *
  * Created on May 6, 2010, 10:48:07 PM
  */
 package com.aptech.labourmanagement.gui.main;
 
+import com.aptech.labourmanagement.component.AppStatusBar;
+import com.aptech.labourmanagement.component.LookAndFeel;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,31 +23,25 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Noi Nho
  */
-public class frmMain extends javax.swing.JFrame {
+public class MainFrm extends javax.swing.JFrame {
 
-    /** Creates new form frmMain */
-    public frmMain() {
+    /** Creates new form MainFrm */
+    public MainFrm() {
         initComponents();
+        this.initStatusBar();
         // Cach lam cho form xuat hien giua man hinh
         int width = this.getWidth();
         int heigh = this.getHeight();
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
-        try {
-            UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        new LookAndFeel(this);
     }
 
+    private void initStatusBar() {
+        AppStatusBar status = new AppStatusBar();
+        this.pnlStatus.add(status.getBar());
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -54,6 +50,7 @@ public class frmMain extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jToolBar1 = new javax.swing.JToolBar();
         btnAccount = new javax.swing.JButton();
@@ -65,6 +62,7 @@ public class frmMain extends javax.swing.JFrame {
         btnWeeklySalary = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
         btnWeeklyAttendance = new javax.swing.JButton();
+        pnlStatus = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnSystem = new javax.swing.JMenu();
         mniLogin = new javax.swing.JMenuItem();
@@ -95,6 +93,7 @@ public class frmMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Labour Management System");
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jToolBar1.setRollover(true);
 
@@ -137,6 +136,27 @@ public class frmMain extends javax.swing.JFrame {
         btnWeeklyAttendance.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnWeeklyAttendance);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 28;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.02;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 375);
+        getContentPane().add(jToolBar1, gridBagConstraints);
+
+        pnlStatus.setLayout(new java.awt.BorderLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weighty = 0.02;
+        gridBagConstraints.insets = new java.awt.Insets(259, 0, 0, 0);
+        getContentPane().add(pnlStatus, gridBagConstraints);
+
         mnSystem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/window_time.png"))); // NOI18N
         mnSystem.setText("System");
 
@@ -168,7 +188,7 @@ public class frmMain extends javax.swing.JFrame {
 
         mniRoleFunction.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         mniRoleFunction.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/certificate.png"))); // NOI18N
-        mniRoleFunction.setText("Role Function ");
+        mniRoleFunction.setText("Role");
         mnAccountManagement.add(mniRoleFunction);
 
         mniAccount.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
@@ -263,21 +283,6 @@ public class frmMain extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(377, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(359, Short.MAX_VALUE))
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -292,7 +297,7 @@ public class frmMain extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new frmMain().setVisible(true);
+                new MainFrm().setVisible(true);
             }
         });
     }
@@ -334,5 +339,6 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem mniSalaryGrade;
     private javax.swing.JMenuItem mniSalaryReport;
     private javax.swing.JMenuItem mniShift;
+    private javax.swing.JPanel pnlStatus;
     // End of variables declaration//GEN-END:variables
 }

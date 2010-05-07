@@ -27,9 +27,9 @@ public class RoleDAO {
     private PreparedStatement pst = null;
     private ResultSet rs = null;
     // SQL statements
-    private final String SQL_CREATE = "INSERT INTO RoleFunction(RoleName, IsLoginSystem, IsChangePassword,IsConfigSystem,IsAccountManagement,IsRoleFunctionManagement,"
-            + "IsWorkerManagement,IsRefersManagement,IsSalaryGradeManagement,IsAttendanceManagement,IsWeeklyAttendanceReport,IsWeeklyHightestLowestSalaryReport) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-    private final String SQL_UPDATE = "UPDATE RoleFunction set RoleName =?, IsLoginSystem =?, IsChangePassword =?,IsConfigSystem =?,IsAccountManagement =?,IsRoleFunctionManagement =?"
+    private final String SQL_CREATE = "INSERT INTO RoleFunction(RoleName, IsLoginSystem, IsChangePassword,IsAccountManagement,IsRoleFunctionManagement,"
+            + "IsWorkerManagement,IsRefersManagement,IsSalaryGradeManagement,IsAttendanceManagement,IsWeeklyAttendanceReport,IsWeeklyHightestLowestSalaryReport) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+    private final String SQL_UPDATE = "UPDATE RoleFunction set RoleName =?, IsLoginSystem =?, IsChangePassword =?,IsAccountManagement =?,IsRoleFunctionManagement =?"
             + "IsWorkerManagement =?,IsRefersManagement =?,IsSalaryGradeManagement =?,IsAttendanceManagement =?,IsWeeklyAttendanceReport =?,IsWeeklyHightestLowestSalaryReport =? WHERE RoleID =?";
     private final String SQL_DELETE = "DELETE FROM RoleFunction WHERE RoleName =?";
     private final String SQL_READ = "SELECT * FROM RoleFunction WHERE RoleID =?";
@@ -47,15 +47,14 @@ public class RoleDAO {
             pst.setString(1, role.getRoleName());
             pst.setBoolean(2, role.isIsLoginSystem());
             pst.setBoolean(3, role.isIsChangePassword());
-            pst.setBoolean(4, role.isIsConfigSystem());
-            pst.setBoolean(5, role.isIsAccountManagement());
-            pst.setBoolean(6, role.isIsRoleFunctionManagement());
-            pst.setBoolean(7, role.isIsWorkerManagement());
-            pst.setBoolean(8, role.isIsRefersManagement());
-            pst.setBoolean(9, role.isIsSalaryGradeManagement());
-            pst.setBoolean(10, role.isIsAttendanceManagement());
-            pst.setBoolean(11, role.isIsWeeklyAttendanceReport());
-            pst.setBoolean(12, role.isIsWeeklyHightestLowestSalaryReport());
+            pst.setBoolean(4, role.isIsAccountManagement());
+            pst.setBoolean(5, role.isIsRoleFunctionManagement());
+            pst.setBoolean(6, role.isIsWorkerManagement());
+            pst.setBoolean(7, role.isIsRefersManagement());
+            pst.setBoolean(8, role.isIsSalaryGradeManagement());
+            pst.setBoolean(9, role.isIsAttendanceManagement());
+            pst.setBoolean(10, role.isIsWeeklyAttendanceReport());
+            pst.setBoolean(11, role.isIsWeeklySalaryReport());
             if (pst.executeUpdate() == 1) {
                 setLastError("Create successfully!");
                 db.closeConnection();
@@ -84,16 +83,15 @@ public class RoleDAO {
             pst.setString(1, role.getRoleName());
             pst.setBoolean(2, role.isIsLoginSystem());
             pst.setBoolean(3, role.isIsChangePassword());
-            pst.setBoolean(4, role.isIsConfigSystem());
-            pst.setBoolean(5, role.isIsAccountManagement());
-            pst.setBoolean(6, role.isIsRoleFunctionManagement());
-            pst.setBoolean(7, role.isIsWorkerManagement());
-            pst.setBoolean(8, role.isIsRefersManagement());
-            pst.setBoolean(9, role.isIsSalaryGradeManagement());
-            pst.setBoolean(10, role.isIsAttendanceManagement());
-            pst.setBoolean(11, role.isIsWeeklyAttendanceReport());
-            pst.setBoolean(12, role.isIsWeeklyHightestLowestSalaryReport());
-            pst.setInt(13, role.getRoleID());
+            pst.setBoolean(4, role.isIsAccountManagement());
+            pst.setBoolean(5, role.isIsRoleFunctionManagement());
+            pst.setBoolean(6, role.isIsWorkerManagement());
+            pst.setBoolean(7, role.isIsRefersManagement());
+            pst.setBoolean(8, role.isIsSalaryGradeManagement());
+            pst.setBoolean(9, role.isIsAttendanceManagement());
+            pst.setBoolean(10, role.isIsWeeklyAttendanceReport());
+            pst.setBoolean(11, role.isIsWeeklySalaryReport());
+            pst.setInt(12, role.getRoleID());
             if (pst.executeUpdate() == 1) {
                 this.setLastError("Update successfuly!");
                 db.closeConnection();
@@ -169,7 +167,6 @@ public class RoleDAO {
                 role.setRoleName(rs.getString("RoleName"));
                 role.setIsLoginSystem(rs.getBoolean("IsLoginSystem"));
                 role.setIsChangePassword(rs.getBoolean("IsChangePassword"));
-                role.setIsConfigSystem(rs.getBoolean("IsConfigSystem"));
                 role.setIsAccountManagement(rs.getBoolean("IsAccountManagement"));
                 role.setIsRoleFunctionManagement(rs.getBoolean("IsRoleFunctionManagement"));
                 role.setIsWorkerManagement(rs.getBoolean("IsWorkerManagement"));
@@ -177,7 +174,7 @@ public class RoleDAO {
                 role.setIsSalaryGradeManagement(rs.getBoolean("IsSalaryGradeManagement"));
                 role.setIsAttendanceManagement(rs.getBoolean("IsAttendanceManagement"));
                 role.setIsWeeklyAttendanceReport(rs.getBoolean("IsWeeklyAttendanceReport"));
-                role.setIsWeeklyHightestLowestSalaryReport(rs.getBoolean("IsWeeklyHightestLowestSalaryReport"));
+                role.setIsWeeklySalaryReport(rs.getBoolean("IsWeeklyHightestLowestSalaryReport"));
             }
             db.closeConnection();
             return role;
