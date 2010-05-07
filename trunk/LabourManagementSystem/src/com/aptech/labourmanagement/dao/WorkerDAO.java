@@ -35,6 +35,11 @@ public class WorkerDAO {
     private final String SQL_READ_ALL = "SELECT * FROM WORKER";
     private final String SQL_READ_BY_WORKERID = "SELECT * FROM WORKER WHERE WorkerID =?";
 
+    public WorkerDAO() {
+        db = new ConfigureDB();
+    }
+
+
     /**
      * create new worker
      * @param worker

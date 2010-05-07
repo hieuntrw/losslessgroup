@@ -12,10 +12,8 @@ public class Role {
 
     private int roleID;
     private String roleName;
-    private boolean isLoginSystem;
-    private boolean isChangePassword;
     private boolean isAccountManagement;
-    private boolean isRoleFunctionManagement;
+    private boolean isRoleManagement;
     private boolean isWorkerManagement;
     private boolean isRefersManagement;
     private boolean isSalaryGradeManagement;
@@ -31,13 +29,11 @@ public class Role {
     public Role() {
     }
 
-    public Role(int roleID, String roleName, boolean isLoginSystem, boolean isChangePassword, boolean isAccountManagement, boolean isRoleFunctionManagement, boolean isWorkerManagement, boolean isRefersManagement, boolean isSalaryGradeManagement, boolean isAttendanceManagement, boolean isWeeklyAttendanceReport, boolean IsWeeklySalaryReport) {
+    public Role(int roleID, String roleName, boolean isAccountManagement, boolean isRoleFunctionManagement, boolean isWorkerManagement, boolean isRefersManagement, boolean isSalaryGradeManagement, boolean isAttendanceManagement, boolean isWeeklyAttendanceReport, boolean IsWeeklySalaryReport) {
         this.roleID = roleID;
         this.roleName = roleName;
-        this.isLoginSystem = isLoginSystem;
-        this.isChangePassword = isChangePassword;
         this.isAccountManagement = isAccountManagement;
-        this.isRoleFunctionManagement = isRoleFunctionManagement;
+        this.isRoleManagement = isRoleFunctionManagement;
         this.isWorkerManagement = isWorkerManagement;
         this.isRefersManagement = isRefersManagement;
         this.isSalaryGradeManagement = isSalaryGradeManagement;
@@ -76,34 +72,6 @@ public class Role {
     }
 
     /**
-     * @return the isLoginSystem
-     */
-    public boolean isIsLoginSystem() {
-        return isLoginSystem;
-    }
-
-    /**
-     * @param isLoginSystem the isLoginSystem to set
-     */
-    public void setIsLoginSystem(boolean isLoginSystem) {
-        this.isLoginSystem = isLoginSystem;
-    }
-
-    /**
-     * @return the isChangePassword
-     */
-    public boolean isIsChangePassword() {
-        return isChangePassword;
-    }
-
-    /**
-     * @param isChangePassword the isChangePassword to set
-     */
-    public void setIsChangePassword(boolean isChangePassword) {
-        this.isChangePassword = isChangePassword;
-    }
-
-    /**
      * @return the isAccountManagement
      */
     public boolean isIsAccountManagement() {
@@ -118,17 +86,17 @@ public class Role {
     }
 
     /**
-     * @return the isRoleFunctionManagement
+     * @return the isRoleManagement
      */
-    public boolean isIsRoleFunctionManagement() {
-        return isRoleFunctionManagement;
+    public boolean isIsRoleManagement() {
+        return isRoleManagement;
     }
 
     /**
-     * @param isRoleFunctionManagement the isRoleFunctionManagement to set
+     * @param isRoleManagement the isRoleManagement to set
      */
-    public void setIsRoleFunctionManagement(boolean isRoleFunctionManagement) {
-        this.isRoleFunctionManagement = isRoleFunctionManagement;
+    public void setIsRoleManagement(boolean isRoleFunctionManagement) {
+        this.isRoleManagement = isRoleFunctionManagement;
     }
 
     /**

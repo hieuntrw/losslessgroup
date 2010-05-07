@@ -34,6 +34,12 @@ public class SalaryGradeDAO {
     private final String SQL_READ_ALL = "SELECT * FROM SalaryGrade";
     private final String SQL_READ_ALL_GRADE_NAME = "SELECT * FROM SalaryGrade WHERE GradeName =?";
 
+    public SalaryGradeDAO() {
+        db = new ConfigureDB();
+    }
+
+
+
     /**
      * add new salary grade
      * @param sg
