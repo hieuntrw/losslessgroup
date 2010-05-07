@@ -2,21 +2,22 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.aptech.labourmanagement.services;
 
 import com.aptech.labourmanagement.dao.ReferDAO;
 import com.aptech.labourmanagement.entity.Refer;
+import java.util.ArrayList;
 
 /**
  *
  * @author Noi Nho
  */
 public class ReferServices {
+
     private String LastError;
     ReferDAO reDao;
 
-    public ReferServices(){
+    public ReferServices() {
         reDao = new ReferDAO();
     }
 
@@ -34,34 +35,56 @@ public class ReferServices {
         this.LastError = LastError;
     }
 
-
     /**
      *@return true or false
      *@param fa, the re to update into Refer table
      */
-     public boolean addRefer(Refer re){
-         if(reDao.create(re)){
-             this.setLastError(re.getLastError());
-             return true;
-         }else{
-             this.setLastError(re.getLastError());
-             return false;
-         }
-     }
+    public boolean create(Refer re) {
+        if (reDao.create(re)) {
+            this.setLastError(re.getLastError());
+            return true;
+        } else {
+            this.setLastError(re.getLastError());
+            return false;
+        }
+    }
 
-      /**
+    /**
      *@return true or false
      *@param fa, the ac to update into Family table
      */
-    public boolean updateRefer(Refer re){
-        if(reDao.update(re)){
-             this.setLastError(re.getLastError());
-             return true;
-         }else{
-             this.setLastError(re.getLastError());
-             return false;
+    public boolean update(Refer re) {
+        if (reDao.update(re)) {
+            this.setLastError(re.getLastError());
+            return true;
+        } else {
+            this.setLastError(re.getLastError());
+            return false;
+        }
+    }
+
+    /**
+     * @return true or false
+     * @param referID, the referID to delete from table refer
+     */
+    public boolean remove(int referID) {
+        if (reDao.delete(referID)) {
+            this.setLastError(reDao.getLastError());
+            return true;
+        } else {
+            this.setLastError(reDao.getLastError());
+            return false;
         }
     }
 
 
+    /**
+     *
+     */
+
+
+    public Refer findByID(int referID){
+        Refer listRefer = reDao.readByID(referID);
+        return listRefer;
+    }
 }
