@@ -28,10 +28,8 @@ public class LookAndFeel {
      */
     private void setLookAndFeel() {
         try {
-            com.jgoodies.looks.plastic.PlasticLookAndFeel.setCurrentTheme(new com.jgoodies.looks.plastic.theme.ExperienceBlue());
+            //com.aptech.jgoodies.looks.plastic.PlasticLookAndFeel.setCurrentTheme(new com.jgoodies.looks.plastic.theme.ExperienceBlue());
             UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
-            //            UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
-            //            UIManager.setLookAndFeel("org.jdesktop.layout.LayoutStyle");
             SwingUtilities.updateComponentTreeUI(container);
         } catch (Exception ex) {
             System.out.println("error: "+ex.getMessage());
