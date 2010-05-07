@@ -13,6 +13,7 @@ package com.aptech.labourmanagement.gui.main;
 import com.aptech.labourmanagement.component.AppStatusBar;
 import com.aptech.labourmanagement.component.LookAndFeel;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -23,6 +24,7 @@ public class MainFrm extends javax.swing.JFrame {
     /** Creates new form MainFrm */
     public MainFrm() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("../../icon/LMSIcon.png")).getImage());
         this.initStatusBar();
         // Cach lam cho form xuat hien giua man hinh
         int width = this.getWidth();
@@ -156,7 +158,8 @@ public class MainFrm extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/Hinhnen.jpg"))); // NOI18N
+        jLabel1.setPreferredSize(new java.awt.Dimension(1024, 580));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;

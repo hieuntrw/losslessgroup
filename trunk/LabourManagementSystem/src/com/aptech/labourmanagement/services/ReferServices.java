@@ -6,7 +6,6 @@ package com.aptech.labourmanagement.services;
 
 import com.aptech.labourmanagement.dao.ReferDAO;
 import com.aptech.labourmanagement.entity.Refer;
-import java.util.ArrayList;
 
 /**
  *
