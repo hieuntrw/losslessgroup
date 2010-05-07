@@ -7,6 +7,8 @@ package com.aptech.labourmanagement.services;
 
 import com.aptech.labourmanagement.dao.AttendanceDAO;
 import com.aptech.labourmanagement.entity.Attendance;
+import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -77,5 +79,24 @@ public class AttendanceServices {
             return false;
         }
         
+    }
+
+    /**
+     *@return list Attendance by workerID
+     */
+
+    public ArrayList<Attendance> findAttendanceByWorkerID(int workerID){
+        ArrayList<Attendance> listAttendance = atDao.readAttendanceByWorkerID(workerID);
+        return listAttendance;
+    }
+
+    /**
+     *@return list Attendance by date
+     *
+     */
+
+    public ArrayList<Attendance> findAttendanceByDate(Date date){
+        ArrayList<Attendance> listAttendance = atDao.readAttendanceByDate(date);
+        return listAttendance;
     }
 }

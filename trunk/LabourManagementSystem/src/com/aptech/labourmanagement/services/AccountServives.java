@@ -55,6 +55,23 @@ public class AccountServives {
             return false;
         }
     }
+
+    /**
+     *
+     *
+     */
+    public boolean update(Account ac){
+        ac.setPassword(pe.encryptPass(ac.getPassword()));
+        if(accDao.update(ac)){
+            this.setLastError(accDao.getLastError());
+            return true;
+        } else {
+            this.setLastError(accDao.getLastError());
+            return false;
+        }
+        
+    }
+
     /**
      * @return true or false
      * @param username the username to check from table Account
