@@ -100,4 +100,20 @@ public class Shift {
     public void setLastError(String lastError) {
         this.lastError = lastError;
     }
+    public boolean validateShift(){
+        if(this.getShiftName().length() == 0){
+            this.setLastError("Shift Name can not empty");
+            return false;
+        }
+        if(this.getTimeIn().length() == 0){
+            this.setLastError("Time In can not empty");
+            return false;
+        }
+        if(this.getTimeOut().length() == 0){
+            this.setLastError("Time Out can not empty");
+            return false;
+        }
+        return true;
+
+    }
 }

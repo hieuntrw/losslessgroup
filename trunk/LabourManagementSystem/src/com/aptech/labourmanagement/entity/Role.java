@@ -196,4 +196,11 @@ public class Role {
     public void setIsWeeklySalaryReport(boolean IsWeeklySalaryReport) {
         this.IsWeeklySalaryReport = IsWeeklySalaryReport;
     }
+    public boolean validateRole(){
+        if(this.getRoleName().length() == 0){
+            this.setLastError("Role Name can not empty");
+            return false;
+        }
+        return true;
+    }
 }

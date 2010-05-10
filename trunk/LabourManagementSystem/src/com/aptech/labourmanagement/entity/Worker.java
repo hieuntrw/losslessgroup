@@ -244,4 +244,28 @@ public class Worker {
     public void setLastError(String lastError) {
         this.lastError = lastError;
     }
+    public boolean validateWorker(){
+        if(this.getAddress().length() == 0){
+            this.setLastError("Address can not empty");
+            return false;
+        }
+        if(this.getContactNumber().length() == 0){
+            this.setLastError("Contact Number can not empty");
+            return false;
+        }
+        if(this.getFirstName().length() == 0){
+            this.setLastError("First Name can not empty");
+            return false;
+        }
+        if(this.getLastName().length() == 0){
+            this.setLastError("Last Name can not empty");
+            return false;
+        }
+        //DayOfBirth
+        //GradeSalary
+        //Experience
+       
+        return true;
+
+    }
 }
