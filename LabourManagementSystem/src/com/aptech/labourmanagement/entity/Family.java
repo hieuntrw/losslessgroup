@@ -149,4 +149,15 @@ public class Family {
     public void setLastError(String lastError) {
         this.lastError = lastError;
     }
+    public boolean validateFamily(){
+        if(this.getRalateName().length() == 0){
+            this.setLastError("Relate Name can not empty");
+            return false;
+        }
+        if(this.getFullName().length() == 0){
+            this.setLastError("Full Name can not empty");
+            return false;
+        }
+        return true;
+    }
 }

@@ -168,4 +168,20 @@ public class Refer {
     public void setLastError(String lastError) {
         this.lastError = lastError;
     }
+    public boolean validateRefer(){
+        if(this.getFirstName().length() == 0){
+            this.setLastError("First Name can not empty");
+            return false;
+        }
+        if(this.getLastName().length() == 0){
+            this.setLastError("Last Name can not empty");
+            return false;
+        }
+        if(this.getAddress().length() == 0){
+            this.setLastError("Address can not empty");
+            return false;
+        }
+        return true;
+        //if(this.getDayOfBirth().)
+    }
 }

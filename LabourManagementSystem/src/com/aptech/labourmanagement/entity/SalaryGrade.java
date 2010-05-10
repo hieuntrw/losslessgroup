@@ -83,4 +83,12 @@ public class SalaryGrade {
     public void setLastError(String lastError) {
         this.lastError = lastError;
     }
+    public boolean validateSalaryGrade(){
+        if(this.getGradeName().length() == 0){
+            this.setLastError("Grade Name can not empty");
+            return false;
+        }
+       // if(this.getGradeNum())
+        return true;
+    }
 }
