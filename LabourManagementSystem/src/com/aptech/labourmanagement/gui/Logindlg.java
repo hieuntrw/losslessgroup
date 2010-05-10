@@ -26,12 +26,13 @@ public class Logindlg extends javax.swing.JDialog {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
         // Cach lam cho form xuat hien giua man hinh
+        this.setSize(350, 300);
         int width = this.getWidth();
         int heigh = this.getHeight();
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
-        this.setSize(350, 300);
+        
         new LookAndFeel(this);
 
     }

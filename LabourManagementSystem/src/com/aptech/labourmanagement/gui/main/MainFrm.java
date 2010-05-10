@@ -24,15 +24,16 @@ public class MainFrm extends javax.swing.JFrame {
     /** Creates new form MainFrm */
     public MainFrm() {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("../../icon/LMSIcon.png")).getImage());
-        this.initStatusBar();
+
         // Cach lam cho form xuat hien giua man hinh
+        this.setSize(1000, 735);
         int width = this.getWidth();
         int heigh = this.getHeight();
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
-       // this.setSize(900, 700);
+        setIconImage(new ImageIcon(getClass().getResource("../../icon/LMSIcon.png")).getImage());
+        this.initStatusBar();
         new LookAndFeel(this);
     }
 

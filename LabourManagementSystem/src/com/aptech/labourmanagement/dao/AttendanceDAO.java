@@ -37,7 +37,6 @@ public class AttendanceDAO {
         db = new ConfigureDB();
     }
 
-
     /**
      * create attendance
      * @return true or false
@@ -98,7 +97,6 @@ public class AttendanceDAO {
         return false;
     }
 
-    
     /**
      * delete attendance
      * @return true or false
@@ -126,7 +124,6 @@ public class AttendanceDAO {
         return false;
     }
 
-    
     /**
      * get all attendance by WorkerID
      * @param workerID
@@ -139,9 +136,9 @@ public class AttendanceDAO {
             pst = con.prepareStatement(SQL_READ_BY_WORKERID);
             pst.setInt(1, workerID);
             rs = pst.executeQuery();
-            WorkerDAO workerDAO = new WorkerDAO();
-            ShiftDAO siDao = new ShiftDAO();
             while (rs.next()) {
+                WorkerDAO workerDAO = new WorkerDAO();
+                ShiftDAO siDao = new ShiftDAO();
                 Attendance at = new Attendance();
                 at.setID(rs.getInt("ID"));
                 at.setWorker(workerDAO.readByID(rs.getInt("WorkerID")));

@@ -25,14 +25,13 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
+        this.setSize(750, 450);
         int width = this.getWidth();
         int heigh = this.getHeight();
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
         this.jScrollPane1.setSize(400, 200);
-        
-        this.setSize(750, 450);
         new LookAndFeel(this);
         
     }

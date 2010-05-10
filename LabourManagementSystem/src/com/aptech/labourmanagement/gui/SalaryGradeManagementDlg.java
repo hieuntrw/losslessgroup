@@ -27,13 +27,13 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         // Cach lam cho form xuat hien giua man hinh
+        this.setSize(new Dimension(654, 410));
         int width = this.getWidth();
         int heigh = this.getHeight();
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
         new LookAndFeel(this);
-        this.setSize(new Dimension(654, 410));
         setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
     }
 
@@ -72,7 +72,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
         lblTitle.setText("Salary Grade Management");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -87,7 +87,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 35, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 25, 5);
         getContentPane().add(jPanel5, gridBagConstraints);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Salary grade information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -157,7 +157,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         getContentPane().add(jPanel1, gridBagConstraints);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Salary grade list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
-        jPanel2.setLayout(new java.awt.GridBagLayout());
+        jPanel2.setLayout(new java.awt.BorderLayout(0, 10));
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(300, 180));
 
@@ -171,36 +171,23 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblSalaryGrade);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        jPanel2.add(jScrollPane1, gridBagConstraints);
+        jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/add.png"))); // NOI18N
         btnAdd.setText("Add");
-        btnAdd.setPreferredSize(new java.awt.Dimension(71, 25));
         jPanel4.add(btnAdd);
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
-        btnEdit.setPreferredSize(new java.awt.Dimension(71, 25));
         jPanel4.add(btnEdit);
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete2.png"))); // NOI18N
         btnDelete.setText("Delete");
         jPanel4.add(btnDelete);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        jPanel2.add(jPanel4, gridBagConstraints);
+        jPanel2.add(jPanel4, java.awt.BorderLayout.SOUTH);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
