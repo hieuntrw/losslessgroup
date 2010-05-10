@@ -74,11 +74,15 @@ public class RoleServices {
         ArrayList<String> listString = roDao.readRoleNameAll();
         return listString;
     }
-
-//    public Role findRoleByID(int roleID) {
-//
-//        return null;
-//    }
+/**
+ * 
+ * @param roleID
+ * @return
+ */
+    public Role findRoleByID(int roleID) {
+        Role ro = roDao.getRoleByID(roleID);
+        return ro;
+    }
 
     /**
      * @return the LastError
