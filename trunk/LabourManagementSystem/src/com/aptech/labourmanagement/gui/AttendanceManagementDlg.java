@@ -4,7 +4,7 @@
  */
 
 /*
- * FamilyRalateManagementDlg.java
+ * FamilyRalateManagement.java
  *
  * Created on May 10, 2010, 1:12:52 PM
  */
@@ -19,21 +19,22 @@ import javax.swing.ImageIcon;
  *
  * @author Noi Nho
  */
-public class FamilyRalateManagementDlg extends javax.swing.JDialog {
+public class AttendanceManagementDlg extends javax.swing.JDialog {
 
-    /** Creates new form FamilyRalateManagementDlg */
-    public FamilyRalateManagementDlg(java.awt.Frame parent, boolean modal) {
+    /** Creates new form FamilyRalateManagement */
+    public AttendanceManagementDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
         // Cach lam cho form xuat hien giua man hinh
-        this.setSize(855, 640);
+        this.setSize(850, 700);
         int width = this.getWidth();
         int heigh = this.getHeight();
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
         new LookAndFeel(this);
+        dcsWorkDate.setDate(new java.util.Date());
     }
 
     /** This method is called from within the constructor to
@@ -46,25 +47,31 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        pnlFamilyInfor = new javax.swing.JPanel();
-        lblFullName = new javax.swing.JLabel();
+        pnlAttendanceInfor = new javax.swing.JPanel();
+        lblFirstlName = new javax.swing.JLabel();
         lblDayOfBirth = new javax.swing.JLabel();
-        lblRalateName = new javax.swing.JLabel();
-        lblAddress = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtFullName = new javax.swing.JTextField();
+        lblShiftName = new javax.swing.JLabel();
+        lblTimeIn = new javax.swing.JLabel();
+        lblLastname = new javax.swing.JLabel();
+        txtFirstName = new javax.swing.JTextField();
         dcsDayOfBirth = new com.toedter.calendar.JDateChooser();
-        cbbRalateName = new javax.swing.JComboBox();
-        txtAddress = new javax.swing.JTextField();
-        txtWorkName = new javax.swing.JTextField();
+        cbbShiftName = new javax.swing.JComboBox();
+        txtTimeIn = new javax.swing.JTextField();
+        txtLastName = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        pnlFamilyList = new javax.swing.JPanel();
+        lblTimeOut = new javax.swing.JLabel();
+        lblWorkDate = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        dcsWorkDate = new com.toedter.calendar.JDateChooser();
+        pnlAttendanceList = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblFamily = new javax.swing.JTable();
+        tblAttendance = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        btnAdd = new javax.swing.JButton();
+        btnTimekeeping = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         pnlLaborList = new javax.swing.JPanel();
@@ -74,101 +81,109 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         lblTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Family Ralate Management");
+        setTitle("Attendance Management");
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        pnlFamilyInfor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Family ralate information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
-        pnlFamilyInfor.setLayout(new java.awt.GridBagLayout());
+        pnlAttendanceInfor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Attendance information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlAttendanceInfor.setLayout(new java.awt.GridBagLayout());
 
-        lblFullName.setText("Full name:");
+        lblFirstlName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblFirstlName.setText("Firstl name:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        pnlFamilyInfor.add(lblFullName, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(lblFirstlName, gridBagConstraints);
 
+        lblDayOfBirth.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblDayOfBirth.setText("Day of birth:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        pnlFamilyInfor.add(lblDayOfBirth, gridBagConstraints);
-
-        lblRalateName.setText("Ralate name:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        pnlFamilyInfor.add(lblRalateName, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(lblDayOfBirth, gridBagConstraints);
 
-        lblAddress.setText("Address:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        pnlFamilyInfor.add(lblAddress, gridBagConstraints);
-
-        jLabel6.setText("Work name:");
+        lblShiftName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblShiftName.setText("Shift name:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        pnlFamilyInfor.add(jLabel6, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(lblShiftName, gridBagConstraints);
 
-        txtFullName.setColumns(20);
+        lblTimeIn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTimeIn.setText("Time in:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(lblTimeIn, gridBagConstraints);
+
+        lblLastname.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblLastname.setText("Last name:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(lblLastname, gridBagConstraints);
+
+        txtFirstName.setColumns(20);
+        txtFirstName.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
-        pnlFamilyInfor.add(txtFullName, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(txtFirstName, gridBagConstraints);
 
         dcsDayOfBirth.setDateFormatString("MM/dd/yyyy");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
-        pnlFamilyInfor.add(dcsDayOfBirth, gridBagConstraints);
-
-        cbbRalateName.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        dcsDayOfBirth.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
-        pnlFamilyInfor.add(cbbRalateName, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(dcsDayOfBirth, gridBagConstraints);
 
-        txtAddress.setColumns(20);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
-        pnlFamilyInfor.add(txtAddress, gridBagConstraints);
-
-        txtWorkName.setColumns(20);
+        cbbShiftName.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
-        pnlFamilyInfor.add(txtWorkName, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(cbbShiftName, gridBagConstraints);
+
+        txtTimeIn.setColumns(7);
+        txtTimeIn.setEditable(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(txtTimeIn, gridBagConstraints);
+
+        txtLastName.setColumns(20);
+        txtLastName.setEditable(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(txtLastName, gridBagConstraints);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btnSave.setText("Save");
@@ -180,12 +195,70 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        pnlFamilyInfor.add(jPanel2, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(jPanel2, gridBagConstraints);
+
+        lblTimeOut.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTimeOut.setText("Time out:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(lblTimeOut, gridBagConstraints);
+
+        lblWorkDate.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblWorkDate.setText("Work date:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(lblWorkDate, gridBagConstraints);
+
+        jTextField1.setColumns(7);
+        jTextField1.setEditable(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(jTextField1, gridBagConstraints);
+
+        jCheckBox1.setText("Is extra shift");
+        jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(jCheckBox1, gridBagConstraints);
+
+        jCheckBox2.setSelected(true);
+        jCheckBox2.setText("Complete");
+        jCheckBox2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(jCheckBox2, gridBagConstraints);
+
+        dcsWorkDate.setDateFormatString("MM/dd/yyyy");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
+        pnlAttendanceInfor.add(dcsWorkDate, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -193,32 +266,32 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.55;
-        gridBagConstraints.weighty = 0.35;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        getContentPane().add(pnlFamilyInfor, gridBagConstraints);
+        gridBagConstraints.weighty = 0.45;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(pnlAttendanceInfor, gridBagConstraints);
 
-        pnlFamilyList.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Family ralate list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
-        pnlFamilyList.setLayout(new java.awt.BorderLayout(0, 5));
+        pnlAttendanceList.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Attendance list of labor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlAttendanceList.setLayout(new java.awt.BorderLayout(0, 5));
 
         jScrollPane2.setPreferredSize(new java.awt.Dimension(450, 200));
 
-        tblFamily.setModel(new javax.swing.table.DefaultTableModel(
+        tblAttendance.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No.", "Full name", "Day of birth", "Ralate name", "Address"
+                "No.", "Work date", "Time in", "Time out", "Is extra shift", "Complete"
             }
         ));
-        jScrollPane2.setViewportView(tblFamily);
+        jScrollPane2.setViewportView(tblAttendance);
 
-        pnlFamilyList.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        pnlAttendanceList.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/add.png"))); // NOI18N
-        btnAdd.setText("Add");
-        jPanel1.add(btnAdd);
+        btnTimekeeping.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/add.png"))); // NOI18N
+        btnTimekeeping.setText("Timekeeping");
+        jPanel1.add(btnTimekeeping);
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
@@ -228,7 +301,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         btnDelete.setText("Delete");
         jPanel1.add(btnDelete);
 
-        pnlFamilyList.add(jPanel1, java.awt.BorderLayout.SOUTH);
+        pnlAttendanceList.add(jPanel1, java.awt.BorderLayout.SOUTH);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -236,9 +309,9 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.55;
-        gridBagConstraints.weighty = 0.65;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        getContentPane().add(pnlFamilyList, gridBagConstraints);
+        gridBagConstraints.weighty = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(pnlAttendanceList, gridBagConstraints);
 
         pnlLaborList.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Labor list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         pnlLaborList.setLayout(new java.awt.BorderLayout());
@@ -264,16 +337,16 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.45;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        gridBagConstraints.weighty = 0.85;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         getContentPane().add(pnlLaborList, gridBagConstraints);
 
         pnlTitle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         pnlTitle.setLayout(new java.awt.GridBagLayout());
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
+        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("Family Ralate Management");
+        lblTitle.setText("Attendance Management");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -288,7 +361,9 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 25, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.15;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 20, 2);
         getContentPane().add(pnlTitle, gridBagConstraints);
 
         pack();
@@ -300,8 +375,9 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FamilyRalateManagementDlg dialog = new FamilyRalateManagementDlg(new javax.swing.JFrame(), true);
+                AttendanceManagementDlg dialog = new AttendanceManagementDlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -312,32 +388,38 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox cbbRalateName;
+    private javax.swing.JButton btnTimekeeping;
+    private javax.swing.JComboBox cbbShiftName;
     private com.toedter.calendar.JDateChooser dcsDayOfBirth;
-    private javax.swing.JLabel jLabel6;
+    private com.toedter.calendar.JDateChooser dcsWorkDate;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblAddress;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblDayOfBirth;
-    private javax.swing.JLabel lblFullName;
-    private javax.swing.JLabel lblRalateName;
+    private javax.swing.JLabel lblFirstlName;
+    private javax.swing.JLabel lblLastname;
+    private javax.swing.JLabel lblShiftName;
+    private javax.swing.JLabel lblTimeIn;
+    private javax.swing.JLabel lblTimeOut;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JPanel pnlFamilyInfor;
-    private javax.swing.JPanel pnlFamilyList;
+    private javax.swing.JLabel lblWorkDate;
+    private javax.swing.JPanel pnlAttendanceInfor;
+    private javax.swing.JPanel pnlAttendanceList;
     private javax.swing.JPanel pnlLaborList;
     private javax.swing.JPanel pnlTitle;
-    private javax.swing.JTable tblFamily;
+    private javax.swing.JTable tblAttendance;
     private javax.swing.JTable tblLabor;
-    private javax.swing.JTextField txtAddress;
-    private javax.swing.JTextField txtFullName;
-    private javax.swing.JTextField txtWorkName;
+    private javax.swing.JTextField txtFirstName;
+    private javax.swing.JTextField txtLastName;
+    private javax.swing.JTextField txtTimeIn;
     // End of variables declaration//GEN-END:variables
 
 }

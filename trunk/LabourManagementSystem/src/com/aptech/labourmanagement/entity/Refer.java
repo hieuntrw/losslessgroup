@@ -13,8 +13,7 @@ import java.sql.Date;
 public class Refer {
 
     private int referID;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private Date dayOfBirth;
     private String address;
     private String workName;
@@ -29,10 +28,9 @@ public class Refer {
     public Refer() {
     }
 
-    public Refer(int referID, String firstName, String lastName, Date dayOfBirth, String address, String workName, String position, String contactNumber) {
+    public Refer(int referID, String fullName, Date dayOfBirth, String address, String workName, String position, String contactNumber) {
         this.referID = referID;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.fullName = fullName;
         this.dayOfBirth = dayOfBirth;
         this.address = address;
         this.workName = workName;
@@ -58,31 +56,17 @@ public class Refer {
     }
 
     /**
-     * @return the firstName
+     * @return the fullName
      */
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
     /**
-     * @param firstName the firstName to set
+     * @param fullName the fullName to set
      */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * @return the lastName
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * @param lastName the lastName to set
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     /**
@@ -168,12 +152,12 @@ public class Refer {
     public void setLastError(String lastError) {
         this.lastError = lastError;
     }
+    /**
+     * valdate data
+     * @return true or false
+     */
     public boolean validateRefer(){
-        if(this.getFirstName().length() == 0){
-            this.setLastError("First Name can not empty");
-            return false;
-        }
-        if(this.getLastName().length() == 0){
+       if(this.getFullName().length() == 0){
             this.setLastError("Last Name can not empty");
             return false;
         }
