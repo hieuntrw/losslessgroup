@@ -57,7 +57,7 @@ public class ShiftServices {
      * @param si the ac to insert into table Shift
      */
 
-    public boolean delete(int shiftID ){
+    public boolean remove(int shiftID ){
          if(siDao.delete(shiftID)){
             this.setLastError(siDao.getLastError());
             return true;
@@ -75,18 +75,54 @@ public class ShiftServices {
         return listShift;
     }
 
-
-      /**
-     * @return Shift
-     * @param ShiftName,the ShiftName to get Shift
+    /**
+     *
+     *
+     * @return a list string
      */
-//    public Shift findByName(String ShiftName) {
-//        Shift si = siDao.readByName(ShiftName);
-//        return si;
-//    }
+
+     public ArrayList<String> findByName(){
+          ArrayList<String> listString = siDao.readByName();
+        return listString;
+     }
+/**
+ * 
+ * @param shiftID
+ * @return
+ */
+
+
+     public Shift readByID(int shiftID){
+         Shift si = siDao.readByID(shiftID);
+         return si;
+     }
 
 
 
+
+/**
+ *
+ * @param shiftID
+ * @return 
+ */
+public int findHourByID(int shiftID){
+    int sum = siDao.readHourByID(shiftID);
+    return sum;
+
+}
+/**
+ * @param shiftName
+ * @return
+ */
+    public boolean checkShift(String shiftName) {
+        if (siDao.isExist(shiftName)) {
+            this.setLastError(siDao.getLastError());
+            return true;
+        } else {
+            this.setLastError(siDao.getLastError());
+            return false;
+        }
+    }
 
     /**
      * @return the LastError
