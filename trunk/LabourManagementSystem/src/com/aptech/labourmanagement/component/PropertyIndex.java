@@ -1,4 +1,4 @@
-package com.aptech.student.component;
+package com.aptech.labourmanagement.component;
 
 
 

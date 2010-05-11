@@ -11,6 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * 
+ * @author Noi Nho
+ */
 public class StatusBarFactory {
     protected String baseImagePath;
     protected StatusBar statusBar = new StatusBar();

@@ -11,8 +11,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 /**
- *
- * @author Nguyen Thi My Ha
+ * 
+ * @author Noi Nho
  */
 public class LookAndFeel {
 

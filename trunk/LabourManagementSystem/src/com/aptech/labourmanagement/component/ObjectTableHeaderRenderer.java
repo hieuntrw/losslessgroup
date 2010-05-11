@@ -1,4 +1,4 @@
-package com.aptech.student.component;
+package com.aptech.labourmanagement.component;
 
 
 
@@ -16,8 +16,8 @@ import javax.swing.BorderFactory;
 import javax.swing.table.TableCellRenderer;
 
 /**
- *
- * @author naminh
+ * 
+ * @author Noi Nho
  */
 //doi tuong dinh dang thuoc tinh cho o
 public class ObjectTableHeaderRenderer extends JLabel implements TableCellRenderer {

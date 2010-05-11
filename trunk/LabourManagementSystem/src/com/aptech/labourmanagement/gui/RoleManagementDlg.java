@@ -8,12 +8,22 @@
  *
  * Created on May 7, 2010, 6:07:11 PM
  */
-
 package com.aptech.labourmanagement.gui;
 
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.entity.Role;
+import com.aptech.labourmanagement.services.RoleServices;
+import com.aptech.labourmanagement.component.ColumnData;
+import com.aptech.labourmanagement.component.ObjectTableModel;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -21,11 +31,22 @@ import javax.swing.ImageIcon;
  */
 public class RoleManagementDlg extends javax.swing.JDialog {
 
+    public RoleServices roleSer;
+    public ObjectTableModel tableModel;
+    public ArrayList<Role> arrRole = new ArrayList<Role>();
+    //contains information header of columns
+    public JTable headerTable;
+    //index selected in table
+    int index = -1;
+    int selection;
+
     /** Creates new form RoleManagementDlg */
     public RoleManagementDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
+        loadDataOnTable();
+
         this.setSize(780, 500);
         int width = this.getWidth();
         int heigh = this.getHeight();
@@ -33,6 +54,8 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
         new LookAndFeel(this);
+
+        disableFields();
     }
 
     /** This method is called from within the constructor to
@@ -64,7 +87,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrRole = new javax.swing.JScrollPane();
         tblRole = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
@@ -108,6 +131,11 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         jPanel2.add(lblRoleName, gridBagConstraints);
 
         ckbAll.setText("All");
+        ckbAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckbAllActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -208,10 +236,20 @@ public class RoleManagementDlg extends javax.swing.JDialog {
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnSave);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnCancel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -234,7 +272,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Role list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel4.setLayout(new java.awt.BorderLayout(0, 10));
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(350, 260));
+        scrRole.setPreferredSize(new java.awt.Dimension(350, 150));
 
         tblRole.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -244,9 +282,14 @@ public class RoleManagementDlg extends javax.swing.JDialog {
                 "No.", "Role ID", "Role name"
             }
         ));
-        jScrollPane1.setViewportView(tblRole);
+        tblRole.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRoleMouseClicked(evt);
+            }
+        });
+        scrRole.setViewportView(tblRole);
 
-        jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel4.add(scrRole, java.awt.BorderLayout.CENTER);
 
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -270,6 +313,11 @@ public class RoleManagementDlg extends javax.swing.JDialog {
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete2.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnDelete);
 
         jPanel4.add(jPanel5, java.awt.BorderLayout.SOUTH);
@@ -288,20 +336,228 @@ public class RoleManagementDlg extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        clearFields();
+        enableFields();
+        selection = 1;
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        enableFields();
+        //btnAdd.setEnabled(false);
+        selection = 0;
     }//GEN-LAST:event_btnEditActionPerformed
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        clearFields();
+        disableFields();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void tblRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRoleMouseClicked
+        // TODO add your handling code here:
+        index = tblRole.getSelectedRow();
+        if (index > -1) {
+            txtRoleName.setText(arrRole.get(index).getRoleName());
+            ckbAccountManagement.setSelected(arrRole.get(index).isIsAccountManagement());
+            ckbAttendanceManagement.setSelected(arrRole.get(index).isIsAttendanceManagement());
+            ckbFamilyManagement.setSelected(arrRole.get(index).isIsFamilyManagement());
+            ckbLaborManagement.setSelected(arrRole.get(index).isIsWorkerManagement());
+            ckbReferManagement.setSelected(arrRole.get(index).isIsRefersManagement());
+            ckbRoleManagement.setSelected(arrRole.get(index).isIsRoleManagement());
+            ckbSalaryGrade.setSelected(arrRole.get(index).isIsSalaryGradeManagement());
+            ckbWeeklyAttendanceReport.setSelected(arrRole.get(index).isIsWeeklyAttendanceReport());
+            ckbWeeklySararyReport.setSelected(arrRole.get(index).isIsWeeklySalaryReport());
+            btnEdit.setEnabled(true);
+            btnDelete.setEnabled(true);
+        }
+    }//GEN-LAST:event_tblRoleMouseClicked
+
+    private void ckbAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbAllActionPerformed
+        // TODO add your handling code here:
+        if (ckbAll.isSelected() == true) {
+            ckbAccountManagement.setSelected(true);
+            ckbAttendanceManagement.setSelected(true);
+            ckbFamilyManagement.setSelected(true);
+            ckbLaborManagement.setSelected(true);
+            ckbReferManagement.setSelected(true);
+            ckbRoleManagement.setSelected(true);
+            ckbSalaryGrade.setSelected(true);
+            ckbWeeklyAttendanceReport.setSelected(true);
+            ckbWeeklySararyReport.setSelected(true);
+        } else {
+            ckbAccountManagement.setSelected(false);
+            ckbAttendanceManagement.setSelected(false);
+            ckbFamilyManagement.setSelected(false);
+            ckbLaborManagement.setSelected(false);
+            ckbReferManagement.setSelected(false);
+            ckbRoleManagement.setSelected(false);
+            ckbSalaryGrade.setSelected(false);
+            ckbWeeklyAttendanceReport.setSelected(false);
+            ckbWeeklySararyReport.setSelected(false);
+        }
+
+    }//GEN-LAST:event_ckbAllActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        Role role = new Role();
+        if (selection == 0) {
+            index = tblRole.getSelectedRow();
+            role = arrRole.get(index);
+        }
+        role.setRoleName(txtRoleName.getText().trim());
+        role.setIsAccountManagement(ckbAccountManagement.isSelected());
+        role.setIsAttendanceManagement(ckbAttendanceManagement.isSelected());
+        role.setIsFamilyManagement(ckbFamilyManagement.isSelected());
+        role.setIsRefersManagement(ckbReferManagement.isSelected());
+        role.setIsRoleManagement(ckbRoleManagement.isSelected());
+        role.setIsSalaryGradeManagement(ckbSalaryGrade.isSelected());
+        role.setIsWeeklyAttendanceReport(ckbWeeklyAttendanceReport.isSelected());
+        role.setIsWeeklySalaryReport(ckbWeeklySararyReport.isSelected());
+        role.setIsWorkerManagement(ckbLaborManagement.isSelected());
+        roleSer = new RoleServices();
+        if (selection == 1) {
+            if (roleSer.create(role)) {
+                JOptionPane.showMessageDialog(this, roleSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnTable();
+                disableFields();
+            } else {
+                JOptionPane.showMessageDialog(this, roleSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            if (selection == 0) {
+                if (roleSer.update(role)) {
+                    JOptionPane.showMessageDialog(this, roleSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                    loadDataOnTable();
+                    disableFields();
+                } else {
+                    JOptionPane.showMessageDialog(this, roleSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        selection = -1;
+        index = tblRole.getSelectedRow();
+        Role role = new Role();
+        role = arrRole.get(index);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to role name = " + role.getRoleName());
+        if (i == JOptionPane.YES_OPTION) {
+            roleSer = new RoleServices();
+            if (roleSer.remove(role.getRoleID())) {
+                JOptionPane.showMessageDialog(this, roleSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnTable();
+                clearFields();
+                disableFields();
+            } else {
+                JOptionPane.showMessageDialog(this, roleSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
     /**
-    * @param args the command line arguments
-    */
+     * load data on table 
+     */
+    public void loadDataOnTable() {
+        roleSer = new RoleServices();
+        arrRole = roleSer.findRoleAll();
+        ColumnData[] columns = {
+            new ColumnData("Role ID", 50, SwingConstants.LEFT, 1),
+            new ColumnData("Role name", 150, SwingConstants.LEFT, 2)
+        };
+        tableModel = new ObjectTableModel(tblRole, columns, arrRole);
+
+        headerTable = tableModel.getHeaderTable();
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+        tblRole.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+        scrRole.setRowHeader(viewport);
+        scrRole.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
+
+    /**
+     * disable fields
+     */
+    public void disableFields() {
+        clearFields();
+        txtRoleName.setEditable(false);
+        ckbAccountManagement.setEnabled(false);
+        ckbAll.setEnabled(false);
+        ckbAttendanceManagement.setEnabled(false);
+        ckbFamilyManagement.setEnabled(false);
+        ckbLaborManagement.setEnabled(false);
+        ckbReferManagement.setEnabled(false);
+        ckbRoleManagement.setEnabled(false);
+        ckbSalaryGrade.setEnabled(false);
+        ckbWeeklyAttendanceReport.setEnabled(false);
+        ckbWeeklySararyReport.setEnabled(false);
+        btnCancel.setEnabled(false);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+        btnSave.setEnabled(false);
+
+    }
+
+    /**
+     * enable Fields
+     */
+    public void enableFields() {
+        //clearFields();
+        txtRoleName.setEditable(true);
+        ckbAccountManagement.setEnabled(true);
+        ckbAll.setEnabled(true);
+        ckbAttendanceManagement.setEnabled(true);
+        ckbFamilyManagement.setEnabled(true);
+        ckbLaborManagement.setEnabled(true);
+        ckbReferManagement.setEnabled(true);
+        ckbRoleManagement.setEnabled(true);
+        ckbSalaryGrade.setEnabled(true);
+        ckbWeeklyAttendanceReport.setEnabled(true);
+        ckbWeeklySararyReport.setEnabled(true);
+        btnCancel.setEnabled(true);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+        btnSave.setEnabled(true);
+
+    }
+
+    /**
+     * clear Fields
+     */
+    public void clearFields() {
+        txtRoleName.setText("");
+        ckbAccountManagement.setSelected(false);
+        ckbAll.setSelected(false);
+        ckbAttendanceManagement.setSelected(false);
+        ckbFamilyManagement.setSelected(false);
+        ckbLaborManagement.setSelected(false);
+        ckbReferManagement.setSelected(false);
+        ckbRoleManagement.setSelected(false);
+        ckbSalaryGrade.setSelected(false);
+        ckbWeeklyAttendanceReport.setSelected(false);
+        ckbWeeklySararyReport.setSelected(false);
+
+    }
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 RoleManagementDlg dialog = new RoleManagementDlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -311,7 +567,6 @@ public class RoleManagementDlg extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
@@ -333,11 +588,10 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblRoleName;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JScrollPane scrRole;
     private javax.swing.JTable tblRole;
     private javax.swing.JTextField txtRoleName;
     // End of variables declaration//GEN-END:variables
-
 }

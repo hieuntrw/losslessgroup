@@ -4,11 +4,13 @@
  */
 package com.aptech.labourmanagement.entity;
 
+import com.aptech.labourmanagement.component.PropertyIndex;
+
 /**
  *
  * @author Noi Nho
  */
-public class Role {
+public class Role implements PropertyIndex {
 
     private int roleID;
     private String roleName;
@@ -20,6 +22,7 @@ public class Role {
     private boolean isAttendanceManagement;
     private boolean isWeeklyAttendanceReport;
     private boolean IsWeeklySalaryReport;
+    private boolean IsFamilyManagement;
     private String lastError;
 
 
@@ -29,7 +32,7 @@ public class Role {
     public Role() {
     }
 
-    public Role(int roleID, String roleName, boolean isAccountManagement, boolean isRoleFunctionManagement, boolean isWorkerManagement, boolean isRefersManagement, boolean isSalaryGradeManagement, boolean isAttendanceManagement, boolean isWeeklyAttendanceReport, boolean IsWeeklySalaryReport) {
+    public Role(int roleID, String roleName, boolean isAccountManagement, boolean isRoleFunctionManagement, boolean isWorkerManagement, boolean isRefersManagement, boolean isSalaryGradeManagement, boolean isAttendanceManagement, boolean isWeeklyAttendanceReport, boolean IsWeeklySalaryReport,boolean IsFamilyManagement) {
         this.roleID = roleID;
         this.roleName = roleName;
         this.isAccountManagement = isAccountManagement;
@@ -40,6 +43,7 @@ public class Role {
         this.isAttendanceManagement = isAttendanceManagement;
         this.isWeeklyAttendanceReport = isWeeklyAttendanceReport;
         this.IsWeeklySalaryReport = IsWeeklySalaryReport;
+        this.IsFamilyManagement = IsFamilyManagement;
 
     }
 
@@ -196,11 +200,55 @@ public class Role {
     public void setIsWeeklySalaryReport(boolean IsWeeklySalaryReport) {
         this.IsWeeklySalaryReport = IsWeeklySalaryReport;
     }
-    public boolean validateRole(){
-        if(this.getRoleName().length() == 0){
-            this.setLastError("Role Name can not empty");
+
+    /**
+     * validate role
+     * @return true or false
+     */
+    public boolean validateRole() {
+        if (this.getRoleName().length() == 0) {
+            this.setLastError("Role Name can not empty!");
+            return false;
+        }
+        if(!(this.isIsAccountManagement()||this.isIsAttendanceManagement()||this.isIsFamilyManagement()||this.isIsRefersManagement()||this.isIsRoleManagement()||this.isIsSalaryGradeManagement()||this.isIsWeeklyAttendanceReport()||this.isIsWeeklySalaryReport()||this.isIsWorkerManagement())){
+            this.setLastError("Role option can not empty!");
             return false;
         }
         return true;
+    }
+
+    public Object getPropertyValue(int index) {
+        String value = "";
+        switch (index) {
+            case 1:
+                value = String.valueOf(this.getRoleID());
+                break;
+            case 2:
+                value = this.getRoleName();
+                break;
+        }
+        return value;
+    }
+
+    public void setPropertyValue(int index, Object value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Class getPropertyClass(int index) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * @return the IsFamilyManagement
+     */
+    public boolean isIsFamilyManagement() {
+        return IsFamilyManagement;
+    }
+
+    /**
+     * @param IsFamilyManagement the IsFamilyManagement to set
+     */
+    public void setIsFamilyManagement(boolean IsFamilyManagement) {
+        this.IsFamilyManagement = IsFamilyManagement;
     }
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package util;
+package com.aptech.labourmanagement.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,8 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author lab
+ * 
+ * @author Noi Nho
  */
 public class ConfigureDB {
 
@@ -21,7 +21,7 @@ public class ConfigureDB {
     public Connection getConnection() {
         String url = "jdbc:sqlserver://localhost:1433;databaseName=LabourManagementSystem";
         String user = "sa";
-        String pass = "123";
+        String pass = "123456";
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(url, user, pass);

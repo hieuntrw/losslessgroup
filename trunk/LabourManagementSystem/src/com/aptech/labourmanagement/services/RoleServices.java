@@ -27,13 +27,25 @@ public class RoleServices {
      * @return
      */
     public boolean create(Role role) {
-        if (roDao.create(role)) {
-            this.setLastError(roDao.getLastError());
-            return true;
+        if (role.validateRole()) {
+            if (!roDao.isExist(role.getRoleName())) {
+                if (roDao.create(role)) {
+                    this.setLastError(roDao.getLastError());
+                    return true;
+                } else {
+                    this.setLastError(roDao.getLastError());
+                    return false;
+                }
+            } else {
+                this.setLastError(roDao.getLastError());
+                return false;
+            }
+
         } else {
-            this.setLastError(roDao.getLastError());
+            this.setLastError(role.getLastError());
             return false;
         }
+
     }
 
     /**
@@ -42,11 +54,22 @@ public class RoleServices {
      * @return
      */
     public boolean update(Role role) {
-        if (roDao.update(role)) {
-            this.setLastError(roDao.getLastError());
-            return true;
+        if (role.validateRole()) {
+            if (roDao.isExist(role.getRoleName())) {
+                if (roDao.update(role)) {
+                    this.setLastError(roDao.getLastError());
+                    return true;
+                } else {
+                    this.setLastError(roDao.getLastError());
+                    return false;
+                }
+            } else {
+                this.setLastError(roDao.getLastError());
+                return false;
+            }
+
         } else {
-            this.setLastError(roDao.getLastError());
+            this.setLastError(role.getLastError());
             return false;
         }
     }
@@ -56,8 +79,8 @@ public class RoleServices {
      * @param roleName
      * @return
      */
-    public boolean remove(String roleName) {
-        if (roDao.delete(roleName)) {
+    public boolean remove(int roleID) {
+        if (roDao.delete(roleID)) {
             this.setLastError(roDao.getLastError());
             return true;
         } else {
@@ -70,15 +93,16 @@ public class RoleServices {
      * 
      * @return
      */
-    public ArrayList<String> findRoleNameAll() {
-        ArrayList<String> listString = roDao.readRoleNameAll();
-        return listString;
+    public ArrayList<Role> findRoleAll() {
+        ArrayList<Role> listRole = roDao.readByAll();
+        return listRole;
     }
-/**
- * 
- * @param roleID
- * @return
- */
+
+    /**
+     *
+     * @param roleID
+     * @return
+     */
     public Role findRoleByID(int roleID) {
         Role ro = roDao.getRoleByID(roleID);
         return ro;
