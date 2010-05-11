@@ -11,6 +11,10 @@
 
 package com.aptech.labourmanagement.gui;
 
+import com.aptech.labourmanagement.component.LookAndFeel;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Noi Nho
@@ -21,6 +25,15 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
     public WeeklySalaryReportDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
+        // Cach lam cho form xuat hien giua man hinh
+        this.setSize(770, 625);
+        int width = this.getWidth();
+        int heigh = this.getHeight();
+        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+        new LookAndFeel(this);
     }
 
     /** This method is called from within the constructor to
@@ -31,22 +44,208 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        jPanel1 = new javax.swing.JPanel();
+        lblTitle = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        dcsFromDay = new com.toedter.calendar.JDateChooser();
+        DcsToDay = new com.toedter.calendar.JDateChooser();
+        lblFromDay = new javax.swing.JLabel();
+        lblToDay = new javax.swing.JLabel();
+        btnComputingSalary = new javax.swing.JButton();
+        lblOption = new javax.swing.JLabel();
+        cbbOption = new javax.swing.JComboBox();
+        txtLaborID = new javax.swing.JTextField();
+        lblLaborID = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        btnPrint = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblSalary = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Weekly Salary Report");
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 549, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 375, Short.MAX_VALUE)
-        );
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTitle.setText("Weekly Salary Report");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel1.add(lblTitle, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 20, 5);
+        getContentPane().add(jPanel1, gridBagConstraints);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Computing option", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        dcsFromDay.setDateFormatString("MM/dd/yyyy");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
+        jPanel2.add(dcsFromDay, gridBagConstraints);
+
+        DcsToDay.setDateFormatString("MM/dd/yyyy");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
+        jPanel2.add(DcsToDay, gridBagConstraints);
+
+        lblFromDay.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblFromDay.setText("From day:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        jPanel2.add(lblFromDay, gridBagConstraints);
+
+        lblToDay.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblToDay.setText("To day:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        jPanel2.add(lblToDay, gridBagConstraints);
+
+        btnComputingSalary.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/calculator.png"))); // NOI18N
+        btnComputingSalary.setText("Computing salary");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 5);
+        jPanel2.add(btnComputingSalary, gridBagConstraints);
+
+        lblOption.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblOption.setText("Option:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        jPanel2.add(lblOption, gridBagConstraints);
+
+        cbbOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All labor", "A lalor", "Highest salary", "Lowest salary" }));
+        cbbOption.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbOptionItemStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
+        jPanel2.add(cbbOption, gridBagConstraints);
+
+        txtLaborID.setColumns(10);
+        txtLaborID.setEditable(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
+        jPanel2.add(txtLaborID, gridBagConstraints);
+
+        lblLaborID.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblLaborID.setText("Labor ID:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        jPanel2.add(lblLaborID, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        getContentPane().add(jPanel2, gridBagConstraints);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Salary report", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel3.setLayout(new java.awt.BorderLayout(0, 5));
+
+        btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/printer2.png"))); // NOI18N
+        btnPrint.setText("Print");
+        btnPrint.setPreferredSize(new java.awt.Dimension(85, 25));
+        jPanel4.add(btnPrint);
+
+        jPanel3.add(jPanel4, java.awt.BorderLayout.SOUTH);
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(730, 300));
+
+        tblSalary.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No.", "Firs name", "Last name", "Day of birth", "Total hour", "Salary grade", "Total salary"
+            }
+        ));
+        jScrollPane1.setViewportView(tblSalary);
+
+        jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        getContentPane().add(jPanel3, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbbOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbOptionItemStateChanged
+        // TODO add your handling code here:
+        if(cbbOption.getSelectedIndex() == 0){
+            txtLaborID.setEditable(false);
+        }else{
+            if (cbbOption.getSelectedIndex() == 1) {
+                txtLaborID.setEditable(true);
+            } else {
+                if (cbbOption.getSelectedIndex() == 2) {
+                    txtLaborID.setEditable(false);
+                } else {
+                    if(cbbOption.getSelectedIndex() == 3){
+                        txtLaborID.setEditable(false);
+                    }
+                }
+            }
+        }
+
+
+    }//GEN-LAST:event_cbbOptionItemStateChanged
 
     /**
     * @param args the command line arguments
@@ -66,6 +265,23 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser DcsToDay;
+    private javax.swing.JButton btnComputingSalary;
+    private javax.swing.JButton btnPrint;
+    private javax.swing.JComboBox cbbOption;
+    private com.toedter.calendar.JDateChooser dcsFromDay;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblFromDay;
+    private javax.swing.JLabel lblLaborID;
+    private javax.swing.JLabel lblOption;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblToDay;
+    private javax.swing.JTable tblSalary;
+    private javax.swing.JTextField txtLaborID;
     // End of variables declaration//GEN-END:variables
 
 }
