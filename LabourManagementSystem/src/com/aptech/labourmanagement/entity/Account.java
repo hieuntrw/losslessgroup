@@ -151,11 +151,12 @@ public class Account implements PropertyIndex {
                 value = this.getRole().getRoleName();
                 break;
             case 4:
-                if (isStatus()) {
+                if (this.isStatus()) {
                     value = "Yes";
                 } else {
                     value = "No";
                 }
+                break;
         }
         return value;
 

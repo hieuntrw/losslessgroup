@@ -43,46 +43,24 @@ public class AccountServives {
      * @param ac the ac to insert into table Account
      */
     public boolean create(Account ac) {
-        //acc da validate trong form!
         //Create instance AccountDAO
         //add account
-        ac.setPassword(pe.encryptPass(ac.getPassword()));
-        if (accDao.create(ac)) {
-            this.setLastError(accDao.getLastError());
-            return true;
+        if (ac.validateAccount()) {
+            ac.setPassword(pe.encryptPass(ac.getPassword()));
+            if (!accDao.isExist(ac.getUsername())) {
+                if (accDao.create(ac)) {
+                    this.setLastError(accDao.getLastError());
+                    return true;
+                } else {
+                    this.setLastError(accDao.getLastError());
+                    return false;
+                }
+            } else {
+                this.setLastError(accDao.getLastError());
+                return false;
+            }
         } else {
-            this.setLastError(accDao.getLastError());
-            return false;
-        }
-    }
-
-    /**
-     *
-     *
-     */
-    public boolean update(Account ac){
-        ac.setPassword(pe.encryptPass(ac.getPassword()));
-        if(accDao.update(ac)){
-            this.setLastError(accDao.getLastError());
-            return true;
-        } else {
-            this.setLastError(accDao.getLastError());
-            return false;
-        }
-        
-    }
-
-    /**
-     * @return true or false
-     * @param username the username to check from table Account
-     */
-
-    public boolean checkUsername(String username) {
-        if (accDao.isExist(username)) {
-            this.setLastError(accDao.getLastError());
-            return true;
-        } else {
-            this.setLastError(accDao.getLastError());
+            this.setLastError(ac.getLastError());
             return false;
         }
     }
@@ -92,12 +70,17 @@ public class AccountServives {
      * @param ac the ac to update to table Account
      */
     public boolean store(Account ac) {
-        ac.setPassword(pe.encryptPass(ac.getPassword()));
-        if (accDao.update(ac)) {
-            this.setLastError(accDao.getLastError());
-            return true;
+        if (ac.validateAccount()) {
+            ac.setPassword(pe.encryptPass(ac.getPassword()));
+            if (accDao.update(ac)) {
+                this.setLastError(accDao.getLastError());
+                return true;
+            } else {
+                this.setLastError(accDao.getLastError());
+                return false;
+            }
         } else {
-            this.setLastError(accDao.getLastError());
+            this.setLastError(ac.getLastError());
             return false;
         }
     }
@@ -130,6 +113,7 @@ public class AccountServives {
      */
     public ArrayList<Account> findByAll() {
         ArrayList<Account> listAccount = accDao.readByAll();
+        this.setLastError(accDao.getLastError());
         return listAccount;
     }
 

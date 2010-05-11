@@ -10,15 +10,37 @@
  */
 package com.aptech.labourmanagement.gui;
 
+import com.aptech.labourmanagement.component.ColumnData;
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.component.ObjectTableModel;
+import com.aptech.labourmanagement.entity.Account;
+import com.aptech.labourmanagement.entity.Role;
+import com.aptech.labourmanagement.services.AccountServives;
+import com.aptech.labourmanagement.services.RoleServices;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 /**
- *
- * @author lab
+ * 
+ * @author Noi Nho
  */
 public class AccountManagementDlg extends javax.swing.JDialog {
+
+    public AccountServives accSer;
+    public ObjectTableModel tableModel;
+    public ArrayList<Account> arrAcc = new ArrayList<Account>();
+    //contains information header of columns
+    public JTable headerTable;
+    //index selected in table
+    int index = -1;
+    int selection;
 
     /** Creates new form AccountManagementDlg */
     public AccountManagementDlg(java.awt.Frame parent, boolean modal) {
@@ -31,9 +53,87 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
-        this.jScrollPane1.setSize(400, 200);
+        //this.scrAccount.setSize(400, 200);
         new LookAndFeel(this);
-        
+        loadDataToCombobox();
+        loadDataOnTable();
+        disableFields();
+    }
+
+    /**
+     * disable fields
+     */
+    public void disableFields() {
+        clearFields();
+        txtPassword.setEditable(false);
+        txtUsername.setEditable(false);
+        cbbGrant.setEnabled(false);
+        ckbIsUsing.setEnabled(false);
+        btnSave.setEnabled(false);
+        btnCancel.setEnabled(false);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+    }
+
+    /**
+     * enable fields
+     */
+    public void enableFields() {
+        txtPassword.setEditable(true);
+        txtUsername.setEditable(true);
+        cbbGrant.setEnabled(true);
+        ckbIsUsing.setEnabled(true);
+        btnSave.setEnabled(true);
+        btnCancel.setEnabled(true);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+    }
+
+    /**
+     * clear Fields
+     */
+    public void clearFields() {
+        txtPassword.setText("");
+        txtUsername.setText("");
+        cbbGrant.setSelectedIndex(0);
+    }
+
+    public void loadDataToCombobox() {
+        RoleServices roleSer = new RoleServices();
+        ArrayList<Role> arrRole = roleSer.findRoleAll();
+        for (int i = 0; i < arrRole.size(); i++) {
+            cbbGrant.addItem((arrRole.get(i).getRoleName()));
+        }
+    }
+
+    /**
+     * load database on form
+     */
+    public void loadDataOnTable() {
+        accSer = new AccountServives();
+        arrAcc = accSer.findByAll();
+        JOptionPane.showMessageDialog(this, arrAcc.get(0).getUsername(), "Message", JOptionPane.INFORMATION_MESSAGE);
+        ColumnData[] columns = {
+            new ColumnData("Account ID", 50, SwingConstants.LEFT, 1),
+            new ColumnData("User name", 100, SwingConstants.LEFT, 2),
+            new ColumnData("Grant", 100, SwingConstants.LEFT, 3),
+            new ColumnData("Status", 30, SwingConstants.CENTER, 4)
+        };
+        tableModel = new ObjectTableModel(tblAccount, columns, arrAcc);
+
+        headerTable = tableModel.getHeaderTable();
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+        tblAccount.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+        scrAccount.setRowHeader(viewport);
+        scrAccount.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
     }
 
     /** This method is called from within the constructor to
@@ -49,7 +149,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrAccount = new javax.swing.JScrollPane();
         tblAccount = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         btnCreate = new javax.swing.JButton();
@@ -68,6 +168,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         ckbIsUsing = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Account Management");
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -94,36 +195,27 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         getContentPane().add(jPanel1, gridBagConstraints);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Account list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
-        jPanel3.setLayout(new java.awt.GridBagLayout());
+        jPanel3.setLayout(new java.awt.BorderLayout(0, 5));
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(380, 200));
+        scrAccount.setPreferredSize(new java.awt.Dimension(380, 200));
 
         tblAccount.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No.", "Username", "Grant", "Status"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            }
+        ));
+        tblAccount.setPreferredSize(new java.awt.Dimension(200, 0));
+        tblAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAccountMouseClicked(evt);
             }
         });
-        tblAccount.setPreferredSize(new java.awt.Dimension(200, 0));
-        jScrollPane1.setViewportView(tblAccount);
+        scrAccount.setViewportView(tblAccount);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
-        jPanel3.add(jScrollPane1, gridBagConstraints);
+        jPanel3.add(scrAccount, java.awt.BorderLayout.CENTER);
 
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -131,6 +223,11 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         btnCreate.setText("Add");
         btnCreate.setMaximumSize(new java.awt.Dimension(83, 25));
         btnCreate.setMinimumSize(new java.awt.Dimension(83, 25));
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnCreate);
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/edit.png"))); // NOI18N
@@ -143,18 +240,12 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         btnDelete.setText("Delete");
         jPanel4.add(btnDelete);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
-        jPanel3.add(jPanel4, gridBagConstraints);
+        jPanel3.add(jPanel4, java.awt.BorderLayout.SOUTH);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.6;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
@@ -175,10 +266,20 @@ public class AccountManagementDlg extends javax.swing.JDialog {
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnSave);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnCancel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -228,7 +329,6 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
         jPanel2.add(txtPassword, gridBagConstraints);
 
-        cbbGrant.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -259,6 +359,64 @@ public class AccountManagementDlg extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        // TODO add your handling code here:
+        clearFields();
+        enableFields();
+        selection = 1;
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        disableFields();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        Account acc = new Account();
+        if (selection == 0) {
+            index = tblAccount.getSelectedRow();
+            acc = arrAcc.get(index);
+        }
+        acc.setUsername(txtUsername.getText().trim());
+        acc.setPassword(txtPassword.getText().trim());
+        RoleServices roleServices = new RoleServices();
+        Role role = roleServices.findRoleByName((String) cbbGrant.getSelectedItem());
+        acc.setRole(role);
+        acc.setStatus(ckbIsUsing.isSelected());
+        accSer = new AccountServives();
+        if (selection == 1) {
+            if (accSer.create(acc)) {
+                JOptionPane.showMessageDialog(this, accSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnTable();
+                disableFields();
+            } else {
+                JOptionPane.showMessageDialog(this, accSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            if (accSer.store(acc)) {
+                JOptionPane.showMessageDialog(this, accSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnTable();
+                disableFields();
+            } else {
+                JOptionPane.showMessageDialog(this, accSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void tblAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAccountMouseClicked
+        // TODO add your handling code here:
+        index = tblAccount.getSelectedRow();
+        if (index > -1) {
+            txtUsername.setText(arrAcc.get(index).getUsername());
+            cbbGrant.setSelectedItem(arrAcc.get(index).getRole().getRoleName());
+            ckbIsUsing.setSelected(arrAcc.get(index).isStatus());
+            btnEdit.setEnabled(true);
+            btnDelete.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_tblAccountMouseClicked
 
     /**
      * @param args the command line arguments
@@ -292,11 +450,11 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblGrant;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUsername;
+    private javax.swing.JScrollPane scrAccount;
     private javax.swing.JTable tblAccount;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;

@@ -5,6 +5,7 @@
 package com.aptech.labourmanagement.dao;
 
 import com.aptech.labourmanagement.entity.Account;
+import com.aptech.labourmanagement.entity.Role;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,12 +27,12 @@ public class AccountDAO {
     private ResultSet rs = null;
     private String lastError;
     // SQL statements
-    private final String SQL_CREATE = "INSERT INTO ACCOUNT(Username, Password, RoleID,Status) VALUES(?,?,?,?)";
+    private final String SQL_CREATE = "INSERT INTO ACCOUNT(Username, Password, RoleID, Status) VALUES(?,?,?,?)";
     private final String SQL_UPDATE = "UPDATE ACCOUNT set Password=?,RoleID=?,Status=? where AccountID=?";
     private final String SQL_DELETE = "DELETE FROM ACCOUNT WHERE username =?";
     private final String SQL_READ = "SELECT * FROM ACCOUNT";
     private final String SQL_CHECK_USER = "SELECT * FROM ACCOUNT WHERE username =?";
-    private final String SQL_LOGIN = "SELECT * FROM ACCOUNT WHERE Username =? AND Password =?";
+    private final String SQL_LOGIN = "SELECT * FROM ACCOUNT WHERE Username =? AND Password =? and Satus =?";
 
     public AccountDAO() {
         db = new ConfigureDB();
@@ -194,7 +195,7 @@ public class AccountDAO {
                 ac.setAccountID(rs.getInt("AccountID"));
                 ac.setUsername(rs.getString("Username"));
                 ac.setPassword(rs.getString("Password"));
-                ac.setRole(roleDAO.getRoleByID(rs.getInt("RoleID")));
+                ac.setRole((Role)roleDAO.getRoleByID(rs.getInt("RoleID")));
                 ac.setStatus(rs.getBoolean("Status"));
                 list.add(ac);
             }
@@ -220,6 +221,7 @@ public class AccountDAO {
             pst = con.prepareStatement(SQL_LOGIN);
             pst.setString(1, username);
             pst.setString(2, password);
+            pst.setBoolean(3, true);
             rs = pst.executeQuery();
             if (rs.next()) {
                 this.setLastError("Login successfuly!");

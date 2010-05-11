@@ -53,21 +53,15 @@ public class RoleServices {
      * @param role
      * @return
      */
-    public boolean update(Role role) {
+    public boolean store(Role role) {
         if (role.validateRole()) {
-            if (roDao.isExist(role.getRoleName())) {
-                if (roDao.update(role)) {
-                    this.setLastError(roDao.getLastError());
-                    return true;
-                } else {
-                    this.setLastError(roDao.getLastError());
-                    return false;
-                }
+            if (roDao.update(role)) {
+                this.setLastError(roDao.getLastError());
+                return true;
             } else {
                 this.setLastError(roDao.getLastError());
                 return false;
             }
-
         } else {
             this.setLastError(role.getLastError());
             return false;
@@ -105,6 +99,11 @@ public class RoleServices {
      */
     public Role findRoleByID(int roleID) {
         Role ro = roDao.getRoleByID(roleID);
+        return ro;
+    }
+
+    public Role findRoleByName(String roleName) {
+        Role ro = roDao.getRoleByName(roleName);
         return ro;
     }
 
