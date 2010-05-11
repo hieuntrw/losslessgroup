@@ -426,7 +426,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
             }
         } else {
             if (selection == 0) {
-                if (roleSer.update(role)) {
+                if (roleSer.store(role)) {
                     JOptionPane.showMessageDialog(this, roleSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
                     loadDataOnTable();
                     disableFields();

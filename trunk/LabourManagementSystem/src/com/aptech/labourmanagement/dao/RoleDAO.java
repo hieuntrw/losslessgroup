@@ -227,6 +227,40 @@ public class RoleDAO {
     }
 
     /**
+     * get role by role name
+     * @param roleName
+     * @return Role
+     */
+    public Role getRoleByName(String roleName) {
+        Role role = new Role();
+        try {
+            con = db.getConnection();
+            pst = con.prepareStatement(SQL_IS_EXIST);
+            pst.setString(1, roleName);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                role.setRoleID(rs.getInt("RoleID"));
+                role.setRoleName(rs.getString("RoleName"));
+                role.setIsAccountManagement(rs.getBoolean("IsAccountManagement"));
+                role.setIsRoleManagement(rs.getBoolean("IsRoleManagement"));
+                role.setIsWorkerManagement(rs.getBoolean("IsWorkerManagement"));
+                role.setIsRefersManagement(rs.getBoolean("IsRefersManagement"));
+                role.setIsSalaryGradeManagement(rs.getBoolean("IsSalaryGradeManagement"));
+                role.setIsAttendanceManagement(rs.getBoolean("IsAttendanceManagement"));
+                role.setIsWeeklyAttendanceReport(rs.getBoolean("IsWeeklyAttendanceReport"));
+                role.setIsWeeklySalaryReport(rs.getBoolean("IsWeeklySalaryReport"));
+                role.setIsFamilyManagement(rs.getBoolean("IsFamilyManagement"));
+            }
+            db.closeConnection();
+            return role;
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            this.setLastError("Get rolefunction fail");
+            return null;
+        }
+    }
+
+    /**
      * @return the lastError
      */
     public String getLastError() {
