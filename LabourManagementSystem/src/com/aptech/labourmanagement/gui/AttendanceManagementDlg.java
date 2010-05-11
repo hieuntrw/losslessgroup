@@ -27,7 +27,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
         // Cach lam cho form xuat hien giua man hinh
-        this.setSize(850, 700);
+        this.setSize(860, 660);
         int width = this.getWidth();
         int heigh = this.getHeight();
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();

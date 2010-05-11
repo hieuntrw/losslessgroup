@@ -17,7 +17,7 @@ public class AppStatusBar {
     }
     
     private void initAppStatusBar() {
-        String TIME_FORMAT = "dd'/'MM'/'yyyy' 'h':'mm' 'a";
+        String TIME_FORMAT = "MM'/'dd'/'yyyy' 'h':'mm' 'a";
         final SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT);
         Calendar calCurrent = Calendar.getInstance(TimeZone.getDefault());
         sdf.setTimeZone(TimeZone.getDefault());
@@ -34,7 +34,7 @@ public class AppStatusBar {
                     while (true) {
                         Thread.sleep(1000);
                         Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-                        timerZone.setText("Thời gian: " + sdf.format(cal.getTime()));
+                        timerZone.setText("Date time: " + sdf.format(cal.getTime()));
                     }
                 } catch ( Exception x ) {
                     x.printStackTrace();
