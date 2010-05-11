@@ -6,7 +6,10 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import javax.swing.JLabel;
 
-
+/**
+ * 
+ * @author Noi Nho
+ */
 public class AppStatusBar {
     private StatusBarFactory statusBarFactory;
     private StatusBar bar;

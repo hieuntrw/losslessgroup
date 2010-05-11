@@ -4,7 +4,7 @@
  */
 package com.aptech.labourmanagement.entity;
 
-import com.aptech.student.component.PropertyIndex;
+import com.aptech.labourmanagement.component.PropertyIndex;
 
 /**
  *

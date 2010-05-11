@@ -1,5 +1,4 @@
-package com.aptech.student.component;
-
+package com.aptech.labourmanagement.component;
 
 
 /*
@@ -19,6 +18,11 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 //doi tuong hien thi o trong bang
+
+/**
+ * 
+ * @author Noi Nho
+ */
 public class ObjectTableCellRenderer extends DefaultTableCellRenderer {
 
     protected Border noFocusBorder = new EmptyBorder(1, 1, 1, 1);

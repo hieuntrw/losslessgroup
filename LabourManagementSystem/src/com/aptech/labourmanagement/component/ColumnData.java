@@ -1,11 +1,14 @@
-package com.aptech.student.component;
+package com.aptech.labourmanagement.component;
 
 
 
 
 import javax.swing.SwingConstants;
 
-
+/**
+ * 
+ * @author Noi Nho
+ */
 public class ColumnData implements SwingConstants {
 
     public static byte DEFAULT_RENDERER = 0;

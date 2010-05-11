@@ -1,4 +1,4 @@
-package com.aptech.student.component;
+package com.aptech.labourmanagement.component;
 
 
 
@@ -11,7 +11,10 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-
+/**
+ * 
+ * @author Noi Nho
+ */
 public class ObjectTableModel extends AbstractTableModel {
 
     private JTable table;
