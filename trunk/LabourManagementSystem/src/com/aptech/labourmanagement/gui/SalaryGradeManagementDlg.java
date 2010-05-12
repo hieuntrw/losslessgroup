@@ -15,6 +15,7 @@ import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.component.ObjectTableModel;
 import com.aptech.labourmanagement.entity.SalaryGrade;
 import com.aptech.labourmanagement.services.SalaryGradeServices;
+import com.aptech.labourmanagement.util.CheckForm;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -285,26 +286,32 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         }
         sg.setGradeName(txtGradeName.getText().trim());
         //kiem tra truong value la kieu so
-        sg.setGradeNum(Float.parseFloat(txtValue.getText()));
-        salaryGradeSer = new SalaryGradeServices();
-        if (selection == 1) {
-            if (salaryGradeSer.create(sg)) {
-                JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
-                loadDataOnTable();
-                disableFields();
-            } else {
-                JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
-            }
-        } else {
-            if (selection == 0) {
-                if (salaryGradeSer.store(sg)) {
+        if (CheckForm.isNumberic(txtValue.getText().trim())) {
+            sg.setGradeNum(Float.parseFloat(txtValue.getText()));
+            salaryGradeSer = new SalaryGradeServices();
+            if (selection == 1) {
+                if (salaryGradeSer.create(sg)) {
                     JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
                     loadDataOnTable();
                     disableFields();
                 } else {
                     JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
                 }
+            } else {
+                if (selection == 0) {
+                    if (salaryGradeSer.store(sg)) {
+                        JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                        loadDataOnTable();
+                        disableFields();
+                    } else {
+                        JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Grade value must be is numberic!", "Warning", JOptionPane.WARNING_MESSAGE);
+            txtValue.setText("");
+            txtValue.requestFocus();
         }
 
     }//GEN-LAST:event_btnSaveActionPerformed

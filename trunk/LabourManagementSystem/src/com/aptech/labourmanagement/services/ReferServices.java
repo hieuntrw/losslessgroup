@@ -40,10 +40,15 @@ public class ReferServices {
      *@param fa, the re to store into Refer table
      */
     public boolean create(Refer re) {
-        if (reDao.create(re)) {
-            this.setLastError(re.getLastError());
-            return true;
-        } else {
+        if (re.validateRefer()) {
+            if (reDao.create(re)) {
+                this.setLastError(reDao.getLastError());
+                return true;
+            } else {
+                this.setLastError(reDao.getLastError());
+                return false;
+            }
+        }else{
             this.setLastError(re.getLastError());
             return false;
         }
@@ -54,10 +59,15 @@ public class ReferServices {
      *@param fa, the ac to store into Family table
      */
     public boolean store(Refer re) {
-        if (reDao.update(re)) {
-            this.setLastError(re.getLastError());
-            return true;
-        } else {
+        if (re.validateRefer()) {
+            if (reDao.update(re)) {
+                this.setLastError(reDao.getLastError());
+                return true;
+            } else {
+                this.setLastError(reDao.getLastError());
+                return false;
+            }
+        }else{
             this.setLastError(re.getLastError());
             return false;
         }
@@ -76,14 +86,16 @@ public class ReferServices {
             return false;
         }
     }
+
     /**
      *
      * @return list Refer
      */
-    public ArrayList<Refer> findByAll(){
+    public ArrayList<Refer> findByAll() {
         ArrayList<Refer> listRefer = reDao.readByAll();
         return listRefer;
     }
+
     /**
      *
      */
