@@ -4,13 +4,14 @@
  */
 package com.aptech.labourmanagement.entity;
 
+import com.aptech.labourmanagement.component.PropertyIndex;
 import java.sql.Date;
 
 /**
  *
  * @author Noi Nho
  */
-public class Family {
+public class Family implements PropertyIndex{
 
     private int familyID;
     private Worker worker;
@@ -159,5 +160,17 @@ public class Family {
             return false;
         }
         return true;
+    }
+
+    public Object getPropertyValue(int index) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setPropertyValue(int index, Object value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Class getPropertyClass(int index) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
