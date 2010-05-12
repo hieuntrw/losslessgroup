@@ -23,26 +23,31 @@ public class SalaryGradeServices {
     }
 
     /**
-     *
+     * create Salary Grade
      * @param sg
      * @return
      */
     public boolean create(SalaryGrade sg) {
-        if (saDao.create(sg)) {
-            this.setLastError(saDao.getLastError());
-            return true;
+        if (sg.validateSalaryGrade()) {
+            if (saDao.create(sg)) {
+                this.setLastError(saDao.getLastError());
+                return true;
+            } else {
+                this.setLastError(saDao.getLastError());
+                return false;
+            }
         } else {
-            this.setLastError(saDao.getLastError());
+            this.setLastError(sg.getLastError());
             return false;
         }
     }
 
     /**
-     *
+     * update Salary Grade
      * @param sg
      * @return
      */
-    public boolean update(SalaryGrade sg) {
+    public boolean store(SalaryGrade sg) {
         if (saDao.update(sg)) {
             this.setLastError(saDao.getLastError());
             return true;

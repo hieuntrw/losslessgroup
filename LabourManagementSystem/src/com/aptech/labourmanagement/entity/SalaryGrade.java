@@ -4,11 +4,13 @@
  */
 package com.aptech.labourmanagement.entity;
 
+import com.aptech.labourmanagement.component.PropertyIndex;
+
 /**
  *
  * @author Noi Nho
  */
-public class SalaryGrade {
+public class SalaryGrade implements PropertyIndex {
 
     private int salaryGradeID;
     private String gradeName;
@@ -22,7 +24,7 @@ public class SalaryGrade {
         this.salaryGradeID = salaryGradeID;
         this.gradeName = gradeName;
         this.gradeNum = gradeNum;
-        
+
     }
 
     public SalaryGrade() {
@@ -83,12 +85,34 @@ public class SalaryGrade {
     public void setLastError(String lastError) {
         this.lastError = lastError;
     }
-    public boolean validateSalaryGrade(){
-        if(this.getGradeName().length() == 0){
+
+    public boolean validateSalaryGrade() {
+        if (this.getGradeName().length() == 0) {
             this.setLastError("Grade Name can not empty");
             return false;
         }
-       // if(this.getGradeNum())
+        // if(this.getGradeNum())
         return true;
+    }
+
+    public Object getPropertyValue(int index) {
+        String value = "";
+        switch (index) {
+            case 1:
+                value = this.getGradeName();
+                break;
+            case 2:
+                value = String.valueOf(this.getGradeNum());
+                break;
+        }
+        return value;
+    }
+
+    public void setPropertyValue(int index, Object value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Class getPropertyClass(int index) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

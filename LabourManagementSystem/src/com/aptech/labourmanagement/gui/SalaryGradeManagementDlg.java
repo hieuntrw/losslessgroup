@@ -8,19 +8,38 @@
  *
  * Created on May 7, 2010, 10:53:22 PM
  */
-
 package com.aptech.labourmanagement.gui;
 
+import com.aptech.labourmanagement.component.ColumnData;
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.component.ObjectTableModel;
+import com.aptech.labourmanagement.entity.SalaryGrade;
+import com.aptech.labourmanagement.services.SalaryGradeServices;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author Noi Nho
  */
 public class SalaryGradeManagementDlg extends javax.swing.JDialog {
+
+    public SalaryGradeServices salaryGradeSer;
+    public ObjectTableModel tableModel;
+    public ArrayList<SalaryGrade> arrSalaryGrade = new ArrayList<SalaryGrade>();
+    //contains information header of columns
+    public JTable headerTable;
+    //index selected in table
+    int index = -1;
+    int selection;
 
     /** Creates new form SalaryGradeManagementDlg */
     public SalaryGradeManagementDlg(java.awt.Frame parent, boolean modal) {
@@ -35,6 +54,8 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
         new LookAndFeel(this);
         setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
+        loadDataOnTable();
+        disableFields();
     }
 
     /** This method is called from within the constructor to
@@ -58,7 +79,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrGrade = new javax.swing.JScrollPane();
         tblSalaryGrade = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
@@ -69,7 +90,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         setTitle("Salary grade management");
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
@@ -133,10 +154,20 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnSave);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnCancel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -159,7 +190,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Salary grade list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel2.setLayout(new java.awt.BorderLayout(0, 10));
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(300, 180));
+        scrGrade.setPreferredSize(new java.awt.Dimension(300, 180));
 
         tblSalaryGrade.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -169,22 +200,42 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
                 "No.", "Grade name", "Value"
             }
         ));
-        jScrollPane1.setViewportView(tblSalaryGrade);
+        tblSalaryGrade.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSalaryGradeMouseClicked(evt);
+            }
+        });
+        scrGrade.setViewportView(tblSalaryGrade);
 
-        jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel2.add(scrGrade, java.awt.BorderLayout.CENTER);
 
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/add.png"))); // NOI18N
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnAdd);
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnEdit);
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete2.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnDelete);
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.SOUTH);
@@ -201,14 +252,157 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tblSalaryGradeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSalaryGradeMouseClicked
+        // TODO add your handling code here:
+        index = tblSalaryGrade.getSelectedRow();
+        if (index > -1) {
+            btnDelete.setEnabled(true);
+            btnEdit.setEnabled(true);
+            txtGradeName.setText(arrSalaryGrade.get(index).getGradeName());
+            txtValue.setText(String.valueOf(arrSalaryGrade.get(index).getGradeNum()));
+        }
+    }//GEN-LAST:event_tblSalaryGradeMouseClicked
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        clearFields();
+        disableFields();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        selection = 1;
+        clearFields();
+        enableFields();
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        SalaryGrade sg = new SalaryGrade();
+        if (selection == 0) {
+            index = tblSalaryGrade.getSelectedRow();
+            sg = arrSalaryGrade.get(index);
+        }
+        sg.setGradeName(txtGradeName.getText().trim());
+        //kiem tra truong value la kieu so
+        sg.setGradeNum(Float.parseFloat(txtValue.getText()));
+        salaryGradeSer = new SalaryGradeServices();
+        if (selection == 1) {
+            if (salaryGradeSer.create(sg)) {
+                JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnTable();
+                disableFields();
+            } else {
+                JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            if (selection == 0) {
+                if (salaryGradeSer.store(sg)) {
+                    JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                    loadDataOnTable();
+                    disableFields();
+                } else {
+                    JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        enableFields();
+        selection = 0;
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        selection = -1;
+        index = tblSalaryGrade.getSelectedRow();
+        SalaryGrade sg = new SalaryGrade();
+        sg = arrSalaryGrade.get(index);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to salary grade name = " + sg.getGradeName());
+        if (i == JOptionPane.YES_OPTION) {
+            salaryGradeSer = new SalaryGradeServices();
+            if (salaryGradeSer.remove(sg.getSalaryGradeID())) {
+                JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnTable();
+                clearFields();
+                disableFields();
+            } else {
+                JOptionPane.showMessageDialog(this, salaryGradeSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
     /**
-    * @param args the command line arguments
-    */
+     * clear fields
+     */
+    public void clearFields() {
+        txtGradeName.setText("");
+        txtValue.setText("");
+    }
+
+    /**
+     * disable fields
+     */
+    public void disableFields() {
+        txtGradeName.setEditable(false);
+        txtValue.setEditable(false);
+        btnCancel.setEnabled(false);
+        btnSave.setEnabled(false);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+    }
+
+    public void enableFields() {
+        txtGradeName.setEditable(true);
+        txtValue.setEditable(true);
+        btnCancel.setEnabled(true);
+        btnSave.setEnabled(true);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+    }
+
+    /**
+     * laod data base
+     */
+    public void loadDataOnTable() {
+        salaryGradeSer = new SalaryGradeServices();
+        arrSalaryGrade = salaryGradeSer.finfByAll();
+        ColumnData[] columns = {
+            new ColumnData("Grade name", 150, SwingConstants.LEFT, 1),
+            new ColumnData("Grade value", 100, SwingConstants.LEFT, 2)
+        };
+
+        tableModel = new ObjectTableModel(tblSalaryGrade, columns, arrSalaryGrade);
+
+        headerTable = tableModel.getHeaderTable();
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+        tblSalaryGrade.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+        scrGrade.setRowHeader(viewport);
+        scrGrade.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 SalaryGradeManagementDlg dialog = new SalaryGradeManagementDlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -217,7 +411,6 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
@@ -229,13 +422,12 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblGradeName;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblValue;
+    private javax.swing.JScrollPane scrGrade;
     private javax.swing.JTable tblSalaryGrade;
     private javax.swing.JTextField txtGradeName;
     private javax.swing.JTextField txtValue;
     // End of variables declaration//GEN-END:variables
-
 }
