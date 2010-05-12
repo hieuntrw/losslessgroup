@@ -4,13 +4,14 @@
  */
 package com.aptech.labourmanagement.entity;
 
+import com.aptech.labourmanagement.component.PropertyIndex;
 import java.sql.Date;
 
 /**
  *
  * @author Noi Nho
  */
-public class Refer {
+public class Refer implements PropertyIndex{
 
     private int referID;
     private String fullName;
@@ -167,5 +168,33 @@ public class Refer {
         }
         return true;
         //if(this.getDayOfBirth().)
+    }
+
+    public Object getPropertyValue(int index) {
+        String value = "";
+        switch (index) {
+            case 1:
+                value = this.getFullName();
+                break;
+            case 2:
+                value = this.getDayOfBirth().toString();
+                break;
+            case 3:
+                value = this.getPosition();
+                break;
+            case 4:
+                value = this.getAddress();
+
+                break;
+        }
+        return value;
+    }
+
+    public void setPropertyValue(int index, Object value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Class getPropertyClass(int index) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
