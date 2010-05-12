@@ -12,6 +12,9 @@ package com.aptech.labourmanagement.gui.main;
 
 import com.aptech.labourmanagement.component.AppStatusBar;
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.entity.Account;
+import com.aptech.labourmanagement.gui.ChangePasswordDlg;
+import com.aptech.labourmanagement.gui.Logindlg;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
@@ -21,8 +24,9 @@ import javax.swing.ImageIcon;
  */
 public class MainFrm extends javax.swing.JFrame {
 
+    public Account acc = new Account();
     /** Creates new form MainFrm */
-    public MainFrm() {
+    public MainFrm(Logindlg loginDlg) {
         initComponents();
 
         // Cach lam cho form xuat hien giua man hinh
@@ -35,6 +39,7 @@ public class MainFrm extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("../../icon/LMSIcon.png")).getImage());
         this.initStatusBar();
         new LookAndFeel(this);
+        acc = loginDlg.acc;
     }
 
     private void initStatusBar() {
@@ -201,6 +206,11 @@ public class MainFrm extends javax.swing.JFrame {
         mniChangePass.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         mniChangePass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/user1_information.png"))); // NOI18N
         mniChangePass.setText("Change password");
+        mniChangePass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniChangePassActionPerformed(evt);
+            }
+        });
         mnSystem.add(mniChangePass);
 
         mniLogout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
@@ -323,6 +333,11 @@ public class MainFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mniAboutActionPerformed
 
+    private void mniChangePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniChangePassActionPerformed
+        // TODO add your handling code here:
+        new ChangePasswordDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniChangePassActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -330,7 +345,7 @@ public class MainFrm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new MainFrm().setVisible(true);
+                new MainFrm(new Logindlg(null, true)).setVisible(true);
             }
         });
     }

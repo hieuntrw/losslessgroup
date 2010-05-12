@@ -11,14 +11,20 @@
 package com.aptech.labourmanagement.gui;
 
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.entity.Account;
+import com.aptech.labourmanagement.gui.main.MainFrm;
+import com.aptech.labourmanagement.services.AccountServives;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Noi Nho
  */
 public class Logindlg extends javax.swing.JDialog {
+
+    public Account acc = new Account();
 
     /** Creates new form dlgLogin */
     public Logindlg(java.awt.Frame parent, boolean modal) {
@@ -32,7 +38,7 @@ public class Logindlg extends javax.swing.JDialog {
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
-        
+
         new LookAndFeel(this);
 
     }
@@ -124,6 +130,11 @@ public class Logindlg extends javax.swing.JDialog {
 
         btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
         btnOk.setText("Cancel");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnOk);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -168,7 +179,29 @@ public class Logindlg extends javax.swing.JDialog {
 
     private void btncancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelActionPerformed
         // TODO add your handling code here:
+        AccountServives accSer = new AccountServives();
+        String username = txtUsername.getText();
+        String pass = String.valueOf(txtPassword.getPassword());
+        if ((username.length() != 0) && (pass.length() != 0)) {
+            if (accSer.loginSystem(username, pass)) {
+                acc = accSer.findByUsername(username);
+                new MainFrm(this).setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, accSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "User name or password can not empty!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_btncancelActionPerformed
+
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        // TODO add your handling code here:
+        txtPassword.setText("");
+        txtUsername.setText("");
+    }//GEN-LAST:event_btnOkActionPerformed
 
     /**
      * @param args the command line arguments

@@ -32,7 +32,7 @@ public class AccountDAO {
     private final String SQL_DELETE = "DELETE FROM ACCOUNT WHERE username =?";
     private final String SQL_READ = "SELECT * FROM ACCOUNT";
     private final String SQL_CHECK_USER = "SELECT * FROM ACCOUNT WHERE username =?";
-    private final String SQL_LOGIN = "SELECT * FROM ACCOUNT WHERE Username =? AND Password =? and Satus =?";
+    private final String SQL_LOGIN = "SELECT * FROM ACCOUNT WHERE Username =? AND Password =? and Status =?";
 
     public AccountDAO() {
         db = new ConfigureDB();

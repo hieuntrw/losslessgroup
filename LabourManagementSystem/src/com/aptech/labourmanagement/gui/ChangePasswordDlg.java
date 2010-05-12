@@ -11,8 +11,12 @@
 package com.aptech.labourmanagement.gui;
 
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.entity.Account;
+import com.aptech.labourmanagement.gui.main.MainFrm;
+import com.aptech.labourmanagement.services.AccountServives;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,9 +24,11 @@ import javax.swing.ImageIcon;
  */
 public class ChangePasswordDlg extends javax.swing.JDialog {
 
+    Account acc = new Account();
+
     /** Creates new form ChangePassword */
-    public ChangePasswordDlg(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public ChangePasswordDlg(MainFrm main, boolean modal) {
+        super(main, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
         // Cach lam cho form xuat hien giua man hinh
@@ -33,6 +39,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
         new LookAndFeel(this);
+        this.acc = main.acc;
 
     }
 
@@ -66,7 +73,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Change Password");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -168,6 +175,11 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnCancel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -183,7 +195,44 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         // TODO add your handling code here:
+        String oldPass = String.valueOf(txtOldPass.getPassword());
+        String newPass = String.valueOf(txtNewPass.getPassword());
+        String cofirmPass = String.valueOf(txtCofirmPass.getPassword());
+        if ((newPass.length() != 0) && (cofirmPass.length() != 0) && (oldPass.length() != 0)) {
+            if (newPass.equals(cofirmPass)) {
+                AccountServives accSer = new AccountServives();
+                if (accSer.loginSystem(acc.getUsername(), oldPass)) {
+                    acc.setPassword(newPass);
+                    if (accSer.store(acc)) {
+                        JOptionPane.showMessageDialog(this, "Change password successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                        txtCofirmPass.setText("");
+                        txtNewPass.setText("");
+                        txtOldPass.setText("");
+                    } else {
+                        JOptionPane.showMessageDialog(this, accSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Old passsword is incorrect!", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "New password and cofirm password do not match!", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+
+        }else{
+            JOptionPane.showMessageDialog(this, "You must enter complete information!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnOkActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        txtCofirmPass.setText("");
+        txtNewPass.setText("");
+        txtOldPass.setText("");
+
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,9 +241,10 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                ChangePasswordDlg dialog = new ChangePasswordDlg(new javax.swing.JFrame(), true);
+                ChangePasswordDlg dialog = new ChangePasswordDlg(new MainFrm(null), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
