@@ -52,17 +52,17 @@ public class SalaryGradeDAO {
             pst.setString(1, sg.getGradeName());
             pst.setFloat(2, sg.getGradeNum());
             if (pst.executeUpdate() == 1) {
-                setLastError("Create successfully!");
+                this.setLastError("Create successfully!");
                 db.closeConnection();
                 return true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(SalaryGradeDAO.class.getName()).log(Level.SEVERE, null, ex);
-            setLastError("Create fail, error: " + ex.getMessage());
+            this.setLastError("Create fail, error: " + ex.getMessage());
             db.closeConnection();
             return false;
         }
-        setLastError("Create fail!");
+        this.setLastError("Create fail!");
         db.closeConnection();
         return false;
     }
@@ -86,7 +86,7 @@ public class SalaryGradeDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(SalaryGradeDAO.class.getName()).log(Level.SEVERE, null, ex);
-            setLastError("Update fail, error: " + ex.getMessage());
+            this.setLastError("Update fail, error: " + ex.getMessage());
             db.closeConnection();
             return false;
         }

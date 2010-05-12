@@ -16,7 +16,9 @@ import com.aptech.labourmanagement.component.ObjectTableModel;
 import com.aptech.labourmanagement.entity.Refer;
 import com.aptech.labourmanagement.services.ReferServices;
 import java.awt.Toolkit;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -359,7 +361,7 @@ public class ReferManagementDlg extends javax.swing.JDialog {
         index = tblRefer.getSelectedRow();
         if (index > -1) {
             btnDelete.setEnabled(true);
-            btnSave.setEnabled(true);
+            btnEdit.setEnabled(true);
             txtAddress.setText(arrRefers.get(index).getAddress());
             txtContactNumber.setText(arrRefers.get(index).getContactNumber());
             txtFullName.setText(arrRefers.get(index).getFullName());
@@ -410,30 +412,37 @@ public class ReferManagementDlg extends javax.swing.JDialog {
         }
         refer.setAddress(txtAddress.getText().trim());
         refer.setContactNumber(txtContactNumber.getText().trim());
-        //chuyen doi calender wa SQL
-        refer.setDayOfBirth(null);
-        refer.setFullName(txtFullName.getText().trim());
-        refer.setPosition(txtPosition.getText().trim());
-        refer.setWorkName(txtWorkName.getText().trim());
-        referSer = new ReferServices();
-        if (selection == 1) {
-            if (referSer.create(refer)) {
-                JOptionPane.showMessageDialog(this, referSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
-                loadDataOnTable();
-                disableFields();
-            } else {
-                JOptionPane.showMessageDialog(this, referSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
-            }
-        } else {
-            if (selection == 0) {
-                if (referSer.store(refer)) {
+        //convert date calender to date SQL
+        if (dcsDayOfBirth.getDate() != null) {
+            Calendar ca = Calendar.getInstance();
+            ca.setTime(dcsDayOfBirth.getDate());
+            Date date = new Date(ca.getTimeInMillis());
+            refer.setDayOfBirth(date);
+            refer.setFullName(txtFullName.getText().trim());
+            refer.setPosition(txtPosition.getText().trim());
+            refer.setWorkName(txtWorkName.getText().trim());
+            referSer = new ReferServices();
+            if (selection == 1) {
+                if (referSer.create(refer)) {
                     JOptionPane.showMessageDialog(this, referSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
                     loadDataOnTable();
                     disableFields();
                 } else {
                     JOptionPane.showMessageDialog(this, referSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
                 }
+            } else {
+                if (selection == 0) {
+                    if (referSer.store(refer)) {
+                        JOptionPane.showMessageDialog(this, referSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                        loadDataOnTable();
+                        disableFields();
+                    } else {
+                        JOptionPane.showMessageDialog(this, referSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Day of birth can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -441,6 +450,7 @@ public class ReferManagementDlg extends javax.swing.JDialog {
         // TODO add your handling code here:
         enableFields();
         clearFields();
+        selection = 1;
     }//GEN-LAST:event_btnAddActionPerformed
 
     public void clearFields() {
@@ -449,7 +459,7 @@ public class ReferManagementDlg extends javax.swing.JDialog {
         txtFullName.setText("");
         txtPosition.setText("");
         txtWorkName.setText("");
-        dcsDayOfBirth.cleanup();
+        dcsDayOfBirth.setDate(null);
     }
 
     public void disableFields() {
@@ -487,6 +497,7 @@ public class ReferManagementDlg extends javax.swing.JDialog {
     public void loadDataOnTable() {
         referSer = new ReferServices();
         arrRefers = referSer.findByAll();
+        //JOptionPane.showMessageDialog(this, arrRefers.get(arrRefers.size() -1).getFullName(), "Warning", JOptionPane.WARNING_MESSAGE);
         ColumnData[] columns = {
             new ColumnData("Full Name", 100, SwingConstants.LEFT, 1),
             new ColumnData("Day Of Birth", 80, SwingConstants.LEFT, 2),

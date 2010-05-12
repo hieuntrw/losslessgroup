@@ -27,7 +27,7 @@ public class ReferDAO {
     private ResultSet rs = null;
     private String lastError = null;
     //khai bao ca cau lenh SQL
-    private final String SQL_CREATE = "INSERT INTO REFER(FullName,DayOfBirth, Address,WorkName ,Position, ContactNumber) VALUES(?,?,?,?,?,?)";
+    private final String SQL_CREATE = "INSERT INTO REFER(FullName,DayOfBirth,Address,WorkName,Position,ContactNumber) VALUES(?,?,?,?,?,?)";
     private final String SQL_UPDATE = "UPDATE REFER set FullName=?,DayOfBirth=?,Address=?,WorkName=?,Position=?,ContactNumber=?  where ReferID=?";
     private final String SQL_DELETE = "DELETE FROM REFER WHERE ReferID =?";
     private final String SQL_READ_BY_ALL = "SELECT * FROM REFER";
@@ -54,17 +54,17 @@ public class ReferDAO {
             pst.setString(5, re.getPosition());
             pst.setString(6, re.getContactNumber());
             if (pst.executeUpdate() == 1) {
-                setLastError("Create successfully!");
+                this.setLastError("Create successfully!");
                 db.closeConnection();
                 return true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(ReferDAO.class.getName()).log(Level.SEVERE, null, ex);
-            setLastError("Create fail, error: " + ex.getMessage());
+            this.setLastError("Create fail, error: " + ex.getMessage());
             db.closeConnection();
             return false;
         }
-        setLastError("Create fail!");
+        this.setLastError("Create fail!");
         db.closeConnection();
         return false;
     }
@@ -91,7 +91,7 @@ public class ReferDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ReferDAO.class.getName()).log(Level.SEVERE, null, ex);
-            setLastError("Update fail, error: " + ex.getMessage());
+            this.setLastError("Update fail, error: " + ex.getMessage());
             db.closeConnection();
             return false;
         }
@@ -162,7 +162,7 @@ public class ReferDAO {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_BY_ALL);
             rs = pst.executeQuery();
-            if (rs.next()) {
+            while(rs.next()) {
                 Refer refer = new Refer();
                 refer.setReferID(rs.getInt("ReferID"));
                 refer.setFullName(rs.getString("FullName"));

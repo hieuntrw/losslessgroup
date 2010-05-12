@@ -6,12 +6,13 @@ package com.aptech.labourmanagement.entity;
 
 import com.aptech.labourmanagement.component.PropertyIndex;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
  * @author Noi Nho
  */
-public class Refer implements PropertyIndex{
+public class Refer implements PropertyIndex {
 
     private int referID;
     private String fullName;
@@ -22,7 +23,6 @@ public class Refer implements PropertyIndex{
     private String contactNumber;
     private String lastError;
 
-    
     /*
      * Constructor
      */
@@ -39,8 +39,6 @@ public class Refer implements PropertyIndex{
         this.contactNumber = contactNumber;
 
     }
-
-
 
     /**
      * @return the referID
@@ -153,21 +151,22 @@ public class Refer implements PropertyIndex{
     public void setLastError(String lastError) {
         this.lastError = lastError;
     }
+
     /**
      * valdate data
      * @return true or false
      */
-    public boolean validateRefer(){
-       if(this.getFullName().length() == 0){
+    public boolean validateRefer() {
+        if (this.getFullName().length() == 0) {
             this.setLastError("Last Name can not empty");
             return false;
         }
-        if(this.getAddress().length() == 0){
+        if (this.getAddress().length() == 0) {
             this.setLastError("Address can not empty");
             return false;
         }
         return true;
-        //if(this.getDayOfBirth().)
+
     }
 
     public Object getPropertyValue(int index) {
@@ -177,7 +176,8 @@ public class Refer implements PropertyIndex{
                 value = this.getFullName();
                 break;
             case 2:
-                value = this.getDayOfBirth().toString();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                value = dateFormat.format(this.getDayOfBirth());
                 break;
             case 3:
                 value = this.getPosition();

@@ -29,9 +29,14 @@ public class SalaryGradeServices {
      */
     public boolean create(SalaryGrade sg) {
         if (sg.validateSalaryGrade()) {
-            if (saDao.create(sg)) {
-                this.setLastError(saDao.getLastError());
-                return true;
+            if (!saDao.isExist(sg.getGradeName())) {
+                if (saDao.create(sg)) {
+                    this.setLastError(saDao.getLastError());
+                    return true;
+                } else {
+                    this.setLastError(saDao.getLastError());
+                    return false;
+                }
             } else {
                 this.setLastError(saDao.getLastError());
                 return false;
@@ -64,21 +69,6 @@ public class SalaryGradeServices {
      */
     public boolean remove(int salaryGradeID) {
         if (saDao.delete(salaryGradeID)) {
-            this.setLastError(saDao.getLastError());
-            return true;
-        } else {
-            this.setLastError(saDao.getLastError());
-            return false;
-        }
-    }
-
-    /**
-     *
-     * @param gradeName
-     * @return
-     */
-    public boolean CheckGraName(String gradeName) {
-        if (saDao.isExist(gradeName)) {
             this.setLastError(saDao.getLastError());
             return true;
         } else {

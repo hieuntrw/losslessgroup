@@ -5,6 +5,7 @@
 package com.aptech.labourmanagement.entity;
 
 import com.aptech.labourmanagement.component.PropertyIndex;
+import com.aptech.labourmanagement.util.CheckForm;
 
 /**
  *
@@ -91,7 +92,6 @@ public class SalaryGrade implements PropertyIndex {
             this.setLastError("Grade Name can not empty");
             return false;
         }
-        // if(this.getGradeNum())
         return true;
     }
 
