@@ -6,6 +6,7 @@ package com.aptech.labourmanagement.services;
 
 import com.aptech.labourmanagement.dao.ReferDAO;
 import com.aptech.labourmanagement.entity.Refer;
+import java.util.ArrayList;
 
 /**
  *
@@ -36,7 +37,7 @@ public class ReferServices {
 
     /**
      *@return true or false
-     *@param fa, the re to update into Refer table
+     *@param fa, the re to store into Refer table
      */
     public boolean create(Refer re) {
         if (reDao.create(re)) {
@@ -50,9 +51,9 @@ public class ReferServices {
 
     /**
      *@return true or false
-     *@param fa, the ac to update into Family table
+     *@param fa, the ac to store into Family table
      */
-    public boolean update(Refer re) {
+    public boolean store(Refer re) {
         if (reDao.update(re)) {
             this.setLastError(re.getLastError());
             return true;
@@ -75,14 +76,18 @@ public class ReferServices {
             return false;
         }
     }
-
-
+    /**
+     *
+     * @return list Refer
+     */
+    public ArrayList<Refer> findByAll(){
+        ArrayList<Refer> listRefer = reDao.readByAll();
+        return listRefer;
+    }
     /**
      *
      */
-
-
-    public Refer findByID(int referID){
+    public Refer findByID(int referID) {
         Refer listRefer = reDao.readByID(referID);
         return listRefer;
     }

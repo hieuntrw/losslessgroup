@@ -349,7 +349,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-        clearFields();
+        
         disableFields();
     }//GEN-LAST:event_btnCancelActionPerformed
 
