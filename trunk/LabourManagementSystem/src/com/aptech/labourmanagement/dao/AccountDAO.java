@@ -28,7 +28,7 @@ public class AccountDAO {
     private String lastError;
     // SQL statements
     private final String SQL_CREATE = "INSERT INTO ACCOUNT(Username, Password, RoleID, Status) VALUES(?,?,?,?)";
-    private final String SQL_UPDATE = "UPDATE ACCOUNT set Password=?,RoleID=?,Status=? where AccountID=?";
+    private final String SQL_UPDATE = "UPDATE ACCOUNT set Username =?,Password=?,RoleID=?,Status=? where AccountID=?";
     private final String SQL_DELETE = "DELETE FROM ACCOUNT WHERE username =?";
     private final String SQL_READ = "SELECT * FROM ACCOUNT";
     private final String SQL_CHECK_USER = "SELECT * FROM ACCOUNT WHERE username =?";
@@ -75,10 +75,11 @@ public class AccountDAO {
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_UPDATE);
-            pst.setString(1, ac.getPassword());
-            pst.setInt(2, ac.getRole().getRoleID());
-            pst.setBoolean(3, ac.isStatus());
-            pst.setInt(4, ac.getAccountID());
+            pst.setString(1, ac.getUsername());
+            pst.setString(2, ac.getPassword());
+            pst.setInt(3, ac.getRole().getRoleID());
+            pst.setBoolean(4, ac.isStatus());
+            pst.setInt(5, ac.getAccountID());
             if (pst.executeUpdate() == 1) {
                 this.setLastError("Update successfuly!");
                 db.closeConnection();

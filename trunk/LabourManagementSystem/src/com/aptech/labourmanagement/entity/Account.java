@@ -6,6 +6,8 @@ package com.aptech.labourmanagement.entity;
 
 import com.aptech.labourmanagement.component.PropertyIndex;
 
+
+
 /**
  *
  * @author Noi Nho
@@ -118,10 +120,11 @@ public class Account implements PropertyIndex {
     public void setRole(Role role) {
         this.role = role;
     }
-    /*
+
+    /**
+     * validate data
      * @return true or false
      */
-
     public boolean validateAccount() {
         if (this.username.length() == 0) {
             this.setLastError("Username can not empty!");
@@ -151,15 +154,15 @@ public class Account implements PropertyIndex {
                 value = this.getRole().getRoleName();
                 break;
             case 4:
-                if (this.isStatus()) {
+                if(this.isStatus()){
                     value = "Yes";
-                } else {
+                }else{
                     value = "No";
                 }
+
                 break;
         }
         return value;
-
     }
 
     public void setPropertyValue(int index, Object value) {
@@ -169,4 +172,6 @@ public class Account implements PropertyIndex {
     public Class getPropertyClass(int index) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    
 }
