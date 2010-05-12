@@ -112,13 +112,13 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     public void loadDataOnTable() {
         accSer = new AccountServives();
         arrAcc = accSer.findByAll();
-        JOptionPane.showMessageDialog(this, arrAcc.get(0).getUsername(), "Message", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(this,"Da lay dc du lieu, quyen: "+ arrAcc.get(0).getRole().getRoleName(), "Message", JOptionPane.INFORMATION_MESSAGE);
         ColumnData[] columns = {
             new ColumnData("Account ID", 50, SwingConstants.LEFT, 1),
-            new ColumnData("User name", 100, SwingConstants.LEFT, 2),
+            new ColumnData("User name", 120, SwingConstants.LEFT, 2),
             new ColumnData("Grant", 100, SwingConstants.LEFT, 3),
-            new ColumnData("Status", 30, SwingConstants.CENTER, 4)
-        };
+            new ColumnData("Status", 50, SwingConstants.CENTER, 4)};
+
         tableModel = new ObjectTableModel(tblAccount, columns, arrAcc);
 
         headerTable = tableModel.getHeaderTable();
@@ -189,8 +189,9 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 20, 7);
         getContentPane().add(jPanel1, gridBagConstraints);
 
@@ -199,15 +200,6 @@ public class AccountManagementDlg extends javax.swing.JDialog {
 
         scrAccount.setPreferredSize(new java.awt.Dimension(380, 200));
 
-        tblAccount.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        tblAccount.setPreferredSize(new java.awt.Dimension(200, 0));
         tblAccount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblAccountMouseClicked(evt);
@@ -221,8 +213,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
 
         btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/add.png"))); // NOI18N
         btnCreate.setText("Add");
-        btnCreate.setMaximumSize(new java.awt.Dimension(83, 25));
-        btnCreate.setMinimumSize(new java.awt.Dimension(83, 25));
+        btnCreate.setPreferredSize(new java.awt.Dimension(74, 25));
         btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCreateActionPerformed(evt);
@@ -232,12 +223,21 @@ public class AccountManagementDlg extends javax.swing.JDialog {
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
-        btnEdit.setMaximumSize(new java.awt.Dimension(83, 25));
-        btnEdit.setMinimumSize(new java.awt.Dimension(83, 25));
+        btnEdit.setPreferredSize(new java.awt.Dimension(74, 25));
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnEdit);
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete2.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnDelete);
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.SOUTH);
@@ -248,6 +248,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.6;
+        gridBagConstraints.weighty = 0.8;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         getContentPane().add(jPanel3, gridBagConstraints);
 
@@ -354,6 +355,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.8;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         getContentPane().add(jPanel2, gridBagConstraints);
 
@@ -417,6 +419,32 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_tblAccountMouseClicked
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        enableFields();
+        selection = 0;
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        selection = -1;
+        index = tblAccount.getSelectedRow();
+        Account acc = new Account();
+        acc = arrAcc.get(index);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to account have username = " + acc.getUsername());
+        if (i == JOptionPane.YES_OPTION) {
+            accSer = new AccountServives();
+            if (accSer.remove(acc.getUsername())) {
+                JOptionPane.showMessageDialog(this, accSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnTable();
+                clearFields();
+                disableFields();
+            } else {
+                JOptionPane.showMessageDialog(this, accSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments

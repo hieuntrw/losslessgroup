@@ -467,6 +467,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
             new ColumnData("Role ID", 50, SwingConstants.LEFT, 1),
             new ColumnData("Role name", 150, SwingConstants.LEFT, 2)
         };
+
         tableModel = new ObjectTableModel(tblRole, columns, arrRole);
 
         headerTable = tableModel.getHeaderTable();
