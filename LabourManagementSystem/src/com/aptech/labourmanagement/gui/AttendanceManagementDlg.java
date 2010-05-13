@@ -323,7 +323,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
 
             },
             new String [] {
-                "No.", "First name", "Last name", "Day of birth", "Address"
+                "No.", "First name", "Last name", "Day of birth"
             }
         ));
         jScrollPane1.setViewportView(tblLabor);
@@ -344,7 +344,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         pnlTitle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         pnlTitle.setLayout(new java.awt.GridBagLayout());
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Attendance Management");
         gridBagConstraints = new java.awt.GridBagConstraints();

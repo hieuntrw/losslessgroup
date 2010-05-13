@@ -143,7 +143,7 @@ public class FamilyDAO {
                 Family fa = new Family();
                 fa.setFamilyID(rs.getInt("FamilyID"));
                 fa.setWorker(workerDAO.readByID(rs.getInt("WorkerID")));
-                fa.setRalateName(rs.getString("WorkerID"));
+                fa.setRalateName(rs.getString("RalateName"));
                 fa.setFullName(rs.getString("FullName"));
                 fa.setWorkName(rs.getString("WorkName"));
                 fa.setDayOfBirth(rs.getDate("DayOfBirth"));

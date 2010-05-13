@@ -232,6 +232,11 @@ public class ShiftDAO {
         }
     }
 
+    /**
+     * read Hour By ID
+     * @param shiftID
+     * @return
+     */
     public int readHourByID(int shiftID) {
         Shift si = new Shift();
         int hour = 0;

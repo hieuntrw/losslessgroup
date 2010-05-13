@@ -230,7 +230,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.55;
-        gridBagConstraints.weighty = 0.35;
+        gridBagConstraints.weighty = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(pnlFamilyInfor, gridBagConstraints);
 
@@ -293,7 +293,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.55;
-        gridBagConstraints.weighty = 0.65;
+        gridBagConstraints.weighty = 0.55;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(pnlFamilyList, gridBagConstraints);
 
@@ -326,7 +326,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.45;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weighty = 0.85;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(pnlLaborList, gridBagConstraints);
 
@@ -350,6 +350,8 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.15;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 25, 5);
         getContentPane().add(pnlTitle, gridBagConstraints);
 
@@ -361,6 +363,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         indexLabor = tblWorker.getSelectedRow();
         if (indexLabor > -1) {
             loadDataOnFamilyTable(arrWorker.get(indexLabor).getWorkerID());
+            disableFields();
             btnAdd.setEnabled(true);
         }
     }//GEN-LAST:event_tblWorkerMouseClicked
@@ -373,6 +376,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         cbbRalateName.addItem("Sister");
         cbbRalateName.addItem("Brother");
         cbbRalateName.addItem("Grandfather");
+        cbbRalateName.addItem("Grandmother");
     }
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
@@ -393,9 +397,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         family.setAddress(txtAddress.getText().trim());
         family.setFullName(txtFullName.getText().trim());
         family.setWorkName(txtWorkName.getText().trim());
-        // TODO add your handling code here:
-        //xem lai lai item khong dung
-        family.setRalateName((String)cbbRalateName.getItemAt(cbbRalateName.getSelectedIndex()));
+        family.setRalateName((String)cbbRalateName.getSelectedItem());
         //covert date calender to date sql
         Calendar ca = Calendar.getInstance();
         ca.setTime(dcsDayOfBirth.getDate());
