@@ -4,13 +4,15 @@
  */
 package com.aptech.labourmanagement.entity;
 
+import com.aptech.labourmanagement.component.PropertyIndex;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
  * @author Noi Nho
  */
-public class Worker {
+public class Worker implements PropertyIndex {
 
     private int workerID;
     private Refer refer;
@@ -244,28 +246,80 @@ public class Worker {
     public void setLastError(String lastError) {
         this.lastError = lastError;
     }
-    public boolean validateWorker(){
-        if(this.getAddress().length() == 0){
+
+    /***
+     * validate data
+     * @return true or false
+     */
+    public boolean validate() {
+        if (this.getAddress().length() == 0) {
             this.setLastError("Address can not empty");
             return false;
         }
-        if(this.getContactNumber().length() == 0){
+        if (this.getContactNumber().length() == 0) {
             this.setLastError("Contact Number can not empty");
             return false;
         }
-        if(this.getFirstName().length() == 0){
+        if (this.getFirstName().length() == 0) {
             this.setLastError("First Name can not empty");
             return false;
         }
-        if(this.getLastName().length() == 0){
+        if (this.getLastName().length() == 0) {
             this.setLastError("Last Name can not empty");
             return false;
         }
         //DayOfBirth
         //GradeSalary
         //Experience
-       
+
         return true;
 
+    }
+
+    public Object getPropertyValue(int index) {
+        String value = "";
+        switch (index) {
+            case 1:
+                value = this.getFirstName();
+                break;
+            case 2:
+                value = this.getLastName();
+                break;
+            case 3:
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                value = dateFormat.format(this.getDayOfBirth());
+                break;
+            case 4:
+                value = this.getContactNumber();
+                break;
+            case 5:
+                value = String.valueOf(this.getSalaryGrade().getGradeNum());
+                break;
+            case 6:
+                value = this.getRefer().getFullName();
+                break;
+            case 7:
+                if (this.isIsTemporaryWorker()) {
+                    value = "Yes";
+                } else {
+                    value = "No";
+                }
+                break;
+            case 8:
+                if(this.isStatus()){
+                    value = "Yes";
+                }else{
+                    value = "No";
+                }
+        }
+        return value;
+    }
+
+    public void setPropertyValue(int index, Object value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Class getPropertyClass(int index) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
