@@ -8,18 +8,46 @@
  *
  * Created on May 10, 2010, 6:17:29 PM
  */
-
 package com.aptech.labourmanagement.gui;
 
+import com.aptech.labourmanagement.component.ColumnData;
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.component.ObjectTableModel;
+import com.aptech.labourmanagement.entity.Refer;
+import com.aptech.labourmanagement.entity.SalaryGrade;
+import com.aptech.labourmanagement.entity.Worker;
+import com.aptech.labourmanagement.services.ReferServices;
+import com.aptech.labourmanagement.services.SalaryGradeServices;
+import com.aptech.labourmanagement.services.WorkerServices;
+import com.aptech.labourmanagement.util.CheckForm;
 import java.awt.Toolkit;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author lab
  */
 public class WorkerManagementDlg extends javax.swing.JDialog {
+
+    public WorkerServices workerSer;
+    public ObjectTableModel tableModel;
+    public ArrayList<Worker> arrWorker = new ArrayList<Worker>();
+    public ArrayList<Refer> referList = new ArrayList<Refer>();
+    public ArrayList<SalaryGrade> sgList = new ArrayList<SalaryGrade>();
+    //contains information header of columns
+    public JTable headerTable;
+    //index selected in table
+    int index = -1;
+    int selection;
 
     /** Creates new form WorkerManagementDlg */
     public WorkerManagementDlg(java.awt.Frame parent, boolean modal) {
@@ -34,6 +62,10 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
         new LookAndFeel(this);
+        loadDataOnTable();
+        loadDataCbbRefer();
+        loadDataCbbSalaryGrade();
+        disableFields();
         //dcsDayOfBirth.setDate(new java.util.Date());
     }
 
@@ -67,16 +99,16 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         ckbIsWorking = new javax.swing.JCheckBox();
         txtWeight = new javax.swing.JTextField();
         txtHeight = new javax.swing.JTextField();
-        cbbSalaryGrade = new javax.swing.JComboBox();
-        jLabel6 = new javax.swing.JLabel();
         cbbRefer = new javax.swing.JComboBox();
+        jLabel6 = new javax.swing.JLabel();
+        cbbSalaryGrade = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtExperienceYear = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrWorker = new javax.swing.JScrollPane();
         tblWorker = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
@@ -251,11 +283,6 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         ckbIsWorking.setSelected(true);
         ckbIsWorking.setText("Is working");
         ckbIsWorking.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        ckbIsWorking.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ckbIsWorkingActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 9;
@@ -264,6 +291,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         jPanel3.add(ckbIsWorking, gridBagConstraints);
 
         txtWeight.setColumns(5);
+        txtWeight.setText("0.0");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
@@ -273,6 +301,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         jPanel3.add(txtWeight, gridBagConstraints);
 
         txtHeight.setColumns(5);
+        txtHeight.setText("0.0");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 9;
@@ -281,7 +310,6 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
         jPanel3.add(txtHeight, gridBagConstraints);
 
-        cbbSalaryGrade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
@@ -289,7 +317,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanel3.add(cbbSalaryGrade, gridBagConstraints);
+        jPanel3.add(cbbRefer, gridBagConstraints);
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Refer:");
@@ -301,7 +329,6 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 2);
         jPanel3.add(jLabel6, gridBagConstraints);
 
-        cbbRefer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
@@ -309,14 +336,24 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanel3.add(cbbRefer, gridBagConstraints);
+        jPanel3.add(cbbSalaryGrade, gridBagConstraints);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnSave);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -338,6 +375,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         jPanel3.add(jLabel8, gridBagConstraints);
 
         txtExperienceYear.setColumns(20);
+        txtExperienceYear.setText("0");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
@@ -358,32 +396,47 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Labor list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel4.setLayout(new java.awt.BorderLayout(5, 5));
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(450, 350));
+        scrWorker.setPreferredSize(new java.awt.Dimension(450, 350));
 
         tblWorker.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No.", "First name", "Last name", "Day of birth", "Contact", "Salary grade", "Refer", "Is working"
+                "No.", "First name", "Last name", "Day of birth", "Contact", "Salary grade", "Refer", "Is temporary worker", "Is working"
             }
         ));
-        jScrollPane1.setViewportView(tblWorker);
+        scrWorker.setViewportView(tblWorker);
 
-        jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel4.add(scrWorker, java.awt.BorderLayout.CENTER);
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/add.png"))); // NOI18N
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnAdd);
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEdit);
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete2.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnDelete);
 
         jPanel4.add(jPanel1, java.awt.BorderLayout.SOUTH);
@@ -400,28 +453,271 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ckbIsWorkingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbIsWorkingActionPerformed
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ckbIsWorkingActionPerformed
+        disableFields();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        clearFields();
+        enableFields();
+        selection = 1;
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        enableFields();
+        selection = 0;
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        selection = -1;
+        index = tblWorker.getSelectedRow();
+        Worker worker = new Worker();
+        worker = arrWorker.get(index);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to this worker. full name = " + worker.getFirstName() + " " + worker.getLastName());
+        if (i == JOptionPane.YES_OPTION) {
+            workerSer = new WorkerServices();
+            if (workerSer.remove(worker.getWorkerID())) {
+                JOptionPane.showMessageDialog(this, workerSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnTable();
+                clearFields();
+                disableFields();
+            } else {
+                JOptionPane.showMessageDialog(this, workerSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        if (!CheckForm.isNumberic(txtExperienceYear.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Experience year must be numberic type!", "Warning", JOptionPane.WARNING_MESSAGE);
+            txtExperienceYear.requestFocus();
+            txtExperienceYear.setText("");
+            return;
+        }
+        if (!CheckForm.isNumberic(txtHeight.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Height must be numberic type!", "Warning", JOptionPane.WARNING_MESSAGE);
+            txtHeight.requestFocus();
+            txtHeight.setText("");
+            return;
+        }
+        if (!CheckForm.isNumberic(txtWeight.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Weight must be numberic type!", "Warning", JOptionPane.WARNING_MESSAGE);
+            txtWeight.requestFocus();
+            txtWeight.setText("");
+            return;
+        }
+        if (dcsDayOfBirth.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "DayOfBirth can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
+            dcsDayOfBirth.requestFocus();
+            dcsDayOfBirth.setDate(null);
+            return;
+        }
+        Worker worker = new Worker();
+        if (selection == 0) {
+            index = tblWorker.getSelectedRow();
+            worker = arrWorker.get(index);
+        }
+        worker.setFirstName(txtFirstName.getText().trim());
+        worker.setLastName(txtLastname.getText().trim());
+        worker.setAddress(txtAddress.getText().trim());
+        worker.setExperience(Integer.parseInt(txtExperienceYear.getText().trim()));
+        worker.setContactNumber(txtContact.getText().trim());
+        worker.setHeight(Float.parseFloat(txtHeight.getText().trim()));
+        worker.setWeight(Float.parseFloat(txtWeight.getText().trim()));
+        worker.setIsTemporaryWorker(ckbIsTemporaryWorker.isSelected());
+
+        //get refer
+        int referIndex = cbbSalaryGrade.getSelectedIndex();
+        Refer refer = referList.get(referIndex);
+        worker.setRefer(refer);
+
+        //get salary grade
+        int salaryGradeIndex = cbbRefer.getSelectedIndex();
+        SalaryGrade sg = sgList.get(salaryGradeIndex);
+        worker.setSalaryGrade(sg);
+
+        worker.setStatus(ckbIsWorking.isSelected());
+
+        //covert date calender to date sql
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(dcsDayOfBirth.getDate());
+        Date date = new Date(ca.getTimeInMillis());
+        worker.setDayOfBirth(date);
+
+        workerSer = new WorkerServices();
+        if (selection == 1) {
+            if (workerSer.create(worker)) {
+                JOptionPane.showMessageDialog(this, workerSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnTable();
+                disableFields();
+            } else {
+                JOptionPane.showMessageDialog(this, workerSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            if (workerSer.store(worker)) {
+                JOptionPane.showMessageDialog(this, workerSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnTable();
+                disableFields();
+            } else {
+                JOptionPane.showMessageDialog(this, workerSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
-    * @param args the command line arguments
-    */
+     * enable fields
+     */
+    public void enableFields() {
+        txtAddress.setEditable(true);
+        txtContact.setEditable(true);
+        txtExperienceYear.setEditable(true);
+        txtFirstName.setEditable(true);
+        txtHeight.setEditable(true);
+        txtLastname.setEditable(true);
+        txtWeight.setEditable(true);
+        cbbSalaryGrade.setEditable(true);
+        cbbRefer.setEditable(true);
+        ckbIsTemporaryWorker.setEnabled(true);
+        ckbIsWorking.setEnabled(true);
+        dcsDayOfBirth.setEnabled(true);
+        btnCancel.setEnabled(true);
+        btnSave.setEnabled(true);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+        cbbSalaryGrade.setEnabled(true);
+        cbbRefer.setEnabled(true);
+
+    }
+
+    /**
+     * disable fields
+     */
+    public void disableFields() {
+        clearFields();
+        txtAddress.setEditable(false);
+        txtContact.setEditable(false);
+        txtExperienceYear.setEditable(false);
+        txtFirstName.setEditable(false);
+        txtHeight.setEditable(false);
+        txtLastname.setEditable(false);
+        txtWeight.setEditable(false);
+        cbbSalaryGrade.setEditable(false);
+        cbbRefer.setEditable(false);
+        ckbIsTemporaryWorker.setEnabled(false);
+        ckbIsWorking.setEnabled(false);
+        dcsDayOfBirth.setEnabled(false);
+        btnCancel.setEnabled(false);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+        btnSave.setEnabled(false);
+        cbbSalaryGrade.setEnabled(false);
+        cbbRefer.setEnabled(false);
+    }
+
+    /**
+     * clear fields
+     */
+    public void clearFields() {
+        txtAddress.setText("");
+        txtContact.setText("");
+        txtExperienceYear.setText("0");
+        txtFirstName.setText("");
+        txtHeight.setText("0.0");
+        txtLastname.setText("");
+        txtWeight.setText("0.0");
+        cbbSalaryGrade.setSelectedIndex(0);
+        cbbRefer.setSelectedIndex(0);
+        ckbIsTemporaryWorker.setSelected(true);
+        ckbIsWorking.setSelected(true);
+        dcsDayOfBirth.setDate(null);
+    }
+
+    /**
+     * load data of refer to combobox
+     */
+    public void loadDataCbbRefer() {
+        ReferServices referSer = new ReferServices();
+        referList = referSer.findByAll();
+        for (int i = 0; i < referList.size(); i++) {
+            cbbRefer.addItem(referList.get(i).getFullName());
+        }
+
+    }
+
+    public void loadDataCbbSalaryGrade() {
+        SalaryGradeServices sgSer = new SalaryGradeServices();
+        sgList = sgSer.finfByAll();
+        for (int i = 0; i < sgList.size(); i++) {
+            cbbSalaryGrade.addItem(String.valueOf(sgList.get(i).getGradeNum()));
+        }
+    }
+
+    /**
+     * load data on table
+     */
+    public void loadDataOnTable() {
+        workerSer = new WorkerServices();
+        arrWorker = workerSer.findByAll();
+
+        ColumnData[] columns = {
+            new ColumnData("First name", 70, SwingConstants.LEFT, 1),
+            new ColumnData("Last name", 70, SwingConstants.LEFT, 2),
+            new ColumnData("Day of birth", 60, SwingConstants.LEFT, 3),
+            new ColumnData("Contact", 60, SwingConstants.LEFT, 4),
+            new ColumnData("Salary grade", 60, SwingConstants.LEFT, 5),
+            new ColumnData("Refer", 70, SwingConstants.LEFT, 6),
+            new ColumnData("Temporary worker", 60, SwingConstants.CENTER, 7),
+            new ColumnData("Is working", 40, SwingConstants.CENTER, 8)
+        };
+        tableModel = new ObjectTableModel(tblWorker, columns, arrWorker);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblWorker.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrWorker.setRowHeader(viewport);
+        scrWorker.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 WorkerManagementDlg dialog = new WorkerManagementDlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
+
+
                     }
                 });
                 dialog.setVisible(true);
+
+
             }
         });
-    }
 
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
@@ -448,8 +744,8 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JScrollPane scrWorker;
     private javax.swing.JTable tblWorker;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtContact;
@@ -459,5 +755,4 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
     private javax.swing.JTextField txtLastname;
     private javax.swing.JTextField txtWeight;
     // End of variables declaration//GEN-END:variables
-
 }

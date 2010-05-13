@@ -60,7 +60,7 @@ public class WorkerDAO {
             pst.setBoolean(9, worker.isIsTemporaryWorker());
             pst.setFloat(10, worker.getWeight());
             pst.setFloat(11, worker.getHeight());
-            pst.setBoolean(112, worker.isStatus());
+            pst.setBoolean(12, worker.isStatus());
             if (pst.executeUpdate() == 1) {
                 setLastError("Create successfully!");
                 db.closeConnection();

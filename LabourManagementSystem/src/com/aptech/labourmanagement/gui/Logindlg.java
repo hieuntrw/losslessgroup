@@ -15,6 +15,8 @@ import com.aptech.labourmanagement.entity.Account;
 import com.aptech.labourmanagement.gui.main.MainFrm;
 import com.aptech.labourmanagement.services.AccountServives;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -84,6 +86,11 @@ public class Logindlg extends javax.swing.JDialog {
         jPanel1.add(lblPassword, gridBagConstraints);
 
         txtUsername.setColumns(20);
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyPressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -93,6 +100,11 @@ public class Logindlg extends javax.swing.JDialog {
         jPanel1.add(txtUsername, gridBagConstraints);
 
         txtPassword.setColumns(20);
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -179,6 +191,16 @@ public class Logindlg extends javax.swing.JDialog {
 
     private void btncancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelActionPerformed
         // TODO add your handling code here:
+        login();
+
+    }//GEN-LAST:event_btncancelActionPerformed
+
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        // TODO add your handling code here:
+        txtPassword.setText("");
+        txtUsername.setText("");
+    }//GEN-LAST:event_btnOkActionPerformed
+    public void login() {
         AccountServives accSer = new AccountServives();
         String username = txtUsername.getText();
         String pass = String.valueOf(txtPassword.getPassword());
@@ -194,14 +216,20 @@ public class Logindlg extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "User name or password can not empty!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
-
-    }//GEN-LAST:event_btncancelActionPerformed
-
-    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+    }
+    private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
         // TODO add your handling code here:
-        txtPassword.setText("");
-        txtUsername.setText("");
-    }//GEN-LAST:event_btnOkActionPerformed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }
+    }//GEN-LAST:event_txtUsernameKeyPressed
+
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }
+    }//GEN-LAST:event_txtPasswordKeyPressed
 
     /**
      * @param args the command line arguments

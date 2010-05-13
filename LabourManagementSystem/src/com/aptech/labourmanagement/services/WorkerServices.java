@@ -22,32 +22,42 @@ public class WorkerServices {
     }
 
     /**
-     *
+     * create worker
      * @param worker
      * @return
      */
     public boolean create(Worker worker) {
-        if (woDao.create(worker)) {
-            this.setLastError(woDao.getLastError());
-            return true;
-        } else {
-            this.setLastError(woDao.getLastError());
-            return false;
+        if (worker.validate()) {
+            if (woDao.create(worker)) {
+                this.setLastError(woDao.getLastError());
+                return true;
+            } else {
+                this.setLastError(woDao.getLastError());
+                return false;
+            }
+        }else{
+            this.setLastError(worker.getLastError());
+                return false;
         }
     }
 
     /**
-     * 
+     * update worker
      * @param worker
      * @return
      */
-    public boolean update(Worker worker) {
-        if (woDao.update(worker)) {
-            this.setLastError(woDao.getLastError());
-            return true;
-        } else {
-            this.setLastError(woDao.getLastError());
-            return false;
+    public boolean store(Worker worker) {
+        if (worker.validate()) {
+            if (woDao.update(worker)) {
+                this.setLastError(woDao.getLastError());
+                return true;
+            } else {
+                this.setLastError(woDao.getLastError());
+                return false;
+            }
+        }else{
+            this.setLastError(worker.getLastError());
+                return false;
         }
     }
 
