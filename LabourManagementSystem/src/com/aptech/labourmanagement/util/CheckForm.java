@@ -27,4 +27,18 @@ public class CheckForm {
             return true;
         }
     }
+    /**
+     * check phone number
+     * @param value
+     * @return
+     */
+    public static boolean checkPhoneNumber(String value) {
+        Pattern pattern = Pattern.compile("[0-9]{10,11}");
+        Matcher matcher = pattern.matcher(value);
+        if (!matcher.find()) {
+            return false;
+        } else {
+            return true;
+        }
+    }  
 }

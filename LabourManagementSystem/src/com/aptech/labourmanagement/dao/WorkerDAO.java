@@ -97,7 +97,7 @@ public class WorkerDAO {
             pst.setBoolean(9, worker.isIsTemporaryWorker());
             pst.setFloat(10, worker.getWeight());
             pst.setFloat(11, worker.getHeight());
-            pst.setBoolean(112, worker.isStatus());
+            pst.setBoolean(12, worker.isStatus());
             pst.setInt(13, worker.getWorkerID());
             if (pst.executeUpdate() == 1) {
                 this.setLastError("Update successfuly!");

@@ -6,6 +6,7 @@ package com.aptech.labourmanagement.entity;
 
 import com.aptech.labourmanagement.component.PropertyIndex;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -163,7 +164,24 @@ public class Family implements PropertyIndex{
     }
 
     public Object getPropertyValue(int index) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String value = "";
+        switch (index) {
+            case 1:
+                value = this.getFullName();
+                break;
+            case 2:
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                value = dateFormat.format(this.getDayOfBirth());
+                break;
+            case 3:
+                value = this.getRalateName();
+                break;
+            case 4:
+                value = this.getAddress();
+                break;
+
+        }
+        return value;
     }
 
     public void setPropertyValue(int index, Object value) {

@@ -40,12 +40,17 @@ public class FamilyServices {
      * @param fa the ac to insert into table Family
      */
     public boolean create(Family fa) {
-        if (faDao.create(fa)) {
+        if (fa.validateFamily()) {
+            if (faDao.create(fa)) {
+                this.setLastError(faDao.getLastError());
+                return true;
+            } else {
+                this.setLastError(faDao.getLastError());
+                return false;
+            }
+        }else{
             this.setLastError(fa.getLastError());
-            return true;
-        } else {
-            this.setLastError(fa.getLastError());
-            return false;
+                return false;
         }
     }
 
@@ -53,13 +58,18 @@ public class FamilyServices {
      * @return true or false
      * @param fa the ac to insert into table Family
      */
-    public boolean update(Family fa) {
-        if (faDao.update(fa)) {
+    public boolean store(Family fa) {
+       if (fa.validateFamily()) {
+            if (faDao.update(fa)) {
+                this.setLastError(faDao.getLastError());
+                return true;
+            } else {
+                this.setLastError(faDao.getLastError());
+                return false;
+            }
+        }else{
             this.setLastError(fa.getLastError());
-            return true;
-        } else {
-            this.setLastError(fa.getLastError());
-            return false;
+                return false;
         }
     }
 
@@ -76,17 +86,12 @@ public class FamilyServices {
             return false;
         }
     }
-    
+
     /**
      * @return list Family by workerID
      */
-
-    public ArrayList<Family> findFamilyByWorkerID(int workerID){
+    public ArrayList<Family> findFamilyByWorkerID(int workerID) {
         ArrayList<Family> listFamily = faDao.readFamilyByWorkerID(workerID);
         return listFamily;
     }
-
-   
-
-
 }
