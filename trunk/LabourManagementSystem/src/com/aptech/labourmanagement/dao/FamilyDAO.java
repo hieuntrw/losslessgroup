@@ -28,7 +28,7 @@ public class FamilyDAO {
     private String lastError = null;
     // SQL statements
     private final String SQL_CREATE = "INSERT INTO FAMILY(WorkerID, RalateName, FullName, WorkName, DayOfBirth, Address) VALUES(?,?,?,?,?,?)";
-    private final String SQL_UPDATE = "UPDATE FAMILY set RalateName=?,FullName=? ,WorkName=?,DayOfBirth=?, Address=?  where WorkerID=?";
+    private final String SQL_UPDATE = "UPDATE FAMILY set RalateName=?,FullName=?,WorkName=?,DayOfBirth=?, Address=?  where FamilyID=?";
     private final String SQL_DELETE = "DELETE FROM FAMILY WHERE FamilyID =?";
     private final String SQL_READ = "SELECT * FROM FAMILY WHERE WorkerID =?";
 
@@ -82,6 +82,7 @@ public class FamilyDAO {
             pst.setString(3, fa.getWorkName());
             pst.setDate(4, fa.getDayOfBirth());
             pst.setString(5, fa.getAddress());
+            pst.setInt(6, fa.getFamilyID());
             if (pst.executeUpdate() == 1) {
                 this.setLastError("Update successfuly!");
                 db.closeConnection();

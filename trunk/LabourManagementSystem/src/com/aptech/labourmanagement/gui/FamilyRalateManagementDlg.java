@@ -8,18 +8,44 @@
  *
  * Created on May 10, 2010, 1:12:52 PM
  */
-
 package com.aptech.labourmanagement.gui;
 
+import com.aptech.labourmanagement.component.ColumnData;
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.component.ObjectTableModel;
+import com.aptech.labourmanagement.entity.Family;
+import com.aptech.labourmanagement.entity.Worker;
+import com.aptech.labourmanagement.services.FamilyServices;
+import com.aptech.labourmanagement.services.WorkerServices;
 import java.awt.Toolkit;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author Noi Nho
  */
 public class FamilyRalateManagementDlg extends javax.swing.JDialog {
+
+    public WorkerServices workerSer;
+    public FamilyServices familySer;
+    public ObjectTableModel tableModel;
+    public ArrayList<Family> arrFamily = new ArrayList<Family>();
+    public ArrayList<Worker> arrWorker = new ArrayList<Worker>();
+    //contains information header of columns
+    public JTable headerTable;
+    //index selected in table
+    int indexLabor = -1;
+    int indexFamily = -1;
+    int selection;
 
     /** Creates new form FamilyRalateManagementDlg */
     public FamilyRalateManagementDlg(java.awt.Frame parent, boolean modal) {
@@ -34,6 +60,9 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
         new LookAndFeel(this);
+        loadDataOnLaborTable();
+        loadCcRalateName();
+        disableFields();
     }
 
     /** This method is called from within the constructor to
@@ -61,15 +90,15 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         pnlFamilyList = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        scrFamily = new javax.swing.JScrollPane();
         tblFamily = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         pnlLaborList = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblLabor = new javax.swing.JTable();
+        scrWorker = new javax.swing.JScrollPane();
+        tblWorker = new javax.swing.JTable();
         pnlTitle = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
 
@@ -142,8 +171,6 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
         pnlFamilyInfor.add(dcsDayOfBirth, gridBagConstraints);
-
-        cbbRalateName.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -172,10 +199,20 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnSave);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -200,7 +237,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         pnlFamilyList.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Family ralate list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         pnlFamilyList.setLayout(new java.awt.BorderLayout(0, 5));
 
-        jScrollPane2.setPreferredSize(new java.awt.Dimension(450, 200));
+        scrFamily.setPreferredSize(new java.awt.Dimension(450, 200));
 
         tblFamily.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -210,22 +247,42 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
                 "No.", "Full name", "Day of birth", "Ralate name", "Address"
             }
         ));
-        jScrollPane2.setViewportView(tblFamily);
+        tblFamily.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblFamilyMouseClicked(evt);
+            }
+        });
+        scrFamily.setViewportView(tblFamily);
 
-        pnlFamilyList.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        pnlFamilyList.add(scrFamily, java.awt.BorderLayout.CENTER);
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/add.png"))); // NOI18N
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnAdd);
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEdit);
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete2.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnDelete);
 
         pnlFamilyList.add(jPanel1, java.awt.BorderLayout.SOUTH);
@@ -243,19 +300,24 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         pnlLaborList.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Labor list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         pnlLaborList.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(300, 402));
+        scrWorker.setPreferredSize(new java.awt.Dimension(300, 402));
 
-        tblLabor.setModel(new javax.swing.table.DefaultTableModel(
+        tblWorker.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No.", "First name", "Last name", "Day of birth", "Address"
+                "No.", "First name", "Last name", "Day of birth"
             }
         ));
-        jScrollPane1.setViewportView(tblLabor);
+        tblWorker.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblWorkerMouseClicked(evt);
+            }
+        });
+        scrWorker.setViewportView(tblWorker);
 
-        pnlLaborList.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        pnlLaborList.add(scrWorker, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -294,14 +356,250 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tblWorkerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWorkerMouseClicked
+        // TODO add your handling code here:
+        indexLabor = tblWorker.getSelectedRow();
+        if (indexLabor > -1) {
+            loadDataOnFamilyTable(arrWorker.get(indexLabor).getWorkerID());
+            btnAdd.setEnabled(true);
+        }
+    }//GEN-LAST:event_tblWorkerMouseClicked
     /**
-    * @param args the command line arguments
-    */
+     * load data to combobox ralate name
+     */
+    public void loadCcRalateName() {
+        cbbRalateName.addItem("Father");
+        cbbRalateName.addItem("Mother");
+        cbbRalateName.addItem("Sister");
+        cbbRalateName.addItem("Brother");
+        cbbRalateName.addItem("Grandfather");
+    }
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        Family family = new Family();
+        if (selection == 0) {
+            indexFamily = tblFamily.getSelectedRow();
+            family = arrFamily.get(indexFamily);
+        } else {
+            family.setWorker(workerSer.readByID(arrWorker.get(indexLabor).getWorkerID()));
+        }
+        if (dcsDayOfBirth.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "DayOfBirth can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
+            dcsDayOfBirth.requestFocus();
+            dcsDayOfBirth.setDate(null);
+            return;
+        }
+        //set value for family
+        family.setAddress(txtAddress.getText().trim());
+        family.setFullName(txtFullName.getText().trim());
+        family.setWorkName(txtWorkName.getText().trim());
+        // TODO add your handling code here:
+        //xem lai lai item khong dung
+        family.setRalateName((String)cbbRalateName.getItemAt(cbbRalateName.getSelectedIndex()));
+        //covert date calender to date sql
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(dcsDayOfBirth.getDate());
+        Date date = new Date(ca.getTimeInMillis());
+        family.setDayOfBirth(date);
+
+
+        familySer = new FamilyServices();
+        if (selection == 1) {
+            if (familySer.create(family)) {
+                JOptionPane.showMessageDialog(this, familySer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnFamilyTable(family.getWorker().getWorkerID());
+                disableFields();
+                btnAdd.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(this, familySer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            if (selection == 0) {
+                if (familySer.store(family)) {
+                    JOptionPane.showMessageDialog(this, familySer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                    loadDataOnFamilyTable(family.getWorker().getWorkerID());
+                    disableFields();
+                    btnAdd.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, familySer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        disableFields();
+        btnAdd.setEnabled(true);
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void tblFamilyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFamilyMouseClicked
+        // TODO add your handling code here:
+        indexFamily = tblFamily.getSelectedRow();
+        if (indexFamily > -1) {
+            btnEdit.setEnabled(true);
+            btnDelete.setEnabled(true);
+            txtAddress.setText(arrFamily.get(indexFamily).getAddress());
+            txtFullName.setText(arrFamily.get(indexFamily).getFullName());
+            txtWorkName.setText(arrFamily.get(indexFamily).getWorkName());
+            cbbRalateName.setSelectedItem(arrFamily.get(indexFamily).getRalateName());
+            dcsDayOfBirth.setDate(arrFamily.get(indexFamily).getDayOfBirth());
+        }
+    }//GEN-LAST:event_tblFamilyMouseClicked
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        selection = 0;
+        enableFields();
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        selection = 1;
+        clearFields();
+        enableFields();
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        selection = -1;
+        indexFamily = tblFamily.getSelectedRow();
+        Family family = new Family();
+        family = arrFamily.get(indexFamily);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to family member have full name = " + family.getFullName());
+        if (i == JOptionPane.YES_OPTION) {
+            familySer = new FamilyServices();
+            if (familySer.remove(family.getFamilyID())) {
+                JOptionPane.showMessageDialog(this, familySer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnFamilyTable(arrWorker.get(indexLabor).getWorkerID());
+                clearFields();
+                disableFields();
+                btnAdd.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(this, familySer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    /**
+     * enable fields
+     */
+    public void enableFields() {
+        txtAddress.setEditable(true);
+        txtFullName.setEditable(true);
+        txtWorkName.setEditable(true);
+        dcsDayOfBirth.setEnabled(true);
+        cbbRalateName.setEnabled(true);
+        btnAdd.setEnabled(true);
+        btnCancel.setEnabled(true);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+        btnSave.setEnabled(true);
+    }
+
+    /**
+     * disable fields
+     */
+    public void disableFields() {
+        clearFields();
+        txtAddress.setEditable(false);
+        txtFullName.setEditable(false);
+        txtWorkName.setEditable(false);
+        dcsDayOfBirth.setEnabled(false);
+        cbbRalateName.setEnabled(false);
+        btnAdd.setEnabled(false);
+        btnCancel.setEnabled(false);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+        btnSave.setEnabled(false);
+    }
+
+    /**
+     *  clear fields
+     */
+    public void clearFields() {
+        txtAddress.setText("");
+        txtFullName.setText("");
+        txtWorkName.setText("");
+        dcsDayOfBirth.setDate(null);
+        cbbRalateName.setSelectedIndex(0);
+    }
+
+    /**
+     * load data on family table
+     * @param workerID
+     */
+    public void loadDataOnFamilyTable(int workerID) {
+        familySer = new FamilyServices();
+        arrFamily = familySer.findFamilyByWorkerID(workerID);
+
+        ColumnData[] columns = {
+            new ColumnData("Full name", 150, SwingConstants.LEFT, 1),
+            new ColumnData("Day of birth", 90, SwingConstants.LEFT, 2),
+            new ColumnData("Ralate name", 90, SwingConstants.LEFT, 3),
+            new ColumnData("Address", 100, SwingConstants.LEFT, 4)
+        };
+        tableModel = new ObjectTableModel(tblFamily, columns, arrFamily);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblFamily.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrFamily.setRowHeader(viewport);
+        scrFamily.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
+
+    /**
+     * load data on table Labor
+     */
+    public void loadDataOnLaborTable() {
+        workerSer = new WorkerServices();
+        arrWorker = workerSer.findByAll();
+
+        ColumnData[] columns = {
+            new ColumnData("First name", 80, SwingConstants.LEFT, 1),
+            new ColumnData("Last name", 120, SwingConstants.LEFT, 2),
+            new ColumnData("Day of birth", 90, SwingConstants.LEFT, 3)
+        };
+        tableModel = new ObjectTableModel(tblWorker, columns, arrWorker);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblWorker.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrWorker.setRowHeader(viewport);
+        scrWorker.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 FamilyRalateManagementDlg dialog = new FamilyRalateManagementDlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -311,7 +609,6 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
@@ -323,8 +620,6 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblDayOfBirth;
     private javax.swing.JLabel lblFullName;
@@ -334,11 +629,12 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     private javax.swing.JPanel pnlFamilyList;
     private javax.swing.JPanel pnlLaborList;
     private javax.swing.JPanel pnlTitle;
+    private javax.swing.JScrollPane scrFamily;
+    private javax.swing.JScrollPane scrWorker;
     private javax.swing.JTable tblFamily;
-    private javax.swing.JTable tblLabor;
+    private javax.swing.JTable tblWorker;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtFullName;
     private javax.swing.JTextField txtWorkName;
     // End of variables declaration//GEN-END:variables
-
 }

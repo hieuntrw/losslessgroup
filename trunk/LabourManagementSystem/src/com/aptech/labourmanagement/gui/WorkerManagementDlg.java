@@ -66,6 +66,8 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         loadDataCbbRefer();
         loadDataCbbSalaryGrade();
         disableFields();
+        //cbbRefer.setSelectedIndex(0);
+        //cbbSalaryGrade.setSelectedIndex(0);
         //dcsDayOfBirth.setDate(new java.util.Date());
     }
 
@@ -137,6 +139,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.15;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 25, 5);
         getContentPane().add(jPanel5, gridBagConstraints);
 
@@ -389,7 +392,8 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weighty = 0.85;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(jPanel3, gridBagConstraints);
 
@@ -406,6 +410,11 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
                 "No.", "First name", "Last name", "Day of birth", "Contact", "Salary grade", "Refer", "Is temporary worker", "Is working"
             }
         ));
+        tblWorker.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblWorkerMouseClicked(evt);
+            }
+        });
         scrWorker.setViewportView(tblWorker);
 
         jPanel4.add(scrWorker, java.awt.BorderLayout.CENTER);
@@ -446,7 +455,8 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.7;
+        gridBagConstraints.weightx = 0.75;
+        gridBagConstraints.weighty = 0.85;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(jPanel4, gridBagConstraints);
 
@@ -496,25 +506,31 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         if (!CheckForm.isNumberic(txtExperienceYear.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Experience year must be numberic type!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtExperienceYear.requestFocus();
-            txtExperienceYear.setText("");
+            //txtExperienceYear.setText("");
             return;
         }
         if (!CheckForm.isNumberic(txtHeight.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Height must be numberic type!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtHeight.requestFocus();
-            txtHeight.setText("");
+            //txtHeight.setText("");
             return;
         }
         if (!CheckForm.isNumberic(txtWeight.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Weight must be numberic type!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtWeight.requestFocus();
-            txtWeight.setText("");
+            //txtWeight.setText("");
             return;
         }
         if (dcsDayOfBirth.getDate() == null) {
             JOptionPane.showMessageDialog(this, "DayOfBirth can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
             dcsDayOfBirth.requestFocus();
             dcsDayOfBirth.setDate(null);
+            return;
+        }
+        if(!CheckForm.checkPhoneNumber(txtContact.getText().trim())){
+            JOptionPane.showMessageDialog(this, "contact number must be 10(11) digits!!", "Warning", JOptionPane.WARNING_MESSAGE);
+            txtContact.requestFocus();
+            //txtContact.setText("");
             return;
         }
         Worker worker = new Worker();
@@ -532,12 +548,12 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         worker.setIsTemporaryWorker(ckbIsTemporaryWorker.isSelected());
 
         //get refer
-        int referIndex = cbbSalaryGrade.getSelectedIndex();
+        int referIndex = cbbRefer.getSelectedIndex();
         Refer refer = referList.get(referIndex);
         worker.setRefer(refer);
 
         //get salary grade
-        int salaryGradeIndex = cbbRefer.getSelectedIndex();
+        int salaryGradeIndex = cbbSalaryGrade.getSelectedIndex();
         SalaryGrade sg = sgList.get(salaryGradeIndex);
         worker.setSalaryGrade(sg);
 
@@ -568,6 +584,29 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void tblWorkerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWorkerMouseClicked
+        // TODO add your handling code here:
+        index = tblWorker.getSelectedRow();
+        if (index > -1) {
+            btnEdit.setEnabled(true);
+            btnDelete.setEnabled(true);
+            txtAddress.setText(arrWorker.get(index).getAddress());
+            txtContact.setText(arrWorker.get(index).getContactNumber());
+            txtExperienceYear.setText(String.valueOf(arrWorker.get(index).getExperience()));
+            txtFirstName.setText(arrWorker.get(index).getFirstName());
+            txtHeight.setText(String.valueOf(arrWorker.get(index).getHeight()));
+            txtLastname.setText(arrWorker.get(index).getLastName());
+            txtWeight.setText(String.valueOf(arrWorker.get(index).getWeight()));
+            cbbRefer.setSelectedItem(arrWorker.get(index).getRefer().getFullName());
+            cbbSalaryGrade.setSelectedItem(String.valueOf(arrWorker.get(index).getSalaryGrade().getGradeNum()));
+            ckbIsTemporaryWorker.setSelected(arrWorker.get(index).isIsTemporaryWorker());
+            ckbIsWorking.setSelected(arrWorker.get(index).isStatus());
+            dcsDayOfBirth.setDate(arrWorker.get(index).getDayOfBirth());
+        }
+
+
+    }//GEN-LAST:event_tblWorkerMouseClicked
 
     /**
      * enable fields
@@ -665,7 +704,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         arrWorker = workerSer.findByAll();
 
         ColumnData[] columns = {
-            new ColumnData("First name", 70, SwingConstants.LEFT, 1),
+            new ColumnData("First name", 50, SwingConstants.LEFT, 1),
             new ColumnData("Last name", 70, SwingConstants.LEFT, 2),
             new ColumnData("Day of birth", 60, SwingConstants.LEFT, 3),
             new ColumnData("Contact", 60, SwingConstants.LEFT, 4),
