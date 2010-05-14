@@ -8,18 +8,48 @@
  *
  * Created on May 10, 2010, 1:12:52 PM
  */
-
 package com.aptech.labourmanagement.gui;
 
+import com.aptech.labourmanagement.component.ColumnData;
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.component.ObjectTableModel;
+import com.aptech.labourmanagement.entity.Attendance;
+import com.aptech.labourmanagement.entity.Shift;
+import com.aptech.labourmanagement.entity.Worker;
+import com.aptech.labourmanagement.services.AttendanceServices;
+import com.aptech.labourmanagement.services.ShiftServices;
+import com.aptech.labourmanagement.services.WorkerServices;
 import java.awt.Toolkit;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author Noi Nho
  */
 public class AttendanceManagementDlg extends javax.swing.JDialog {
+
+    public WorkerServices workerSer;
+    public AttendanceServices attendanceSer;
+    public ObjectTableModel tableModel;
+    public ArrayList<Attendance> arrAttendance = new ArrayList<Attendance>();
+    public ArrayList<Worker> arrWorker = new ArrayList<Worker>();
+    public ArrayList<Shift> arrShift = new ArrayList<Shift>();
+    //contains information header of columns
+    public JTable headerTable;
+    //index selected in table
+    int indexLabor = -1;
+    int indexAttendance = -1;
+    int indexSelectShiftName = 0;
+    int selection;
 
     /** Creates new form FamilyRalateManagement */
     public AttendanceManagementDlg(java.awt.Frame parent, boolean modal) {
@@ -35,6 +65,9 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
         new LookAndFeel(this);
         dcsWorkDate.setDate(new java.util.Date());
+        loadDataOnLaborTable();
+        loadDataOnCbbShiftName();
+        disableFields();
     }
 
     /** This method is called from within the constructor to
@@ -51,32 +84,32 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         lblFirstlName = new javax.swing.JLabel();
         lblDayOfBirth = new javax.swing.JLabel();
         lblShiftName = new javax.swing.JLabel();
-        lblTimeIn = new javax.swing.JLabel();
+        lblTimeOut = new javax.swing.JLabel();
         lblLastname = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
         dcsDayOfBirth = new com.toedter.calendar.JDateChooser();
         cbbShiftName = new javax.swing.JComboBox();
-        txtTimeIn = new javax.swing.JTextField();
+        txtTimeOut = new javax.swing.JTextField();
         txtLastName = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        lblTimeOut = new javax.swing.JLabel();
+        lblTimeIn = new javax.swing.JLabel();
         lblWorkDate = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        txtTimeIn = new javax.swing.JTextField();
+        ckbIsExtraShift = new javax.swing.JCheckBox();
+        ckbComplete = new javax.swing.JCheckBox();
         dcsWorkDate = new com.toedter.calendar.JDateChooser();
         pnlAttendanceList = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        scrAttendance = new javax.swing.JScrollPane();
         tblAttendance = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         btnTimekeeping = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         pnlLaborList = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblLabor = new javax.swing.JTable();
+        scrWorker = new javax.swing.JScrollPane();
+        tblWorker = new javax.swing.JTable();
         pnlTitle = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
 
@@ -117,15 +150,15 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
         pnlAttendanceInfor.add(lblShiftName, gridBagConstraints);
 
-        lblTimeIn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTimeIn.setText("Time in:");
+        lblTimeOut.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTimeOut.setText("Time out:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
-        pnlAttendanceInfor.add(lblTimeIn, gridBagConstraints);
+        pnlAttendanceInfor.add(lblTimeOut, gridBagConstraints);
 
         lblLastname.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblLastname.setText("Last name:");
@@ -157,7 +190,11 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
         pnlAttendanceInfor.add(dcsDayOfBirth, gridBagConstraints);
 
-        cbbShiftName.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbShiftName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbShiftNameItemStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -166,14 +203,14 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
         pnlAttendanceInfor.add(cbbShiftName, gridBagConstraints);
 
-        txtTimeIn.setColumns(7);
-        txtTimeIn.setEditable(false);
+        txtTimeOut.setColumns(7);
+        txtTimeOut.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
-        pnlAttendanceInfor.add(txtTimeIn, gridBagConstraints);
+        pnlAttendanceInfor.add(txtTimeOut, gridBagConstraints);
 
         txtLastName.setColumns(20);
         txtLastName.setEditable(false);
@@ -187,10 +224,20 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnSave);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -201,15 +248,15 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
         pnlAttendanceInfor.add(jPanel2, gridBagConstraints);
 
-        lblTimeOut.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTimeOut.setText("Time out:");
+        lblTimeIn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTimeIn.setText("Time In:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
-        pnlAttendanceInfor.add(lblTimeOut, gridBagConstraints);
+        pnlAttendanceInfor.add(lblTimeIn, gridBagConstraints);
 
         lblWorkDate.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblWorkDate.setText("Work date:");
@@ -221,35 +268,35 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
         pnlAttendanceInfor.add(lblWorkDate, gridBagConstraints);
 
-        jTextField1.setColumns(7);
-        jTextField1.setEditable(false);
+        txtTimeIn.setColumns(7);
+        txtTimeIn.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
-        pnlAttendanceInfor.add(jTextField1, gridBagConstraints);
+        pnlAttendanceInfor.add(txtTimeIn, gridBagConstraints);
 
-        jCheckBox1.setText("Is extra shift");
-        jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ckbIsExtraShift.setText("Is extra shift");
+        ckbIsExtraShift.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
-        pnlAttendanceInfor.add(jCheckBox1, gridBagConstraints);
+        pnlAttendanceInfor.add(ckbIsExtraShift, gridBagConstraints);
 
-        jCheckBox2.setSelected(true);
-        jCheckBox2.setText("Complete");
-        jCheckBox2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ckbComplete.setSelected(true);
+        ckbComplete.setText("Complete");
+        ckbComplete.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 0);
-        pnlAttendanceInfor.add(jCheckBox2, gridBagConstraints);
+        pnlAttendanceInfor.add(ckbComplete, gridBagConstraints);
 
         dcsWorkDate.setDateFormatString("MM/dd/yyyy");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -273,7 +320,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         pnlAttendanceList.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Attendance list of labor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         pnlAttendanceList.setLayout(new java.awt.BorderLayout(0, 5));
 
-        jScrollPane2.setPreferredSize(new java.awt.Dimension(450, 200));
+        scrAttendance.setPreferredSize(new java.awt.Dimension(450, 200));
 
         tblAttendance.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -283,22 +330,42 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
                 "No.", "Work date", "Time in", "Time out", "Is extra shift", "Complete"
             }
         ));
-        jScrollPane2.setViewportView(tblAttendance);
+        tblAttendance.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAttendanceMouseClicked(evt);
+            }
+        });
+        scrAttendance.setViewportView(tblAttendance);
 
-        pnlAttendanceList.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        pnlAttendanceList.add(scrAttendance, java.awt.BorderLayout.CENTER);
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         btnTimekeeping.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/add.png"))); // NOI18N
         btnTimekeeping.setText("Timekeeping");
+        btnTimekeeping.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimekeepingActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnTimekeeping);
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEdit);
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete2.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnDelete);
 
         pnlAttendanceList.add(jPanel1, java.awt.BorderLayout.SOUTH);
@@ -316,9 +383,9 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         pnlLaborList.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Labor list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         pnlLaborList.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(300, 402));
+        scrWorker.setPreferredSize(new java.awt.Dimension(300, 402));
 
-        tblLabor.setModel(new javax.swing.table.DefaultTableModel(
+        tblWorker.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -326,9 +393,14 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
                 "No.", "First name", "Last name", "Day of birth"
             }
         ));
-        jScrollPane1.setViewportView(tblLabor);
+        tblWorker.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblWorkerMouseClicked(evt);
+            }
+        });
+        scrWorker.setViewportView(tblWorker);
 
-        pnlLaborList.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        pnlLaborList.add(scrWorker, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -369,24 +441,282 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cbbShiftNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbShiftNameItemStateChanged
+        // TODO add your handling code here:
+        indexSelectShiftName = cbbShiftName.getSelectedIndex();
+        txtTimeIn.setText(arrShift.get(indexSelectShiftName).getTimeIn());
+        txtTimeOut.setText(arrShift.get(indexSelectShiftName).getTimeOut());
+    }//GEN-LAST:event_cbbShiftNameItemStateChanged
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        disableFields();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void tblAttendanceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAttendanceMouseClicked
+        // TODO add your handling code here:
+        indexAttendance = tblAttendance.getSelectedRow();
+        if (indexAttendance > -1) {
+            btnEdit.setEnabled(true);
+            btnDelete.setEnabled(true);
+            dcsWorkDate.setDate(arrAttendance.get(indexAttendance).getWorkDay());
+            cbbShiftName.setSelectedItem(arrAttendance.get(indexAttendance).getShift().getShiftName());
+            ckbComplete.setSelected(arrAttendance.get(indexAttendance).isStatus());
+            ckbIsExtraShift.setSelected(arrAttendance.get(indexAttendance).isIsExtraShift());
+            txtFirstName.setText(arrAttendance.get(indexAttendance).getWorker().getFirstName());
+            txtLastName.setText(arrAttendance.get(indexAttendance).getWorker().getLastName());
+            dcsDayOfBirth.setDate(arrAttendance.get(indexAttendance).getWorker().getDayOfBirth());
+        }
+    }//GEN-LAST:event_tblAttendanceMouseClicked
+
+    private void tblWorkerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWorkerMouseClicked
+        // TODO add your handling code here:
+        indexLabor = tblWorker.getSelectedRow();
+        if (indexLabor > -1) {
+            loadDataOnAttendanceTable(arrWorker.get(indexLabor).getWorkerID());
+            disableFields();
+            btnTimekeeping.setEnabled(true);
+            txtFirstName.setText(arrWorker.get(indexLabor).getFirstName());
+            txtLastName.setText(arrWorker.get(indexLabor).getLastName());
+            dcsDayOfBirth.setDate(arrWorker.get(indexLabor).getDayOfBirth());
+        }
+    }//GEN-LAST:event_tblWorkerMouseClicked
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        selection = 0;
+        enableFields();
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        selection = -1;
+        indexAttendance = tblAttendance.getSelectedRow();
+        Attendance at = new Attendance();
+        at = arrAttendance.get(indexAttendance);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to this attendance have ID = " + at.getID());
+        if (i == JOptionPane.YES_OPTION) {
+            attendanceSer = new AttendanceServices();
+            if (attendanceSer.remove(at.getID())) {
+                JOptionPane.showMessageDialog(this, attendanceSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnAttendanceTable(arrWorker.get(indexLabor).getWorkerID());
+                clearFields();
+                disableFields();
+                btnTimekeeping.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(this, attendanceSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnTimekeepingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimekeepingActionPerformed
+        // TODO add your handling code here:
+        selection = 1;
+        clearFields();
+        enableFields();
+    }//GEN-LAST:event_btnTimekeepingActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        Attendance at = new Attendance();
+        if (selection == 0) {
+            indexAttendance = tblAttendance.getSelectedRow();
+            at = arrAttendance.get(indexAttendance);
+        } else {
+            at.setWorker(workerSer.readByID(arrWorker.get(indexLabor).getWorkerID()));
+        }
+        if (dcsWorkDate.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "DayOfBirth can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
+            dcsWorkDate.requestFocus();
+            dcsWorkDate.setDate(null);
+            return;
+        }
+        //set value for attendance
+        indexSelectShiftName = cbbShiftName.getSelectedIndex();
+        at.setShift(arrShift.get(indexSelectShiftName));
+        at.setIsExtraShift(ckbIsExtraShift.isSelected());
+        at.setStatus(ckbComplete.isSelected());
+
+        //covert date calender to date sql
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(dcsWorkDate.getDate());
+        Date date = new Date(ca.getTimeInMillis());
+        at.setWorkDay(date);
+
+
+        attendanceSer = new AttendanceServices();
+        if (selection == 1) {
+            if (attendanceSer.create(at)) {
+                JOptionPane.showMessageDialog(this, attendanceSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadDataOnAttendanceTable(at.getWorker().getWorkerID());
+                disableFields();
+                btnTimekeeping.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(this, attendanceSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            if (selection == 0) {
+                if (attendanceSer.store(at)) {
+                    JOptionPane.showMessageDialog(this, attendanceSer.getLastError(), "Message", JOptionPane.INFORMATION_MESSAGE);
+                    loadDataOnAttendanceTable(at.getWorker().getWorkerID());
+                    disableFields();
+                    btnTimekeeping.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, attendanceSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
     /**
-    * @param args the command line arguments
-    */
+     * enable fields
+     */
+    public void enableFields() {
+        cbbShiftName.setEnabled(true);
+        dcsWorkDate.setEnabled(true);
+        btnCancel.setEnabled(true);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+        btnSave.setEnabled(true);
+        btnTimekeeping.setEnabled(true);
+        ckbComplete.setEnabled(true);
+        ckbIsExtraShift.setEnabled(true);
+    }
+
+    /**
+     * disable fields
+     */
+    public void disableFields() {
+        clearFields();
+        cbbShiftName.setEnabled(false);
+        dcsWorkDate.setEnabled(false);
+        btnCancel.setEnabled(false);
+        btnDelete.setEnabled(false);
+        btnEdit.setEnabled(false);
+        btnSave.setEnabled(false);
+        btnTimekeeping.setEnabled(false);
+        ckbComplete.setEnabled(false);
+        ckbIsExtraShift.setEnabled(false);
+
+    }
+
+    /**
+     * clear fields
+     */
+    public void clearFields() {
+        txtFirstName.setText("");
+        txtLastName.setText("");
+        dcsDayOfBirth.setDate(null);
+        cbbShiftName.setSelectedIndex(0);
+        dcsWorkDate.setDate(new java.util.Date());
+        ckbComplete.setSelected(true);
+        ckbIsExtraShift.setSelected(false);
+    }
+
+    /**
+     * load data on combobox shift name
+     */
+    public void loadDataOnCbbShiftName() {
+        ShiftServices shiftSer = new ShiftServices();
+        arrShift = shiftSer.findByAll();
+        for (int i = 0; i < arrShift.size(); i++) {
+            cbbShiftName.addItem(arrShift.get(i).getShiftName());
+        }
+    }
+
+    /**
+     * load attendance of the labor on table attendance
+     * @param workerID
+     */
+    public void loadDataOnAttendanceTable(int workerID) {
+        attendanceSer = new AttendanceServices();
+        arrAttendance = attendanceSer.findAttendanceByWorkerID(workerID);
+
+        ColumnData[] columns = {
+            new ColumnData("Worker date", 80, SwingConstants.LEFT, 1),
+            new ColumnData("Time in", 50, SwingConstants.LEFT, 2),
+            new ColumnData("Time out", 50, SwingConstants.LEFT, 3),
+            new ColumnData("Is extra shift", 80, SwingConstants.CENTER, 4),
+            new ColumnData("Complete", 50, SwingConstants.CENTER, 5)
+        };
+        tableModel = new ObjectTableModel(tblAttendance, columns, arrAttendance);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblAttendance.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+
+        scrAttendance.setRowHeader(viewport);
+        scrAttendance.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
+
+    /**
+     * load data on labor table
+     */
+    public void loadDataOnLaborTable() {
+        workerSer = new WorkerServices();
+        arrWorker = workerSer.findByAll();
+
+        ColumnData[] columns = {
+            new ColumnData("First name", 80, SwingConstants.LEFT, 1),
+            new ColumnData("Last name", 120, SwingConstants.LEFT, 2),
+            new ColumnData("Day of birth", 90, SwingConstants.LEFT, 3)
+        };
+        tableModel = new ObjectTableModel(tblWorker, columns, arrWorker);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblWorker.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrWorker.setRowHeader(viewport);
+        scrWorker.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+
+
+    }
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 AttendanceManagementDlg dialog = new AttendanceManagementDlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
+
+
                     }
                 });
                 dialog.setVisible(true);
+
+
             }
         });
-    }
 
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
@@ -394,15 +724,12 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnTimekeeping;
     private javax.swing.JComboBox cbbShiftName;
+    private javax.swing.JCheckBox ckbComplete;
+    private javax.swing.JCheckBox ckbIsExtraShift;
     private com.toedter.calendar.JDateChooser dcsDayOfBirth;
     private com.toedter.calendar.JDateChooser dcsWorkDate;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblDayOfBirth;
     private javax.swing.JLabel lblFirstlName;
     private javax.swing.JLabel lblLastname;
@@ -415,11 +742,13 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     private javax.swing.JPanel pnlAttendanceList;
     private javax.swing.JPanel pnlLaborList;
     private javax.swing.JPanel pnlTitle;
+    private javax.swing.JScrollPane scrAttendance;
+    private javax.swing.JScrollPane scrWorker;
     private javax.swing.JTable tblAttendance;
-    private javax.swing.JTable tblLabor;
+    private javax.swing.JTable tblWorker;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;
     private javax.swing.JTextField txtTimeIn;
+    private javax.swing.JTextField txtTimeOut;
     // End of variables declaration//GEN-END:variables
-
 }

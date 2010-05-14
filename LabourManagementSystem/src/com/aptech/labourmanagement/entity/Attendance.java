@@ -4,13 +4,15 @@
  */
 package com.aptech.labourmanagement.entity;
 
+import com.aptech.labourmanagement.component.PropertyIndex;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
  * @author Noi Nho
  */
-public class Attendance {
+public class Attendance implements PropertyIndex {
 
     private int ID;
     private Shift shift;
@@ -30,13 +32,12 @@ public class Attendance {
         this.worker = worker;
         this.status = status;
         this.isExtraShift = isExtraShift;
-      
+
     }
 
     /*
      * Constructor 
      */
-
     public Attendance() {
     }
 
@@ -136,5 +137,61 @@ public class Attendance {
      */
     public void setLastError(String lastError) {
         this.lastError = lastError;
+    }
+
+    /**
+     * validate data attendance
+     * @return true or false
+     */
+    public boolean validate() {
+        if (this.getShift() == null) {
+            this.setLastError("Shift can not empty!");
+            return false;
+        }
+        if (this.getWorker() == null) {
+            this.setLastError("Worker can not empty!");
+            return false;
+        }
+        return true;
+    }
+
+    public Object getPropertyValue(int index) {
+        String value = "";
+        switch (index) {
+            case 1:
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                value = dateFormat.format(this.getWorkDay());
+                break;
+            case 2:
+                value = this.getShift().getTimeIn();
+                break;
+            case 3:
+                value = this.getShift().getTimeOut();
+                break;
+            case 4:
+                if (this.isIsExtraShift()) {
+                    value = "Yes";
+                } else {
+                    value = "No";
+                }
+                break;
+            case 5:
+                if (this.isStatus()) {
+                    value = "Yes";
+                } else {
+                    value = "No";
+                }
+                break;
+
+        }
+        return value;
+    }
+
+    public void setPropertyValue(int index, Object value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Class getPropertyClass(int index) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
