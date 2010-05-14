@@ -38,13 +38,13 @@ import javax.swing.SwingConstants;
  */
 public class WorkerManagementDlg extends javax.swing.JDialog {
 
-    public WorkerServices workerSer;
-    public ObjectTableModel tableModel;
-    public ArrayList<Worker> arrWorker = new ArrayList<Worker>();
-    public ArrayList<Refer> referList = new ArrayList<Refer>();
-    public ArrayList<SalaryGrade> sgList = new ArrayList<SalaryGrade>();
+    private WorkerServices workerSer;
+    private ObjectTableModel tableModel;
+    private ArrayList<Worker> arrWorker = new ArrayList<Worker>();
+    private ArrayList<Refer> referList = new ArrayList<Refer>();
+    private ArrayList<SalaryGrade> sgList = new ArrayList<SalaryGrade>();
     //contains information header of columns
-    public JTable headerTable;
+    private JTable headerTable;
     //index selected in table
     int index = -1;
     int selection;
@@ -487,7 +487,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         index = tblWorker.getSelectedRow();
         Worker worker = new Worker();
         worker = arrWorker.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to this worker. full name = " + worker.getFirstName() + " " + worker.getLastName());
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to this worker. full name = " + worker.getFirstName() + " " + worker.getLastName(),"Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             workerSer = new WorkerServices();
             if (workerSer.remove(worker.getWorkerID())) {
@@ -611,7 +611,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
     /**
      * enable fields
      */
-    public void enableFields() {
+    private void enableFields() {
         txtAddress.setEditable(true);
         txtContact.setEditable(true);
         txtExperienceYear.setEditable(true);
@@ -636,7 +636,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
     /**
      * disable fields
      */
-    public void disableFields() {
+    private void disableFields() {
         clearFields();
         txtAddress.setEditable(false);
         txtContact.setEditable(false);
@@ -661,7 +661,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
     /**
      * clear fields
      */
-    public void clearFields() {
+    private void clearFields() {
         txtAddress.setText("");
         txtContact.setText("");
         txtExperienceYear.setText("0");
@@ -679,7 +679,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
     /**
      * load data of refer to combobox
      */
-    public void loadDataCbbRefer() {
+    private void loadDataCbbRefer() {
         ReferServices referSer = new ReferServices();
         referList = referSer.findByAll();
         for (int i = 0; i < referList.size(); i++) {
@@ -688,7 +688,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
 
     }
 
-    public void loadDataCbbSalaryGrade() {
+    private void loadDataCbbSalaryGrade() {
         SalaryGradeServices sgSer = new SalaryGradeServices();
         sgList = sgSer.finfByAll();
         for (int i = 0; i < sgList.size(); i++) {
@@ -699,7 +699,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
     /**
      * load data on table
      */
-    public void loadDataOnTable() {
+    private void loadDataOnTable() {
         workerSer = new WorkerServices();
         arrWorker = workerSer.findByAll();
 

@@ -31,11 +31,11 @@ import javax.swing.SwingConstants;
  */
 public class ShiftManagementDlg extends javax.swing.JDialog {
 
-    public ShiftServices shiftSer;
-    public ObjectTableModel tableModel;
-    public ArrayList<Shift> arrShift = new ArrayList<Shift>();
+    private ShiftServices shiftSer;
+    private ObjectTableModel tableModel;
+    private ArrayList<Shift> arrShift = new ArrayList<Shift>();
     //contains information header of columns
-    public JTable headerTable;
+    private JTable headerTable;
     //index selected in table
     int index = -1;
     int selection;
@@ -367,7 +367,7 @@ public class ShiftManagementDlg extends javax.swing.JDialog {
         index = tblShift.getSelectedRow();
         Shift shift = new Shift();
         shift = arrShift.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to shift have shift name = " + shift.getShiftName());
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to shift have shift name = " + shift.getShiftName(),"Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             shiftSer = new ShiftServices();
             if (shiftSer.remove(shift.getShiftID())) {
@@ -426,7 +426,7 @@ public class ShiftManagementDlg extends javax.swing.JDialog {
     /**
      * load data on tablse
      */
-    public void loadDataOnTable() {
+    private void loadDataOnTable() {
         shiftSer = new ShiftServices();
         arrShift = shiftSer.findByAll();
 
@@ -457,7 +457,7 @@ public class ShiftManagementDlg extends javax.swing.JDialog {
     /**
      * enable fields
      */
-    public void enableFields() {
+    private void enableFields() {
         txtShiftName.setEditable(true);
         cbbTimeInH.setEnabled(true);
         cbbTimeInM.setEnabled(true);
@@ -473,7 +473,7 @@ public class ShiftManagementDlg extends javax.swing.JDialog {
     /**
      * disable fields
      */
-    public void disableFields() {
+    private void disableFields() {
         clearFields();
         txtShiftName.setEditable(false);
         cbbTimeInH.setEnabled(false);
@@ -490,7 +490,7 @@ public class ShiftManagementDlg extends javax.swing.JDialog {
     /**
      * clear fields
      */
-    public void clearFields() {
+    private void clearFields() {
         txtShiftName.setText("");
         cbbTimeInH.setSelectedIndex(0);
         cbbTimeInM.setSelectedIndex(0);

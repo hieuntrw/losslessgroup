@@ -37,14 +37,14 @@ import javax.swing.SwingConstants;
  */
 public class AttendanceManagementDlg extends javax.swing.JDialog {
 
-    public WorkerServices workerSer;
-    public AttendanceServices attendanceSer;
-    public ObjectTableModel tableModel;
-    public ArrayList<Attendance> arrAttendance = new ArrayList<Attendance>();
-    public ArrayList<Worker> arrWorker = new ArrayList<Worker>();
-    public ArrayList<Shift> arrShift = new ArrayList<Shift>();
+    private WorkerServices workerSer;
+    private AttendanceServices attendanceSer;
+    private ObjectTableModel tableModel;
+    private ArrayList<Attendance> arrAttendance = new ArrayList<Attendance>();
+    private ArrayList<Worker> arrWorker = new ArrayList<Worker>();
+    private ArrayList<Shift> arrShift = new ArrayList<Shift>();
     //contains information header of columns
-    public JTable headerTable;
+    private JTable headerTable;
     //index selected in table
     int indexLabor = -1;
     int indexAttendance = -1;
@@ -494,7 +494,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         indexAttendance = tblAttendance.getSelectedRow();
         Attendance at = new Attendance();
         at = arrAttendance.get(indexAttendance);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to this attendance have ID = " + at.getID());
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to this attendance have ID = " + at.getID(),"Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             attendanceSer = new AttendanceServices();
             if (attendanceSer.remove(at.getID())) {
@@ -571,7 +571,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     /**
      * enable fields
      */
-    public void enableFields() {
+    private void enableFields() {
         cbbShiftName.setEnabled(true);
         dcsWorkDate.setEnabled(true);
         btnCancel.setEnabled(true);
@@ -586,7 +586,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     /**
      * disable fields
      */
-    public void disableFields() {
+    private void disableFields() {
         clearFields();
         cbbShiftName.setEnabled(false);
         dcsWorkDate.setEnabled(false);
@@ -603,7 +603,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     /**
      * clear fields
      */
-    public void clearFields() {
+    private void clearFields() {
         txtFirstName.setText("");
         txtLastName.setText("");
         dcsDayOfBirth.setDate(null);
@@ -616,7 +616,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     /**
      * load data on combobox shift name
      */
-    public void loadDataOnCbbShiftName() {
+    private void loadDataOnCbbShiftName() {
         ShiftServices shiftSer = new ShiftServices();
         arrShift = shiftSer.findByAll();
         for (int i = 0; i < arrShift.size(); i++) {
@@ -628,7 +628,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
      * load attendance of the labor on table attendance
      * @param workerID
      */
-    public void loadDataOnAttendanceTable(int workerID) {
+    private void loadDataOnAttendanceTable(int workerID) {
         attendanceSer = new AttendanceServices();
         arrAttendance = attendanceSer.findAttendanceByWorkerID(workerID);
 
@@ -662,7 +662,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     /**
      * load data on labor table
      */
-    public void loadDataOnLaborTable() {
+    private void loadDataOnLaborTable() {
         workerSer = new WorkerServices();
         arrWorker = workerSer.findByAll();
 

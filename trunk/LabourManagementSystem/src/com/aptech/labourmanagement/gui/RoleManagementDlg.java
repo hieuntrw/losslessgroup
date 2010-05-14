@@ -31,11 +31,11 @@ import javax.swing.SwingConstants;
  */
 public class RoleManagementDlg extends javax.swing.JDialog {
 
-    public RoleServices roleSer;
-    public ObjectTableModel tableModel;
-    public ArrayList<Role> arrRole = new ArrayList<Role>();
+    private RoleServices roleSer;
+    private ObjectTableModel tableModel;
+    private ArrayList<Role> arrRole = new ArrayList<Role>();
     //contains information header of columns
-    public JTable headerTable;
+    private JTable headerTable;
     //index selected in table
     int index = -1;
     int selection;
@@ -444,7 +444,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         index = tblRole.getSelectedRow();
         Role role = new Role();
         role = arrRole.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to role name = " + role.getRoleName());
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to role name = " + role.getRoleName(),"Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             roleSer = new RoleServices();
             if (roleSer.remove(role.getRoleID())) {
@@ -460,7 +460,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     /**
      * load data on table 
      */
-    public void loadDataOnTable() {
+    private void loadDataOnTable() {
         roleSer = new RoleServices();
         arrRole = roleSer.findRoleAll();
         ColumnData[] columns = {
@@ -488,7 +488,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     /**
      * disable fields
      */
-    public void disableFields() {
+    private void disableFields() {
         clearFields();
         txtRoleName.setEditable(false);
         ckbAccountManagement.setEnabled(false);
@@ -511,7 +511,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     /**
      * enable Fields
      */
-    public void enableFields() {
+    private void enableFields() {
         //clearFields();
         txtRoleName.setEditable(true);
         ckbAccountManagement.setEnabled(true);
@@ -534,7 +534,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     /**
      * clear Fields
      */
-    public void clearFields() {
+    private void clearFields() {
         txtRoleName.setText("");
         ckbAccountManagement.setSelected(false);
         ckbAll.setSelected(false);

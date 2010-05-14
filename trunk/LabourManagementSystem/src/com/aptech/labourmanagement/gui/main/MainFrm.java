@@ -13,10 +13,21 @@ package com.aptech.labourmanagement.gui.main;
 import com.aptech.labourmanagement.component.AppStatusBar;
 import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.entity.Account;
+import com.aptech.labourmanagement.gui.AccountManagementDlg;
+import com.aptech.labourmanagement.gui.AttendanceManagementDlg;
 import com.aptech.labourmanagement.gui.ChangePasswordDlg;
+import com.aptech.labourmanagement.gui.FamilyRalateManagementDlg;
 import com.aptech.labourmanagement.gui.Logindlg;
+import com.aptech.labourmanagement.gui.ReferManagementDlg;
+import com.aptech.labourmanagement.gui.RoleManagementDlg;
+import com.aptech.labourmanagement.gui.SalaryGradeManagementDlg;
+import com.aptech.labourmanagement.gui.ShiftManagementDlg;
+import com.aptech.labourmanagement.gui.WeeklyAttendanceReportDlg;
+import com.aptech.labourmanagement.gui.WeeklySalaryReportDlg;
+import com.aptech.labourmanagement.gui.WorkerManagementDlg;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -202,6 +213,11 @@ public class MainFrm extends javax.swing.JFrame {
         mniLogin.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         mniLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/user1.png"))); // NOI18N
         mniLogin.setText("Login");
+        mniLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniLoginActionPerformed(evt);
+            }
+        });
         mnSystem.add(mniLogin);
 
         mniChangePass.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
@@ -217,12 +233,22 @@ public class MainFrm extends javax.swing.JFrame {
         mniLogout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         mniLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/user1_delete.png"))); // NOI18N
         mniLogout.setText("Logout");
+        mniLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniLogoutActionPerformed(evt);
+            }
+        });
         mnSystem.add(mniLogout);
         mnSystem.add(jSeparator1);
 
         mniExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         mniExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete2.png"))); // NOI18N
         mniExit.setText("Exit");
+        mniExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniExitActionPerformed(evt);
+            }
+        });
         mnSystem.add(mniExit);
 
         jMenuBar1.add(mnSystem);
@@ -233,11 +259,21 @@ public class MainFrm extends javax.swing.JFrame {
         mniRoleFunction.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         mniRoleFunction.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/certificate.png"))); // NOI18N
         mniRoleFunction.setText("Role");
+        mniRoleFunction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniRoleFunctionActionPerformed(evt);
+            }
+        });
         mnAccountManagement.add(mniRoleFunction);
 
         mniAccount.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         mniAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/id_card.png"))); // NOI18N
         mniAccount.setText("Account");
+        mniAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniAccountActionPerformed(evt);
+            }
+        });
         mnAccountManagement.add(mniAccount);
 
         jMenuBar1.add(mnAccountManagement);
@@ -248,21 +284,41 @@ public class MainFrm extends javax.swing.JFrame {
         mniRefer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         mniRefer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/users3_preferences.png"))); // NOI18N
         mniRefer.setText("Refer");
+        mniRefer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniReferActionPerformed(evt);
+            }
+        });
         mnLaborManagement.add(mniRefer);
 
         mniFamily.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         mniFamily.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/users_family.png"))); // NOI18N
         mniFamily.setText("Family Ralate");
+        mniFamily.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniFamilyActionPerformed(evt);
+            }
+        });
         mnLaborManagement.add(mniFamily);
 
         mniSalaryGrade.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         mniSalaryGrade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/cashier.png"))); // NOI18N
         mniSalaryGrade.setText("Salary Grade");
+        mniSalaryGrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniSalaryGradeActionPerformed(evt);
+            }
+        });
         mnLaborManagement.add(mniSalaryGrade);
 
         mniLabor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         mniLabor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/user1_information.png"))); // NOI18N
         mniLabor.setText("Labor");
+        mniLabor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniLaborActionPerformed(evt);
+            }
+        });
         mnLaborManagement.add(mniLabor);
         mnLaborManagement.add(jSeparator2);
 
@@ -279,11 +335,21 @@ public class MainFrm extends javax.swing.JFrame {
         mniShift.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         mniShift.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/clock.png"))); // NOI18N
         mniShift.setText("Shift");
+        mniShift.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniShiftActionPerformed(evt);
+            }
+        });
         mnAttendanceManagement.add(mniShift);
 
         mniAttendance.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         mniAttendance.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/stopwatch.png"))); // NOI18N
         mniAttendance.setText("Attendance");
+        mniAttendance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniAttendanceActionPerformed(evt);
+            }
+        });
         mnAttendanceManagement.add(mniAttendance);
 
         jMenuBar1.add(mnAttendanceManagement);
@@ -294,11 +360,21 @@ public class MainFrm extends javax.swing.JFrame {
         mniSalaryReport.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         mniSalaryReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/column_preferences.png"))); // NOI18N
         mniSalaryReport.setText("Weekly Salary");
+        mniSalaryReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniSalaryReportActionPerformed(evt);
+            }
+        });
         mnReport.add(mniSalaryReport);
 
         mniAttendanceReport.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
         mniAttendanceReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/line-chart.png"))); // NOI18N
         mniAttendanceReport.setText("Weekly Attendence");
+        mniAttendanceReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniAttendanceReportActionPerformed(evt);
+            }
+        });
         mnReport.add(mniAttendanceReport);
 
         jMenuBar1.add(mnReport);
@@ -338,6 +414,74 @@ public class MainFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
         new ChangePasswordDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniChangePassActionPerformed
+
+    private void mniLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniLoginActionPerformed
+        // TODO add your handling code here:
+        new Logindlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniLoginActionPerformed
+
+    private void mniLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniLogoutActionPerformed
+        // TODO add your handling code here:
+        //hide roles
+    }//GEN-LAST:event_mniLogoutActionPerformed
+
+    private void mniExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniExitActionPerformed
+        // TODO add your handling code here:
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to exit system ?", "Question", JOptionPane.YES_NO_OPTION);
+        if(i == JOptionPane.YES_OPTION){
+            this.dispose();
+        }
+    }//GEN-LAST:event_mniExitActionPerformed
+
+    private void mniRoleFunctionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniRoleFunctionActionPerformed
+        // TODO add your handling code here:
+        new RoleManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniRoleFunctionActionPerformed
+
+    private void mniAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAccountActionPerformed
+        // TODO add your handling code here:
+        new AccountManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniAccountActionPerformed
+
+    private void mniReferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniReferActionPerformed
+        // TODO add your handling code here:
+        new ReferManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniReferActionPerformed
+
+    private void mniFamilyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniFamilyActionPerformed
+        // TODO add your handling code here:
+        new FamilyRalateManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniFamilyActionPerformed
+
+    private void mniSalaryGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSalaryGradeActionPerformed
+        // TODO add your handling code here:
+        new SalaryGradeManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniSalaryGradeActionPerformed
+
+    private void mniLaborActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniLaborActionPerformed
+        // TODO add your handling code here:
+        new WorkerManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniLaborActionPerformed
+
+    private void mniShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniShiftActionPerformed
+        // TODO add your handling code here:
+        new ShiftManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniShiftActionPerformed
+
+    private void mniAttendanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAttendanceActionPerformed
+        // TODO add your handling code here:
+        new AttendanceManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniAttendanceActionPerformed
+
+    private void mniSalaryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSalaryReportActionPerformed
+        // TODO add your handling code here:
+        new WeeklySalaryReportDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniSalaryReportActionPerformed
+
+    private void mniAttendanceReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAttendanceReportActionPerformed
+        // TODO add your handling code here:
+        new WeeklyAttendanceReportDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniAttendanceReportActionPerformed
 
     /**
      * @param args the command line arguments

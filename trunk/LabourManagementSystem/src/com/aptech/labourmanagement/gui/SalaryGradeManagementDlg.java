@@ -33,11 +33,11 @@ import javax.swing.SwingConstants;
  */
 public class SalaryGradeManagementDlg extends javax.swing.JDialog {
 
-    public SalaryGradeServices salaryGradeSer;
-    public ObjectTableModel tableModel;
-    public ArrayList<SalaryGrade> arrSalaryGrade = new ArrayList<SalaryGrade>();
+    private SalaryGradeServices salaryGradeSer;
+    private ObjectTableModel tableModel;
+    private ArrayList<SalaryGrade> arrSalaryGrade = new ArrayList<SalaryGrade>();
     //contains information header of columns
-    public JTable headerTable;
+    private JTable headerTable;
     //index selected in table
     int index = -1;
     int selection;
@@ -327,7 +327,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         index = tblSalaryGrade.getSelectedRow();
         SalaryGrade sg = new SalaryGrade();
         sg = arrSalaryGrade.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to salary grade name = " + sg.getGradeName());
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to salary grade name = " + sg.getGradeName(),"Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             salaryGradeSer = new SalaryGradeServices();
             if (salaryGradeSer.remove(sg.getSalaryGradeID())) {
@@ -344,7 +344,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
     /**
      * clear fields
      */
-    public void clearFields() {
+    private void clearFields() {
         txtGradeName.setText("");
         txtValue.setText("");
     }
@@ -352,7 +352,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
     /**
      * disable fields
      */
-    public void disableFields() {
+    private void disableFields() {
         clearFields();
         txtGradeName.setEditable(false);
         txtValue.setEditable(false);
@@ -362,7 +362,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         btnEdit.setEnabled(false);
     }
 
-    public void enableFields() {
+    private void enableFields() {
         txtGradeName.setEditable(true);
         txtValue.setEditable(true);
         btnCancel.setEnabled(true);
@@ -374,7 +374,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
     /**
      * laod data base
      */
-    public void loadDataOnTable() {
+    private void loadDataOnTable() {
         salaryGradeSer = new SalaryGradeServices();
         arrSalaryGrade = salaryGradeSer.finfByAll();
         ColumnData[] columns = {

@@ -265,8 +265,6 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
                 }
             }
         }
-
-
     }//GEN-LAST:event_cbbOptionItemStateChanged
 
     private void btnComputingSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComputingSalaryActionPerformed
@@ -292,8 +290,8 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
 
         if (cbbOption.getSelectedIndex() == 0) {
             loadDataOnTableSalaryReport(dateFrom, dateTo);
-            dcsFromDay.setDate(null);
-            dcsToDay.setDate(null);
+            //dcsFromDay.setDate(null);
+            //dcsToDay.setDate(null);
         }
     }//GEN-LAST:event_btnComputingSalaryActionPerformed
 
