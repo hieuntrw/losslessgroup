@@ -31,7 +31,7 @@ public class AttendanceDAO {
     private final String SQL_UPDATE = "UPDATE ATTENDANCE set ShiftID =?,WorkDay =?,Status =?,IsExtraShift =? WHERE ID=?";
     private final String SQL_DELETE = "DELETE FROM ATTENDANCE WHERE ID =?";
     private final String SQL_READ_BY_WORKERID = "SELECT * FROM ATTENDANCE WHERE WorkerID =?";
-    private final String SQL_READ_BY_DATE = "SELECT * FROM ATTENDANCE WHERE WorkDay =?";
+    private final String SQL_READ_BY_DATE = "SELECT * FROM ATTENDANCE WHERE WorkerID = ? and WorkDay =?";
 
     public AttendanceDAO() {
         db = new ConfigureDB();
@@ -142,7 +142,7 @@ public class AttendanceDAO {
                 Attendance at = new Attendance();
                 at.setID(rs.getInt("ID"));
                 at.setWorker(workerDAO.readByID(rs.getInt("WorkerID")));
-                at.setWorkDay(rs.getDate("WorkerDay"));
+                at.setWorkDay(rs.getDate("WorkDay"));
                 at.setShift(siDao.readByID(rs.getInt("ShiftID")));
                 at.setStatus(rs.getBoolean("Status"));
                 at.setIsExtraShift(rs.getBoolean("IsExtraShift"));
@@ -165,12 +165,13 @@ public class AttendanceDAO {
      * @param date
      * @return list attendance
      */
-    public ArrayList<Attendance> readAttendanceByDate(Date date) {
+    public ArrayList<Attendance> readAttendanceByDate(Date date, int workerID) {
         ArrayList<Attendance> listAttendance = new ArrayList<Attendance>();
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_BY_DATE);
-            pst.setDate(1, date);
+            pst.setInt(1, workerID);
+            pst.setDate(2, date);
             rs = pst.executeQuery();
             WorkerDAO workerDAO = new WorkerDAO();
             ShiftDAO siDao = new ShiftDAO();
@@ -178,7 +179,7 @@ public class AttendanceDAO {
                 Attendance at = new Attendance();
                 at.setID(rs.getInt("ID"));
                 at.setWorker(workerDAO.readByID(rs.getInt("WorkerID")));
-                at.setWorkDay(rs.getDate("WorkerDay"));
+                at.setWorkDay(rs.getDate("WorkDay"));
                 at.setShift(siDao.readByID(rs.getInt("ShiftID")));
                 at.setStatus(rs.getBoolean("Status"));
                 at.setIsExtraShift(rs.getBoolean("IsExtraShift"));
