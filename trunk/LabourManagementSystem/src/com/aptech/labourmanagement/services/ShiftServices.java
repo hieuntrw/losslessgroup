@@ -51,14 +51,9 @@ public class ShiftServices {
      */
     public boolean store(Shift si) {
         if (si.validateShift()) {
-            if (!siDao.isExist(si.getShiftName())) {
-                if (siDao.update(si)) {
-                    this.setLastError(siDao.getLastError());
-                    return true;
-                } else {
-                    this.setLastError(siDao.getLastError());
-                    return false;
-                }
+            if (siDao.update(si)) {
+                this.setLastError(siDao.getLastError());
+                return true;
             } else {
                 this.setLastError(siDao.getLastError());
                 return false;

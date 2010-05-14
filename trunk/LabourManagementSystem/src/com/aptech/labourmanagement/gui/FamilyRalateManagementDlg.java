@@ -35,13 +35,13 @@ import javax.swing.SwingConstants;
  */
 public class FamilyRalateManagementDlg extends javax.swing.JDialog {
 
-    public WorkerServices workerSer;
-    public FamilyServices familySer;
-    public ObjectTableModel tableModel;
-    public ArrayList<Family> arrFamily = new ArrayList<Family>();
-    public ArrayList<Worker> arrWorker = new ArrayList<Worker>();
+    private WorkerServices workerSer;
+    private FamilyServices familySer;
+    private ObjectTableModel tableModel;
+    private ArrayList<Family> arrFamily = new ArrayList<Family>();
+    private ArrayList<Worker> arrWorker = new ArrayList<Worker>();
     //contains information header of columns
-    public JTable headerTable;
+    private JTable headerTable;
     //index selected in table
     int indexLabor = -1;
     int indexFamily = -1;
@@ -520,7 +520,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     /**
      *  clear fields
      */
-    public void clearFields() {
+    private  void clearFields() {
         txtAddress.setText("");
         txtFullName.setText("");
         txtWorkName.setText("");
@@ -532,7 +532,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
      * load data on family table
      * @param workerID
      */
-    public void loadDataOnFamilyTable(int workerID) {
+    private void loadDataOnFamilyTable(int workerID) {
         familySer = new FamilyServices();
         arrFamily = familySer.findFamilyByWorkerID(workerID);
 

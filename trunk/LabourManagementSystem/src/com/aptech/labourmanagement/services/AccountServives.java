@@ -71,15 +71,10 @@ public class AccountServives {
      */
     public boolean store(Account ac) {
         if (ac.validateAccount()) {
-            //ac.setPassword(pe.encryptPass(ac.getPassword()));
-            if (!accDao.isExist(ac.getUsername())) {
-                if (accDao.update(ac)) {
-                    this.setLastError(accDao.getLastError());
-                    return true;
-                } else {
-                    this.setLastError(accDao.getLastError());
-                    return false;
-                }
+            ac.setPassword(pe.encryptPass(ac.getPassword()));
+            if (accDao.update(ac)) {
+                this.setLastError(accDao.getLastError());
+                return true;
             } else {
                 this.setLastError(accDao.getLastError());
                 return false;

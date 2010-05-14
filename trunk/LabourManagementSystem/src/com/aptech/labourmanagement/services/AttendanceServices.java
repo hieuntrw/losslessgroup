@@ -6,7 +6,10 @@ package com.aptech.labourmanagement.services;
 
 import com.aptech.labourmanagement.dao.AttendanceDAO;
 import com.aptech.labourmanagement.entity.Attendance;
+import com.aptech.labourmanagement.entity.HourTotal;
 import com.aptech.labourmanagement.entity.Shift;
+import com.aptech.labourmanagement.entity.Worker;
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -182,20 +185,11 @@ public class AttendanceServices {
     public boolean remove(int ID) {
         if (atDao.delete(ID)) {
             this.setLastError(atDao.getLastError());
-
-
             return true;
-
-
         } else {
             this.setLastError(atDao.getLastError());
-
-
             return false;
-
-
         }
-
     }
 
     /**
@@ -205,4 +199,22 @@ public class AttendanceServices {
         ArrayList<Attendance> listAttendance = atDao.readAttendanceByWorkerID(workerID);
         return listAttendance;
     }
+    /**
+     * computing total weekly hours worked of each labor
+     * @param date1
+     * @param date2
+     * @return total hour list of each labor
+     */
+    public ArrayList<HourTotal> computingHourTotal(Date date1, Date date2){
+        ArrayList<Worker> arrWorker = atDao.readAttendanceBySomeDates(date1, date2);
+        ArrayList<HourTotal> arrHourTotal = new ArrayList<HourTotal>();
+        for(int i = 0; i < arrWorker.size(); i++){
+            HourTotal hourTotal = new HourTotal();
+            hourTotal.setWorker(arrWorker.get(i));
+            hourTotal.setHourTotal(atDao.readTotalHourByWorkerID(arrWorker.get(i).getWorkerID(), date1, date2));
+            arrHourTotal.add(hourTotal);
+        }
+        return arrHourTotal;
+    }
+
 }

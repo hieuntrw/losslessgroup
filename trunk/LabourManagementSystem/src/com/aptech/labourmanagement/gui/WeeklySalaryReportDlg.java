@@ -8,18 +8,35 @@
  *
  * Created on May 11, 2010, 4:07:50 AM
  */
-
 package com.aptech.labourmanagement.gui;
 
+import com.aptech.labourmanagement.component.ColumnData;
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.component.ObjectTableModel;
+import com.aptech.labourmanagement.entity.HourTotal;
+import com.aptech.labourmanagement.services.AttendanceServices;
 import java.awt.Toolkit;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author Noi Nho
  */
 public class WeeklySalaryReportDlg extends javax.swing.JDialog {
+
+    private JTable headerTable;
+    private AttendanceServices atSer;
+    private ArrayList<HourTotal> arrHoueTotal;
+    private ObjectTableModel tableModel;
 
     /** Creates new form WeeklySalaryReportDlg */
     public WeeklySalaryReportDlg(java.awt.Frame parent, boolean modal) {
@@ -50,7 +67,7 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
         lblTitle = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         dcsFromDay = new com.toedter.calendar.JDateChooser();
-        DcsToDay = new com.toedter.calendar.JDateChooser();
+        dcsToDay = new com.toedter.calendar.JDateChooser();
         lblFromDay = new javax.swing.JLabel();
         lblToDay = new javax.swing.JLabel();
         btnComputingSalary = new javax.swing.JButton();
@@ -61,7 +78,7 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btnPrint = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrSalary = new javax.swing.JScrollPane();
         tblSalary = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -71,7 +88,7 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
         lblTitle.setText("Weekly Salary Report");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -100,14 +117,14 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
         jPanel2.add(dcsFromDay, gridBagConstraints);
 
-        DcsToDay.setDateFormatString("MM/dd/yyyy");
+        dcsToDay.setDateFormatString("MM/dd/yyyy");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
-        jPanel2.add(DcsToDay, gridBagConstraints);
+        jPanel2.add(dcsToDay, gridBagConstraints);
 
         lblFromDay.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblFromDay.setText("From day:");
@@ -131,6 +148,11 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
 
         btnComputingSalary.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/calculator.png"))); // NOI18N
         btnComputingSalary.setText("Computing salary");
+        btnComputingSalary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComputingSalaryActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
@@ -201,7 +223,7 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.SOUTH);
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(730, 300));
+        scrSalary.setPreferredSize(new java.awt.Dimension(730, 300));
 
         tblSalary.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -211,9 +233,9 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
                 "No.", "Firs name", "Last name", "Day of birth", "Total hour", "Salary grade", "Total salary"
             }
         ));
-        jScrollPane1.setViewportView(tblSalary);
+        scrSalary.setViewportView(tblSalary);
 
-        jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel3.add(scrSalary, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -228,16 +250,16 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
 
     private void cbbOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbOptionItemStateChanged
         // TODO add your handling code here:
-        if(cbbOption.getSelectedIndex() == 0){
+        if (cbbOption.getSelectedIndex() == 0) {
             txtLaborID.setEditable(false);
-        }else{
+        } else {
             if (cbbOption.getSelectedIndex() == 1) {
                 txtLaborID.setEditable(true);
             } else {
                 if (cbbOption.getSelectedIndex() == 2) {
                     txtLaborID.setEditable(false);
                 } else {
-                    if(cbbOption.getSelectedIndex() == 3){
+                    if (cbbOption.getSelectedIndex() == 3) {
                         txtLaborID.setEditable(false);
                     }
                 }
@@ -247,14 +269,45 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
 
     }//GEN-LAST:event_cbbOptionItemStateChanged
 
+    private void btnComputingSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComputingSalaryActionPerformed
+        // TODO add your handling code here:
+        if (dcsToDay.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Date can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
+            dcsToDay.requestFocus();
+            dcsToDay.setDate(null);
+            return;
+        }
+        if (dcsFromDay.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Date can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
+            dcsFromDay.requestFocus();
+            dcsFromDay.setDate(null);
+            return;
+        }
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(dcsFromDay.getDate());
+        Date dateFrom = new Date(ca.getTimeInMillis());
+
+        ca.setTime(dcsToDay.getDate());
+        Date dateTo = new Date(ca.getTimeInMillis());
+
+        if (cbbOption.getSelectedIndex() == 0) {
+            loadDataOnTableSalaryReport(dateFrom, dateTo);
+            dcsFromDay.setDate(null);
+            dcsToDay.setDate(null);
+        }
+    }//GEN-LAST:event_btnComputingSalaryActionPerformed
+
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 WeeklySalaryReportDlg dialog = new WeeklySalaryReportDlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -263,25 +316,53 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser DcsToDay;
     private javax.swing.JButton btnComputingSalary;
     private javax.swing.JButton btnPrint;
     private javax.swing.JComboBox cbbOption;
     private com.toedter.calendar.JDateChooser dcsFromDay;
+    private com.toedter.calendar.JDateChooser dcsToDay;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFromDay;
     private javax.swing.JLabel lblLaborID;
     private javax.swing.JLabel lblOption;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblToDay;
+    private javax.swing.JScrollPane scrSalary;
     private javax.swing.JTable tblSalary;
     private javax.swing.JTextField txtLaborID;
     // End of variables declaration//GEN-END:variables
 
+    private void loadDataOnTableSalaryReport(Date dateFrom, Date dateTo) {
+        atSer = new AttendanceServices();
+        arrHoueTotal = atSer.computingHourTotal(dateFrom, dateTo);
+        ColumnData[] columns = {
+            new ColumnData("First name", 50, SwingConstants.LEFT, 1),
+            new ColumnData("Last name", 80, SwingConstants.LEFT, 2),
+            new ColumnData("Day of birth", 90, SwingConstants.LEFT, 3),
+            new ColumnData("Salary grade", 50, SwingConstants.LEFT, 4),
+            new ColumnData("Total hours", 80, SwingConstants.LEFT, 5),
+            new ColumnData("Totals salary", 80, SwingConstants.LEFT, 6)
+        };
+        tableModel = new ObjectTableModel(tblSalary, columns, arrHoueTotal);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblSalary.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrSalary.setRowHeader(viewport);
+        scrSalary.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
 }

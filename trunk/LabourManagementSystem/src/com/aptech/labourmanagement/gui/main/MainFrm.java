@@ -15,7 +15,6 @@ import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.entity.Account;
 import com.aptech.labourmanagement.gui.ChangePasswordDlg;
 import com.aptech.labourmanagement.gui.Logindlg;
-import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
