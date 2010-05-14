@@ -469,7 +469,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         indexFamily = tblFamily.getSelectedRow();
         Family family = new Family();
         family = arrFamily.get(indexFamily);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to family member have full name = " + family.getFullName());
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to family member have full name = " + family.getFullName(),"Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             familySer = new FamilyServices();
             if (familySer.remove(family.getFamilyID())) {
@@ -487,7 +487,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     /**
      * enable fields
      */
-    public void enableFields() {
+    private void enableFields() {
         txtAddress.setEditable(true);
         txtFullName.setEditable(true);
         txtWorkName.setEditable(true);
@@ -503,7 +503,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     /**
      * disable fields
      */
-    public void disableFields() {
+    private void disableFields() {
         clearFields();
         txtAddress.setEditable(false);
         txtFullName.setEditable(false);
@@ -564,7 +564,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     /**
      * load data on table Labor
      */
-    public void loadDataOnLaborTable() {
+    private void loadDataOnLaborTable() {
         workerSer = new WorkerServices();
         arrWorker = workerSer.findByAll();
 

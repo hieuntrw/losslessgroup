@@ -33,11 +33,11 @@ import javax.swing.SwingConstants;
  */
 public class AccountManagementDlg extends javax.swing.JDialog {
 
-    public AccountServives accSer;
-    public ObjectTableModel tableModel;
-    public ArrayList<Account> arrAcc = new ArrayList<Account>();
+    private AccountServives accSer;
+    private ObjectTableModel tableModel;
+    private ArrayList<Account> arrAcc = new ArrayList<Account>();
     //contains information header of columns
-    public JTable headerTable;
+    private JTable headerTable;
     //index selected in table
     int index = -1;
     int selection;
@@ -63,7 +63,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     /**
      * disable fields
      */
-    public void disableFields() {
+    private void disableFields() {
         clearFields();
         txtPassword.setEditable(false);
         txtUsername.setEditable(false);
@@ -78,7 +78,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     /**
      * enable fields
      */
-    public void enableFields() {
+    private void enableFields() {
         txtPassword.setEditable(true);
         txtUsername.setEditable(true);
         cbbGrant.setEnabled(true);
@@ -92,13 +92,13 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     /**
      * clear Fields
      */
-    public void clearFields() {
+    private void clearFields() {
         txtPassword.setText("");
         txtUsername.setText("");
         cbbGrant.setSelectedIndex(0);
     }
 
-    public void loadDataToCombobox() {
+    private void loadDataToCombobox() {
         RoleServices roleSer = new RoleServices();
         ArrayList<Role> arrRole = roleSer.findRoleAll();
         for (int i = 0; i < arrRole.size(); i++) {
@@ -109,7 +109,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     /**
      * load database on form
      */
-    public void loadDataOnTable() {
+    private void loadDataOnTable() {
         accSer = new AccountServives();
         arrAcc = accSer.findByAll();
         //JOptionPane.showMessageDialog(this,"Da lay dc du lieu, quyen: "+ arrAcc.get(0).getRole().getRoleName(), "Message", JOptionPane.INFORMATION_MESSAGE);
@@ -432,7 +432,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
         index = tblAccount.getSelectedRow();
         Account acc = new Account();
         acc = arrAcc.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to account have username = " + acc.getUsername());
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to account have username = " + acc.getUsername(),"Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             accSer = new AccountServives();
             if (accSer.remove(acc.getUsername())) {

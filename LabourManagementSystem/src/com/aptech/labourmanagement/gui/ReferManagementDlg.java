@@ -34,11 +34,11 @@ import javax.swing.SwingConstants;
  */
 public class ReferManagementDlg extends javax.swing.JDialog {
 
-    public ReferServices referSer;
-    public ObjectTableModel tableModel;
-    public ArrayList<Refer> arrRefers = new ArrayList<Refer>();
+    private ReferServices referSer;
+    private ObjectTableModel tableModel;
+    private ArrayList<Refer> arrRefers = new ArrayList<Refer>();
     //contains information header of columns
-    public JTable headerTable;
+    private JTable headerTable;
     //index selected in table
     int index = -1;
     int selection;
@@ -390,7 +390,7 @@ public class ReferManagementDlg extends javax.swing.JDialog {
         index = tblRefer.getSelectedRow();
         Refer refer = new Refer();
         refer = arrRefers.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to Refer Name = " + refer.getFullName());
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to Refer Name = " + refer.getFullName(),"Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             referSer = new ReferServices();
             if (referSer.remove(refer.getReferID())) {
@@ -460,7 +460,7 @@ public class ReferManagementDlg extends javax.swing.JDialog {
         selection = 1;
     }//GEN-LAST:event_btnAddActionPerformed
 
-    public void clearFields() {
+    private void clearFields() {
         txtAddress.setText("");
         txtContactNumber.setText("");
         txtFullName.setText("");
@@ -469,7 +469,7 @@ public class ReferManagementDlg extends javax.swing.JDialog {
         dcsDayOfBirth.setDate(null);
     }
 
-    public void disableFields() {
+    private void disableFields() {
         clearFields();
         txtAddress.setEditable(false);
         txtContactNumber.setEditable(false);
@@ -484,7 +484,7 @@ public class ReferManagementDlg extends javax.swing.JDialog {
 
     }
 
-    public void enableFields() {
+    private void enableFields() {
         txtAddress.setEditable(true);
         txtContactNumber.setEditable(true);
         txtFullName.setEditable(true);
@@ -501,7 +501,7 @@ public class ReferManagementDlg extends javax.swing.JDialog {
     /**
      *
      */
-    public void loadDataOnTable() {
+    private void loadDataOnTable() {
         referSer = new ReferServices();
         arrRefers = referSer.findByAll();
         //JOptionPane.showMessageDialog(this, arrRefers.get(arrRefers.size() -1).getFullName(), "Warning", JOptionPane.WARNING_MESSAGE);
