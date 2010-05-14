@@ -17,6 +17,7 @@ import com.aptech.labourmanagement.gui.ChangePasswordDlg;
 import com.aptech.labourmanagement.gui.Logindlg;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -30,16 +31,17 @@ public class MainFrm extends javax.swing.JFrame {
         initComponents();
 
         // Cach lam cho form xuat hien giua man hinh
-        this.setSize(1000, 735);
+        /*this.setSize(1000, 735);
         int width = this.getWidth();
         int heigh = this.getHeight();
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);*/
         setIconImage(new ImageIcon(getClass().getResource("../../icon/LMSIcon.png")).getImage());
         this.initStatusBar();
         new LookAndFeel(this);
         acc = loginDlg.acc;
+        this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
     private void initStatusBar() {
