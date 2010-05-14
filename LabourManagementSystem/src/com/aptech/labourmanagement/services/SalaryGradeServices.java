@@ -54,14 +54,9 @@ public class SalaryGradeServices {
      */
     public boolean store(SalaryGrade sg) {
         if (sg.validateSalaryGrade()) {
-            if (!saDao.isExist(sg.getGradeName())) {
-                if (saDao.update(sg)) {
-                    this.setLastError(saDao.getLastError());
-                    return true;
-                } else {
-                    this.setLastError(saDao.getLastError());
-                    return false;
-                }
+            if (saDao.update(sg)) {
+                this.setLastError(saDao.getLastError());
+                return true;
             } else {
                 this.setLastError(saDao.getLastError());
                 return false;

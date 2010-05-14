@@ -203,8 +203,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
             if (newPass.equals(cofirmPass)) {
                 AccountServives accSer = new AccountServives();
                 if (accSer.loginSystem(acc.getUsername(), oldPass)) {
-                    PassEncryption pe = new PassEncryption();
-                    acc.setPassword(pe.encryptPass(newPass));
+                    acc.setPassword(newPass);
                     if (accSer.store(acc)) {
                         JOptionPane.showMessageDialog(this, "Change password successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
                         txtCofirmPass.setText("");
