@@ -15,6 +15,7 @@ import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.component.ObjectTableModel;
 import com.aptech.labourmanagement.entity.Refer;
 import com.aptech.labourmanagement.services.ReferServices;
+import com.aptech.labourmanagement.util.CheckForm;
 import java.awt.Toolkit;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -410,8 +411,14 @@ public class ReferManagementDlg extends javax.swing.JDialog {
             index = tblRefer.getSelectedRow();
             refer = arrRefers.get(index);
         }
-        refer.setAddress(txtAddress.getText().trim());
+        if(!CheckForm.checkPhoneNumber(txtContactNumber.getText().trim())){
+            JOptionPane.showMessageDialog(this, "Contact number not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
+            txtContactNumber.requestFocus();
+            return;
+        }
         refer.setContactNumber(txtContactNumber.getText().trim());
+        refer.setAddress(txtAddress.getText().trim());
+
         //convert date calender to date SQL
         if (dcsDayOfBirth.getDate() != null) {
             Calendar ca = Calendar.getInstance();

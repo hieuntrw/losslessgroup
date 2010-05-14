@@ -55,13 +55,19 @@ public class RoleServices {
      */
     public boolean store(Role role) {
         if (role.validateRole()) {
-            if (roDao.update(role)) {
-                this.setLastError(roDao.getLastError());
-                return true;
+            if (!roDao.isExist(role.getRoleName())) {
+                if (roDao.update(role)) {
+                    this.setLastError(roDao.getLastError());
+                    return true;
+                } else {
+                    this.setLastError(roDao.getLastError());
+                    return false;
+                }
             } else {
                 this.setLastError(roDao.getLastError());
                 return false;
             }
+
         } else {
             this.setLastError(role.getLastError());
             return false;
