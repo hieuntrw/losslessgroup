@@ -53,11 +53,21 @@ public class SalaryGradeServices {
      * @return
      */
     public boolean store(SalaryGrade sg) {
-        if (saDao.update(sg)) {
-            this.setLastError(saDao.getLastError());
-            return true;
+        if (sg.validateSalaryGrade()) {
+            if (!saDao.isExist(sg.getGradeName())) {
+                if (saDao.update(sg)) {
+                    this.setLastError(saDao.getLastError());
+                    return true;
+                } else {
+                    this.setLastError(saDao.getLastError());
+                    return false;
+                }
+            } else {
+                this.setLastError(saDao.getLastError());
+                return false;
+            }
         } else {
-            this.setLastError(saDao.getLastError());
+            this.setLastError(sg.getLastError());
             return false;
         }
     }

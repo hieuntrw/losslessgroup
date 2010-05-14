@@ -14,6 +14,7 @@ import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.entity.Account;
 import com.aptech.labourmanagement.gui.main.MainFrm;
 import com.aptech.labourmanagement.services.AccountServives;
+import com.aptech.labourmanagement.util.PassEncryption;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -202,7 +203,8 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
             if (newPass.equals(cofirmPass)) {
                 AccountServives accSer = new AccountServives();
                 if (accSer.loginSystem(acc.getUsername(), oldPass)) {
-                    acc.setPassword(newPass);
+                    PassEncryption pe = new PassEncryption();
+                    acc.setPassword(pe.encryptPass(newPass));
                     if (accSer.store(acc)) {
                         JOptionPane.showMessageDialog(this, "Change password successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
                         txtCofirmPass.setText("");
@@ -220,7 +222,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "New password and cofirm password do not match!", "Warning", JOptionPane.WARNING_MESSAGE);
             }
 
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "You must enter complete information!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 

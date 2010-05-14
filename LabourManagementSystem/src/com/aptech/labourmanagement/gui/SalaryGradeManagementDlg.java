@@ -266,7 +266,6 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-        clearFields();
         disableFields();
     }//GEN-LAST:event_btnCancelActionPerformed
 
@@ -354,6 +353,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
      * disable fields
      */
     public void disableFields() {
+        clearFields();
         txtGradeName.setEditable(false);
         txtValue.setEditable(false);
         btnCancel.setEnabled(false);
