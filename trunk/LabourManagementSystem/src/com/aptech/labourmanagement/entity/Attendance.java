@@ -157,9 +157,9 @@ public class Attendance implements PropertyIndex {
 
     public Object getPropertyValue(int index) {
         String value = "";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         switch (index) {
             case 1:
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                 value = dateFormat.format(this.getWorkDay());
                 break;
             case 2:
@@ -182,7 +182,15 @@ public class Attendance implements PropertyIndex {
                     value = "No";
                 }
                 break;
-
+            case 6:
+                value = this.getWorker().getFirstName();
+                break;
+            case 7:
+                value = this.getWorker().getLastName();
+                break;
+            case 8:
+                value = dateFormat.format(this.getWorker().getDayOfBirth());
+                break;
         }
         return value;
     }

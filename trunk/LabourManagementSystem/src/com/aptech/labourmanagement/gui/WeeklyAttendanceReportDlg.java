@@ -8,18 +8,39 @@
  *
  * Created on May 11, 2010, 4:07:50 AM
  */
-
 package com.aptech.labourmanagement.gui;
 
+import com.aptech.labourmanagement.component.ColumnData;
 import com.aptech.labourmanagement.component.LookAndFeel;
+import com.aptech.labourmanagement.component.ObjectTableModel;
+import com.aptech.labourmanagement.entity.Attendance;
+import com.aptech.labourmanagement.entity.HourTotal;
+import com.aptech.labourmanagement.services.AttendanceServices;
+import com.aptech.labourmanagement.util.CheckForm;
 import java.awt.Toolkit;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author Noi Nho
  */
 public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
+
+    private AttendanceServices atSer;
+    private ArrayList<Attendance> arrAttendance = new ArrayList<Attendance>();
+    private ArrayList<HourTotal> arrHoueTotal = new ArrayList<HourTotal>();
+    private JTable headerTable;
+    private ObjectTableModel tableModel;
+    int indexSelectOption;
 
     /** Creates new form WeeklySalaryReportDlg */
     public WeeklyAttendanceReportDlg(java.awt.Frame parent, boolean modal) {
@@ -50,7 +71,7 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         lblTitle = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         dcsFromDay = new com.toedter.calendar.JDateChooser();
-        DcsToDay = new com.toedter.calendar.JDateChooser();
+        dcsToDay = new com.toedter.calendar.JDateChooser();
         lblFromDay = new javax.swing.JLabel();
         lblToDay = new javax.swing.JLabel();
         btnAttendanceReport = new javax.swing.JButton();
@@ -61,7 +82,7 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btnPrint = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrAttendance = new javax.swing.JScrollPane();
         tblAttendance = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -85,6 +106,8 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.25;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 20, 5);
         getContentPane().add(jPanel1, gridBagConstraints);
 
@@ -100,14 +123,14 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
         jPanel2.add(dcsFromDay, gridBagConstraints);
 
-        DcsToDay.setDateFormatString("MM/dd/yyyy");
+        dcsToDay.setDateFormatString("MM/dd/yyyy");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 5);
-        jPanel2.add(DcsToDay, gridBagConstraints);
+        jPanel2.add(dcsToDay, gridBagConstraints);
 
         lblFromDay.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblFromDay.setText("From day:");
@@ -131,6 +154,11 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
 
         btnAttendanceReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/chart.png"))); // NOI18N
         btnAttendanceReport.setText("Report");
+        btnAttendanceReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAttendanceReportActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
@@ -188,6 +216,8 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.15;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(jPanel2, gridBagConstraints);
 
@@ -201,25 +231,27 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.SOUTH);
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(730, 300));
+        scrAttendance.setPreferredSize(new java.awt.Dimension(730, 300));
 
         tblAttendance.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No.", "Firs name", "Last name", "Day of birth", "Work date", "Time in", "Time out"
+                "No.", "Firs name", "Last name", "Day of birth", "Working day", "Time in", "Time out", "Is extral shift", "Complete"
             }
         ));
-        jScrollPane1.setViewportView(tblAttendance);
+        scrAttendance.setViewportView(tblAttendance);
 
-        jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel3.add(scrAttendance, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.6;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(jPanel3, gridBagConstraints);
 
@@ -228,25 +260,65 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
 
     private void cbbOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbOptionItemStateChanged
         // TODO add your handling code here:
-        if(cbbOption.getSelectedIndex() == 0){
+        if (cbbOption.getSelectedIndex() == 0) {
             txtLaborID.setEditable(false);
-        }else{
+        } else {
             if (cbbOption.getSelectedIndex() == 1) {
                 txtLaborID.setEditable(true);
-            } 
+            }
         }
 
 
     }//GEN-LAST:event_cbbOptionItemStateChanged
 
+    private void btnAttendanceReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAttendanceReportActionPerformed
+        // TODO add your handling code here:
+        indexSelectOption = cbbOption.getSelectedIndex();
+        if (dcsToDay.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Date can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
+            dcsToDay.requestFocus();
+            dcsToDay.setDate(null);
+            return;
+        }
+        if (dcsFromDay.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Date can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
+            dcsFromDay.requestFocus();
+            dcsFromDay.setDate(null);
+            return;
+        }
+
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(dcsFromDay.getDate());
+        Date dateFrom = new Date(ca.getTimeInMillis());
+
+        ca.setTime(dcsToDay.getDate());
+        Date dateTo = new Date(ca.getTimeInMillis());
+
+        if (indexSelectOption == 0) {
+            loadDataOnTableAllLabor(dateFrom, dateTo);
+        }
+        if (indexSelectOption == 1) {
+            if (!CheckForm.isNumberic(txtLaborID.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "Labor ID must be digits!", "Warning", JOptionPane.WARNING_MESSAGE);
+                txtLaborID.requestFocus();
+                return;
+            }
+            int workerID = Integer.parseInt(txtLaborID.getText().trim());
+            loadDataOnTableALabor(workerID, dateFrom, dateTo);
+        }
+    }//GEN-LAST:event_btnAttendanceReportActionPerformed
+
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 WeeklyAttendanceReportDlg dialog = new WeeklyAttendanceReportDlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -255,25 +327,83 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser DcsToDay;
     private javax.swing.JButton btnAttendanceReport;
     private javax.swing.JButton btnPrint;
     private javax.swing.JComboBox cbbOption;
     private com.toedter.calendar.JDateChooser dcsFromDay;
+    private com.toedter.calendar.JDateChooser dcsToDay;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFromDay;
     private javax.swing.JLabel lblLaborID;
     private javax.swing.JLabel lblOption;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblToDay;
+    private javax.swing.JScrollPane scrAttendance;
     private javax.swing.JTable tblAttendance;
     private javax.swing.JTextField txtLaborID;
     // End of variables declaration//GEN-END:variables
 
+    private void loadDataOnTableAllLabor(Date dateFrom, Date dateTo) {
+        atSer = new AttendanceServices();
+        arrHoueTotal = atSer.computingHourTotal(dateFrom, dateTo);
+        ColumnData[] columns = {
+            new ColumnData("First name", 50, SwingConstants.LEFT, 1),
+            new ColumnData("Last name", 80, SwingConstants.LEFT, 2),
+            new ColumnData("Day of birth", 90, SwingConstants.LEFT, 3),
+            new ColumnData("Total hours", 80, SwingConstants.LEFT, 5)
+        };
+        tableModel = new ObjectTableModel(tblAttendance, columns, arrHoueTotal);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblAttendance.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrAttendance.setRowHeader(viewport);
+        scrAttendance.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
+
+    private void loadDataOnTableALabor(int workerID, Date dateFrom, Date dateTo) {
+        atSer = new AttendanceServices();
+        arrAttendance = atSer.findAttendanceWorkerBySomeDays(workerID, dateFrom, dateTo);
+        ColumnData[] columns = {
+            new ColumnData("First name", 50, SwingConstants.LEFT, 6),
+            new ColumnData("Last name", 80, SwingConstants.LEFT, 7),
+            new ColumnData("Day of birth", 90, SwingConstants.LEFT, 8),
+            new ColumnData("Working day", 80, SwingConstants.LEFT, 1),
+            new ColumnData("Time in", 50, SwingConstants.LEFT, 2),
+            new ColumnData("Time out", 50, SwingConstants.LEFT, 3),
+            new ColumnData("Is extra shift", 80, SwingConstants.CENTER, 4),
+            new ColumnData("Complete", 50, SwingConstants.CENTER, 5)
+        };
+        tableModel = new ObjectTableModel(tblAttendance, columns, arrAttendance);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblAttendance.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrAttendance.setRowHeader(viewport);
+        scrAttendance.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
 }

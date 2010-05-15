@@ -633,7 +633,7 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         arrAttendance = attendanceSer.findAttendanceByWorkerID(workerID);
 
         ColumnData[] columns = {
-            new ColumnData("Worker date", 80, SwingConstants.LEFT, 1),
+            new ColumnData("Working day", 80, SwingConstants.LEFT, 1),
             new ColumnData("Time in", 50, SwingConstants.LEFT, 2),
             new ColumnData("Time out", 50, SwingConstants.LEFT, 3),
             new ColumnData("Is extra shift", 80, SwingConstants.CENTER, 4),

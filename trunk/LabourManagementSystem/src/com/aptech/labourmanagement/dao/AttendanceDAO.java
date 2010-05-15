@@ -37,6 +37,7 @@ public class AttendanceDAO {
     private final String SQL_READ_BY_DATE = "SELECT * FROM ATTENDANCE WHERE WorkerID = ? and WorkDay =?";
     private final String SQL_READ_Worker_BY_SOME_DATES = "SELECT DISTINCT workerID FROM ATTENDANCE WHERE (WorkDay between ? and ?) and status = ?";
     private final String SQL_READ_TOTAL_HOUR = "SELECT ShiftID, count(*) as 'Count' FROM ATTENDANCE WHERE WorkerID =? and (WorkDay between ? and ?) and Status =? group by shiftID ";
+    private final String SQL_READ_ATTENDANCE_WORKER_BY_SOME_DAYS = "SELECT * FROM ATTENDANCE WHERE WorkerID =? and (WorkDay between ? and ?)";
 
     public AttendanceDAO() {
         db = new ConfigureDB();
@@ -233,6 +234,45 @@ public class AttendanceDAO {
     }
 
     /**
+     * get list attendance of the worker some days
+     * @param workerID
+     * @param date1
+     * @param date2
+     * @return list attendance
+     */
+    public ArrayList<Attendance> readAttendanceOfWorkerBySomeDays(int workerID, Date date1, Date date2) {
+        ArrayList<Attendance> listAttendance = new ArrayList<Attendance>();
+        try {
+            con = db.getConnection();
+            pst = con.prepareStatement(SQL_READ_ATTENDANCE_WORKER_BY_SOME_DAYS);
+            pst.setInt(1, workerID);
+            pst.setDate(2, date1);
+            pst.setDate(3, date2);
+            rs = pst.executeQuery();
+            WorkerDAO workerDAO = new WorkerDAO();
+            ShiftDAO siDao = new ShiftDAO();
+            while (rs.next()) {
+                Attendance at = new Attendance();
+                at.setID(rs.getInt("ID"));
+                at.setWorker(workerDAO.readByID(rs.getInt("WorkerID")));
+                at.setWorkDay(rs.getDate("WorkDay"));
+                at.setShift(siDao.readByID(rs.getInt("ShiftID")));
+                at.setStatus(rs.getBoolean("Status"));
+                at.setIsExtraShift(rs.getBoolean("IsExtraShift"));
+
+                listAttendance.add(at);
+            }
+            db.closeConnection();
+            return listAttendance;
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, null, ex);
+            this.setLastError("Get attendance by workerId fail, error: " + ex.getMessage());
+            db.closeConnection();
+            return listAttendance;
+        }
+    }
+
+    /**
      * computing total weekly hours worked of each labor
      * @param workerID
      * @param date1
@@ -240,7 +280,7 @@ public class AttendanceDAO {
      * @return total hour
      */
     public int readTotalHourByWorkerID(int workerID, Date date1, Date date2) {
-        int totalHuor = 0;
+        int totalHuor = -1;
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_TOTAL_HOUR);
@@ -261,7 +301,7 @@ public class AttendanceDAO {
             return totalHuor;
         } catch (SQLException ex) {
             Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, null, ex);
-             this.setLastError("Computing total hour in attendance by some dates fail, error: " + ex.getMessage());
+            this.setLastError("Computing total hour in attendance by some dates fail, error: " + ex.getMessage());
             db.closeConnection();
             return totalHuor;
         }
