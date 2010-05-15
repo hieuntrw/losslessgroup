@@ -13,8 +13,10 @@ package com.aptech.labourmanagement.gui;
 import com.aptech.labourmanagement.component.ColumnData;
 import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.component.ObjectTableModel;
+import com.aptech.labourmanagement.dao.AttendanceDAO;
 import com.aptech.labourmanagement.entity.HourTotal;
 import com.aptech.labourmanagement.services.AttendanceServices;
+import com.aptech.labourmanagement.services.WorkerServices;
 import java.awt.Toolkit;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -33,9 +35,9 @@ import javax.swing.SwingConstants;
  */
 public class WeeklySalaryReportDlg extends javax.swing.JDialog {
 
-    private JTable headerTable;
     private AttendanceServices atSer;
-    private ArrayList<HourTotal> arrHoueTotal;
+    private ArrayList<HourTotal> arrHoueTotal = new ArrayList<HourTotal>();
+    private JTable headerTable;
     private ObjectTableModel tableModel;
 
     /** Creates new form WeeklySalaryReportDlg */
@@ -258,9 +260,23 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
             } else {
                 if (cbbOption.getSelectedIndex() == 2) {
                     txtLaborID.setEditable(false);
+                    Calendar ca = Calendar.getInstance();
+                    ca.setTime(dcsFromDay.getDate());
+                    Date dateFrom = new Date(ca.getTimeInMillis());
+
+                    ca.setTime(dcsToDay.getDate());
+                    Date dateTo = new Date(ca.getTimeInMillis());
+                    loadTableMaxSalary(dateFrom, dateTo);
                 } else {
                     if (cbbOption.getSelectedIndex() == 3) {
                         txtLaborID.setEditable(false);
+                        Calendar ca = Calendar.getInstance();
+                        ca.setTime(dcsFromDay.getDate());
+                        Date dateFrom = new Date(ca.getTimeInMillis());
+
+                        ca.setTime(dcsToDay.getDate());
+                        Date dateTo = new Date(ca.getTimeInMillis());
+                        loadTableMinSalary(dateFrom, dateTo);
                     }
                 }
             }
@@ -292,6 +308,16 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
             loadDataOnTableSalaryReport(dateFrom, dateTo);
             //dcsFromDay.setDate(null);
             //dcsToDay.setDate(null);
+        }
+        if (cbbOption.getSelectedIndex() == 1) {
+            int workerID = Integer.parseInt(txtLaborID.getText().trim());
+            loadTableWorkerSalary(dateFrom, dateTo, workerID);
+        }
+        if (cbbOption.getSelectedIndex() == 2) {
+            loadTableMaxSalary(dateFrom, dateTo);
+        }
+        if (cbbOption.getSelectedIndex() == 3) {
+            loadTableMinSalary(dateFrom, dateTo);
         }
     }//GEN-LAST:event_btnComputingSalaryActionPerformed
 
@@ -346,6 +372,141 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
             new ColumnData("Totals salary", 80, SwingConstants.LEFT, 6)
         };
         tableModel = new ObjectTableModel(tblSalary, columns, arrHoueTotal);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblSalary.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrSalary.setRowHeader(viewport);
+        scrSalary.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
+
+    private void loadTableMaxSalary(Date dateFrom, Date dateTo) {
+        ArrayList<HourTotal> arrMaxSalary = new ArrayList<HourTotal>();
+        if (arrHoueTotal.isEmpty()) {
+            atSer = new AttendanceServices();
+            arrHoueTotal = atSer.computingHourTotal(dateFrom, dateTo);
+        }
+        float maxSalary = 0;
+        HourTotal hourTotal = new HourTotal();
+        for (int i = 0; i < arrHoueTotal.size(); i++) {
+            float temp = arrHoueTotal.get(i).getWorker().getSalaryGrade().getGradeNum() * arrHoueTotal.get(i).getHourTotal();
+            if (temp > maxSalary) {
+                maxSalary = temp;
+                hourTotal = arrHoueTotal.get(i);
+            }
+        }
+        arrMaxSalary.add(hourTotal);
+        ColumnData[] columns = {
+            new ColumnData("First name", 50, SwingConstants.LEFT, 1),
+            new ColumnData("Last name", 80, SwingConstants.LEFT, 2),
+            new ColumnData("Day of birth", 90, SwingConstants.LEFT, 3),
+            new ColumnData("Salary grade", 50, SwingConstants.LEFT, 4),
+            new ColumnData("Total hours", 80, SwingConstants.LEFT, 5),
+            new ColumnData("Totals salary", 80, SwingConstants.LEFT, 6)
+        };
+        tableModel = new ObjectTableModel(tblSalary, columns, arrMaxSalary);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblSalary.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrSalary.setRowHeader(viewport);
+        scrSalary.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
+
+    private void loadTableMinSalary(Date dateFrom, Date dateTo) {
+        ArrayList<HourTotal> arrMinSalary = new ArrayList<HourTotal>();
+        if (arrHoueTotal.isEmpty()) {
+            atSer = new AttendanceServices();
+            arrHoueTotal = atSer.computingHourTotal(dateFrom, dateTo);
+        }
+        float minSalary = Float.MAX_VALUE;
+        HourTotal hourTotal = new HourTotal();
+        for (int i = 0; i < arrHoueTotal.size(); i++) {
+            float temp = arrHoueTotal.get(i).getWorker().getSalaryGrade().getGradeNum() * arrHoueTotal.get(i).getHourTotal();
+            if (temp < minSalary) {
+                minSalary = temp;
+                hourTotal = arrHoueTotal.get(i);
+            }
+        }
+        arrMinSalary.add(hourTotal);
+        ColumnData[] columns = {
+            new ColumnData("First name", 50, SwingConstants.LEFT, 1),
+            new ColumnData("Last name", 80, SwingConstants.LEFT, 2),
+            new ColumnData("Day of birth", 90, SwingConstants.LEFT, 3),
+            new ColumnData("Salary grade", 50, SwingConstants.LEFT, 4),
+            new ColumnData("Total hours", 80, SwingConstants.LEFT, 5),
+            new ColumnData("Totals salary", 80, SwingConstants.LEFT, 6)
+        };
+        tableModel = new ObjectTableModel(tblSalary, columns, arrMinSalary);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblSalary.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrSalary.setRowHeader(viewport);
+        scrSalary.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
+
+    private void loadTableWorkerSalary(Date dateFrom, Date dateTo, int workerID) {
+        ArrayList<HourTotal> arrWorkerSalary = new ArrayList<HourTotal>();
+        HourTotal hourTotal = new HourTotal();
+        int totalHour;
+        if (arrHoueTotal.isEmpty()) {
+            AttendanceDAO atDAO = new AttendanceDAO();
+            totalHour = atDAO.readTotalHourByWorkerID(workerID, dateFrom, dateTo);
+            if (totalHour > 0) {
+                hourTotal.setHourTotal(totalHour);
+                WorkerServices ws = new WorkerServices();
+                hourTotal.setWorker(ws.readByID(workerID));
+                arrWorkerSalary.add(hourTotal);
+            }
+        } else {
+            for (int i = 0; i < arrHoueTotal.size(); i++) {
+                if (arrHoueTotal.get(i).getWorker().getWorkerID() == workerID) {
+                    hourTotal = arrHoueTotal.get(i);
+                    arrWorkerSalary.add(hourTotal);
+                }
+            }
+        }
+
+        ColumnData[] columns = {
+            new ColumnData("First name", 50, SwingConstants.LEFT, 1),
+            new ColumnData("Last name", 80, SwingConstants.LEFT, 2),
+            new ColumnData("Day of birth", 90, SwingConstants.LEFT, 3),
+            new ColumnData("Salary grade", 50, SwingConstants.LEFT, 4),
+            new ColumnData("Total hours", 80, SwingConstants.LEFT, 5),
+            new ColumnData("Totals salary", 80, SwingConstants.LEFT, 6)
+        };
+        tableModel = new ObjectTableModel(tblSalary, columns, arrWorkerSalary);
         headerTable = tableModel.getHeaderTable();
 
         //tao cot stt tu dong

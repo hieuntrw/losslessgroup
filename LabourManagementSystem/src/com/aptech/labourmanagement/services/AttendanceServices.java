@@ -128,6 +128,7 @@ public class AttendanceServices {
     }
 
     /**
+     * update attendance
      * @return true or false
      * @param at the ac to insert into table Attendance
      */
@@ -217,4 +218,8 @@ public class AttendanceServices {
         return arrHourTotal;
     }
 
+    public ArrayList<Attendance> findAttendanceWorkerBySomeDays(int workerID,Date date1, Date date2){
+        ArrayList<Attendance> listAttendance = atDao.readAttendanceOfWorkerBySomeDays(workerID, date1, date2);
+        return listAttendance;
+    }
 }
