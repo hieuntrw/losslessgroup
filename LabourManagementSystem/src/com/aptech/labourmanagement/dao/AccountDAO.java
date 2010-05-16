@@ -231,7 +231,7 @@ public class AccountDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
-            this.setLastError("Username or password wrong!");
+            this.setLastError("Erro connection! "+ex.getMessage());
             db.closeConnection();
             return false;
         }

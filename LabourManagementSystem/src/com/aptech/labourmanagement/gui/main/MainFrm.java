@@ -36,6 +36,7 @@ import javax.swing.JOptionPane;
 public class MainFrm extends javax.swing.JFrame {
 
     public Account acc = new Account();
+
     /** Creates new form MainFrm */
     public MainFrm(Logindlg loginDlg) {
         initComponents();
@@ -52,6 +53,8 @@ public class MainFrm extends javax.swing.JFrame {
         new LookAndFeel(this);
         acc = loginDlg.acc;
         this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        disableMenu();
+        loadMenu();
     }
 
     private void initStatusBar() {
@@ -423,13 +426,15 @@ public class MainFrm extends javax.swing.JFrame {
     private void mniLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniLogoutActionPerformed
         // TODO add your handling code here:
         //hide roles
+        disableMenu();
     }//GEN-LAST:event_mniLogoutActionPerformed
 
     private void mniExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniExitActionPerformed
         // TODO add your handling code here:
         int i = JOptionPane.showConfirmDialog(this, "Are you sure want to exit system ?", "Question", JOptionPane.YES_NO_OPTION);
-        if(i == JOptionPane.YES_OPTION){
-            this.dispose();
+        if (i == JOptionPane.YES_OPTION) {
+            //this.dispose();
+            System.exit(0);
         }
     }//GEN-LAST:event_mniExitActionPerformed
 
@@ -482,6 +487,80 @@ public class MainFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
         new WeeklyAttendanceReportDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniAttendanceReportActionPerformed
+
+    /**
+     * load menu with role of account
+     */
+    private void loadMenu() {
+        if (acc.getRole() != null) {
+            mniLogin.setVisible(false);
+            mniChangePass.setVisible(true);
+            mniLogout.setVisible(true);
+            if (acc.getRole().isIsAccountManagement() || acc.getRole().isIsRoleManagement()) {
+                mnAccountManagement.setVisible(true);
+                mniAccount.setVisible(acc.getRole().isIsAccountManagement());
+                mniRoleFunction.setVisible(acc.getRole().isIsRoleManagement());
+            }
+            if (acc.getRole().isIsAttendanceManagement()) {
+                mnAttendanceManagement.setVisible(true);
+                mniShift.setVisible(true);
+                mniAttendance.setVisible(true);
+            }
+            if (acc.getRole().isIsWorkerManagement() || acc.getRole().isIsFamilyManagement() || acc.getRole().isIsRefersManagement() || acc.getRole().isIsSalaryGradeManagement()) {
+                mnLaborManagement.setVisible(true);
+                mniLabor.setVisible(acc.getRole().isIsWorkerManagement());
+                mniFamily.setVisible(acc.getRole().isIsFamilyManagement());
+                mniRefer.setVisible(acc.getRole().isIsRefersManagement());
+                mniSalaryGrade.setVisible(acc.getRole().isIsSalaryGradeManagement());
+                mniLaborInfor.setVisible(acc.getRole().isIsWorkerManagement());
+            }
+            if (acc.getRole().isIsWeeklyAttendanceReport() || acc.getRole().isIsWeeklySalaryReport()) {
+                mnReport.setVisible(true);
+                mniSalaryReport.setVisible(acc.getRole().isIsWeeklySalaryReport());
+                mniAttendanceReport.setVisible(acc.getRole().isIsWeeklyAttendanceReport());
+            }
+
+            btnAccount.setEnabled(acc.getRole().isIsAccountManagement());
+            btnAttendance.setEnabled(acc.getRole().isIsAttendanceManagement());
+            btnLabor.setEnabled(acc.getRole().isIsWorkerManagement());
+            btnWeeklyAttendance.setEnabled(acc.getRole().isIsWeeklyAttendanceReport());
+            btnWeeklySalary.setEnabled(acc.getRole().isIsWeeklySalaryReport());
+        } else {
+            disableMenu();
+        }
+    }
+
+    /**
+     * disable menus
+     */
+    private void disableMenu() {
+        mniLogin.setVisible(true);
+        mniChangePass.setVisible(false);
+        mniLogout.setVisible(false);
+        mnAccountManagement.setVisible(false);
+        mnAttendanceManagement.setVisible(false);
+        mnLaborManagement.setVisible(false);
+        mnReport.setVisible(false);
+
+        btnAccount.setEnabled(false);
+        btnAttendance.setEnabled(false);
+        btnLabor.setEnabled(false);
+        btnWeeklyAttendance.setEnabled(false);
+        btnWeeklySalary.setEnabled(false);
+
+        mniAccount.setVisible(false);
+        mniRoleFunction.setVisible(false);
+        mnAttendanceManagement.setVisible(false);
+        mniShift.setVisible(false);
+        mniAttendance.setVisible(false);
+        mniLabor.setVisible(false);
+        mniFamily.setVisible(false);
+        mniRefer.setVisible(false);
+        mniSalaryGrade.setVisible(false);
+        mniLaborInfor.setVisible(false);
+        mniSalaryReport.setVisible(false);
+        mniAttendanceReport.setVisible(false);
+    }
 
     /**
      * @param args the command line arguments
