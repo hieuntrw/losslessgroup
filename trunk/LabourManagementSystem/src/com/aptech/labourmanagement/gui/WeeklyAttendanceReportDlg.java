@@ -351,8 +351,8 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         atSer = new AttendanceServices();
         arrHoueTotal = atSer.computingHourTotal(dateFrom, dateTo);
         ColumnData[] columns = {
-            new ColumnData("First name", 50, SwingConstants.LEFT, 1),
             new ColumnData("Last name", 80, SwingConstants.LEFT, 2),
+            new ColumnData("First name", 50, SwingConstants.LEFT, 1),
             new ColumnData("Day of birth", 90, SwingConstants.LEFT, 3),
             new ColumnData("Total hours", 80, SwingConstants.LEFT, 5)
         };
