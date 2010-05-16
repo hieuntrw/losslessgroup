@@ -569,8 +569,8 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         arrWorker = workerSer.findByAll();
 
         ColumnData[] columns = {
-            new ColumnData("First name", 80, SwingConstants.LEFT, 1),
             new ColumnData("Last name", 120, SwingConstants.LEFT, 2),
+            new ColumnData("First name", 80, SwingConstants.LEFT, 1),
             new ColumnData("Day of birth", 90, SwingConstants.LEFT, 3)
         };
         tableModel = new ObjectTableModel(tblWorker, columns, arrWorker);

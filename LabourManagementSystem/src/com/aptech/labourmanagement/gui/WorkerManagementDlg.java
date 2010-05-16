@@ -704,9 +704,9 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         arrWorker = workerSer.findByAll();
 
         ColumnData[] columns = {
-            new ColumnData("First name", 50, SwingConstants.LEFT, 1),
             new ColumnData("Last name", 70, SwingConstants.LEFT, 2),
-            new ColumnData("Day of birth", 60, SwingConstants.LEFT, 3),
+            new ColumnData("First name", 50, SwingConstants.LEFT, 1),
+             new ColumnData("Day of birth", 60, SwingConstants.LEFT, 3),
             new ColumnData("Contact", 60, SwingConstants.LEFT, 4),
             new ColumnData("Salary grade", 60, SwingConstants.LEFT, 5),
             new ColumnData("Refer", 70, SwingConstants.LEFT, 6),
