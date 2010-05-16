@@ -15,7 +15,6 @@ import com.aptech.labourmanagement.entity.Account;
 import com.aptech.labourmanagement.gui.main.MainFrm;
 import com.aptech.labourmanagement.services.AccountServives;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -61,8 +60,8 @@ public class Logindlg extends javax.swing.JDialog {
         txtPassword = new javax.swing.JPasswordField();
         lblUsername = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        btncancel = new javax.swing.JButton();
         btnOk = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
 
@@ -130,24 +129,24 @@ public class Logindlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         getContentPane().add(jPanel1, gridBagConstraints);
 
-        btncancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
-        btncancel.setText("Ok");
-        btncancel.setPreferredSize(new java.awt.Dimension(68, 25));
-        btncancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncancelActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btncancel);
-
-        btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
-        btnOk.setText("Cancel");
+        btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/check.png"))); // NOI18N
+        btnOk.setText("Ok");
+        btnOk.setPreferredSize(new java.awt.Dimension(68, 25));
         btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOkActionPerformed(evt);
             }
         });
         jPanel2.add(btnOk);
+
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/delete.png"))); // NOI18N
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnCancel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -189,17 +188,17 @@ public class Logindlg extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btncancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelActionPerformed
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         // TODO add your handling code here:
         login();
 
-    }//GEN-LAST:event_btncancelActionPerformed
+    }//GEN-LAST:event_btnOkActionPerformed
 
-    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
         txtPassword.setText("");
         txtUsername.setText("");
-    }//GEN-LAST:event_btnOkActionPerformed
+    }//GEN-LAST:event_btnCancelActionPerformed
     public void login() {
         AccountServives accSer = new AccountServives();
         String username = txtUsername.getText();
@@ -251,8 +250,8 @@ public class Logindlg extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnOk;
-    private javax.swing.JButton btncancel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
