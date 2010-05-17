@@ -129,6 +129,11 @@ public class MainFrm extends javax.swing.JFrame {
         btnAccount.setFocusable(false);
         btnAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAccount.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccountActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnAccount);
         jToolBar1.add(jSeparator3);
 
@@ -137,6 +142,11 @@ public class MainFrm extends javax.swing.JFrame {
         btnLabor.setFocusable(false);
         btnLabor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnLabor.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLabor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaborActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnLabor);
         jToolBar1.add(jSeparator4);
 
@@ -145,6 +155,11 @@ public class MainFrm extends javax.swing.JFrame {
         btnAttendance.setFocusable(false);
         btnAttendance.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAttendance.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAttendance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAttendanceActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnAttendance);
         jToolBar1.add(jSeparator5);
 
@@ -153,6 +168,11 @@ public class MainFrm extends javax.swing.JFrame {
         btnWeeklySalary.setFocusable(false);
         btnWeeklySalary.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnWeeklySalary.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnWeeklySalary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWeeklySalaryActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnWeeklySalary);
         jToolBar1.add(jSeparator6);
 
@@ -161,6 +181,11 @@ public class MainFrm extends javax.swing.JFrame {
         btnWeeklyAttendance.setFocusable(false);
         btnWeeklyAttendance.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnWeeklyAttendance.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnWeeklyAttendance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWeeklyAttendanceActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnWeeklyAttendance);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -487,6 +512,31 @@ public class MainFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
         new WeeklyAttendanceReportDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniAttendanceReportActionPerformed
+
+    private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
+        // TODO add your handling code here:
+        new AccountManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_btnAccountActionPerformed
+
+    private void btnLaborActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaborActionPerformed
+        // TODO add your handling code here:
+        new WorkerManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_btnLaborActionPerformed
+
+    private void btnAttendanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAttendanceActionPerformed
+        // TODO add your handling code here:
+        new AttendanceManagementDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_btnAttendanceActionPerformed
+
+    private void btnWeeklySalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWeeklySalaryActionPerformed
+        // TODO add your handling code here:
+        new WeeklySalaryReportDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_btnWeeklySalaryActionPerformed
+
+    private void btnWeeklyAttendanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWeeklyAttendanceActionPerformed
+        // TODO add your handling code here:
+        new WeeklyAttendanceReportDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_btnWeeklyAttendanceActionPerformed
 
     /**
      * load menu with role of account
