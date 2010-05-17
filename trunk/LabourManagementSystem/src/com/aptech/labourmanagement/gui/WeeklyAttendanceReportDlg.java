@@ -238,7 +238,7 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
 
             },
             new String [] {
-                "No.", "Firs name", "Last name", "Day of birth", "Working day", "Time in", "Time out", "Is extral shift", "Complete"
+
             }
         ));
         scrAttendance.setViewportView(tblAttendance);

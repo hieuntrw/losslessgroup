@@ -306,11 +306,25 @@ public class Worker implements PropertyIndex {
                 }
                 break;
             case 8:
-                if(this.isStatus()){
+                if (this.isStatus()) {
                     value = "Yes";
-                }else{
+                } else {
                     value = "No";
                 }
+                break;
+            case 9:
+                value = this.getAddress();
+                break;
+            case 10:
+                value = String.valueOf(this.getHeight());
+                break;
+            case 11:
+                value = String.valueOf(this.getWeight());
+                break;
+            case 12:
+                value = String.valueOf(this.getExperience());
+                break;
+
         }
         return value;
     }
