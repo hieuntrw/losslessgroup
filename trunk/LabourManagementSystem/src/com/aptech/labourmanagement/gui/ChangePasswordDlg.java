@@ -14,7 +14,6 @@ import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.entity.Account;
 import com.aptech.labourmanagement.gui.main.MainFrm;
 import com.aptech.labourmanagement.services.AccountServives;
-import com.aptech.labourmanagement.util.PassEncryption;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -242,7 +241,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                ChangePasswordDlg dialog = new ChangePasswordDlg(new MainFrm(null), true);
+                ChangePasswordDlg dialog = new ChangePasswordDlg(new MainFrm(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     @Override
