@@ -27,9 +27,10 @@ public class Logindlg extends javax.swing.JDialog {
 
     public Account acc = new Account();
 
+    MainFrm main;
     /** Creates new form dlgLogin */
-    public Logindlg(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public Logindlg(MainFrm main, boolean modal) {
+        super(main, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
         // Cach lam cho form xuat hien giua man hinh
@@ -39,7 +40,7 @@ public class Logindlg extends javax.swing.JDialog {
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
-
+        this.main = main;
         new LookAndFeel(this);
 
     }
@@ -191,7 +192,8 @@ public class Logindlg extends javax.swing.JDialog {
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         // TODO add your handling code here:
         login();
-
+        main.status.initAppStatusBar(acc.getUsername(), acc.getRole().getRoleName());
+        main.pnlStatus.validate();
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -206,7 +208,8 @@ public class Logindlg extends javax.swing.JDialog {
         if ((username.length() != 0) && (pass.length() != 0)) {
             if (accSer.loginSystem(username, pass)) {
                 acc = accSer.findByUsername(username);
-                new MainFrm(this).setVisible(true);
+                main.acc = acc;
+                main.loadMenu();
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, accSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
@@ -237,7 +240,7 @@ public class Logindlg extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                Logindlg dialog = new Logindlg(new javax.swing.JFrame(), true);
+                Logindlg dialog = new Logindlg(new MainFrm(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     @Override
