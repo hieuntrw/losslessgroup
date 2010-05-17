@@ -1,7 +1,5 @@
 package com.aptech.labourmanagement.component;
 
-import com.aptech.labourmanagement.entity.Account;
-import com.aptech.labourmanagement.gui.main.MainFrm;
 import com.l2fprod.common.swing.StatusBar;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,25 +11,31 @@ import javax.swing.JLabel;
  * @author Noi Nho
  */
 public class AppStatusBar {
-    //public String username = "";
-    public StatusBarFactory statusBarFactory;
+    private String username;
+    private String permission;
+    private StatusBarFactory statusBarFactory;
     private StatusBar bar;
     private JLabel user = null;
+    private JLabel permi = null;
     
     /** Creates a new instance of AppStatusBar */
-    public AppStatusBar(String username, String permision) {
-        this.initAppStatusBar(username,permision);
+    public AppStatusBar(String username, String permission) {
+        this.username = username;
+        this.permission = permission;
+        this.initAppStatusBar();
     }
     
-    public void initAppStatusBar(String username, String permision) {
+    public void initAppStatusBar() {
         String TIME_FORMAT = "MM'/'dd'/'yyyy' 'h':'mm' 'a";
         final SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT);
         Calendar calCurrent = Calendar.getInstance(TimeZone.getDefault());
         sdf.setTimeZone(TimeZone.getDefault());
-        statusBarFactory = new StatusBarFactory("../icon/");  //thu muc icon nam ngay tai thu muc goc cua project
+        statusBarFactory = new StatusBarFactory("../icon/"); 
         
         //final JLabel statusZone = statusBarFactory.addZone("statusZone", "75%", "Ready");
-        user = statusBarFactory.addZone("user", "75%", "Username: "+username);
+        user = statusBarFactory.addZone("user", "25%", "Username: "+username);
+        statusBarFactory.addSeparator("sepICone", "0.2%", "separator.png");
+        permi = statusBarFactory.addZone("permi", "50%", "Permission: "+permission);
         statusBarFactory.addSeparator("sepIZone", "0.2%", "separator.png");
         final JLabel timerZone = statusBarFactory.addZone("timerZone", "*", "Time: " + sdf.format(calCurrent.getTime()));
         

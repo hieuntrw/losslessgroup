@@ -36,7 +36,7 @@ import javax.swing.JOptionPane;
 public class MainFrm extends javax.swing.JFrame {
 
     public Account acc = new Account();
-    public AppStatusBar status = null;
+
     /** Creates new form MainFrm */
     public MainFrm() {
         initComponents();
@@ -49,15 +49,15 @@ public class MainFrm extends javax.swing.JFrame {
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);*/
         setIconImage(new ImageIcon(getClass().getResource("../../icon/LMSIcon.png")).getImage());
-        this.initStatusBar();
+        this.initStatusBar("", "");
         new LookAndFeel(this);
         this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         disableMenu();
 //        loadMenu();
     }
 
-    private void initStatusBar() {
-        status = new AppStatusBar("","");
+    public void initStatusBar(String username, String permission) {
+        AppStatusBar status = new AppStatusBar(username, permission);
         this.pnlStatus.add(status.getBar());
         this.pnlStatus.validate();
     }
