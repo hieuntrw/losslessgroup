@@ -26,8 +26,8 @@ import javax.swing.JOptionPane;
 public class Logindlg extends javax.swing.JDialog {
 
     public Account acc = new Account();
-
     MainFrm main;
+
     /** Creates new form dlgLogin */
     public Logindlg(MainFrm main, boolean modal) {
         super(main, modal);
@@ -200,6 +200,7 @@ public class Logindlg extends javax.swing.JDialog {
         // TODO add your handling code here:
         txtPassword.setText("");
         txtUsername.setText("");
+
     }//GEN-LAST:event_btnCancelActionPerformed
     public void login() {
         AccountServives accSer = new AccountServives();
@@ -213,6 +214,8 @@ public class Logindlg extends javax.swing.JDialog {
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, accSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
+                txtPassword.setText("");
+                txtUsername.setText("");
             }
 
         } else {

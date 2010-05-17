@@ -106,7 +106,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         setTitle("Family Ralate Management");
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        pnlFamilyInfor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Family ralate information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlFamilyInfor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Family member information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         pnlFamilyInfor.setLayout(new java.awt.GridBagLayout());
 
         lblFullName.setText("Full name:");
@@ -234,7 +234,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(pnlFamilyInfor, gridBagConstraints);
 
-        pnlFamilyList.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Family ralate list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlFamilyList.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Family members list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         pnlFamilyList.setLayout(new java.awt.BorderLayout(0, 5));
 
         scrFamily.setPreferredSize(new java.awt.Dimension(450, 200));
@@ -335,7 +335,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("Family Ralate Management");
+        lblTitle.setText("Family Relationship Management");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -359,8 +359,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblWorkerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWorkerMouseClicked
-        // TODO add your handling code here:
-        indexLabor = tblWorker.getSelectedRow();
+       indexLabor = tblWorker.getSelectedRow();
         if (indexLabor > -1) {
             loadDataOnFamilyTable(arrWorker.get(indexLabor).getWorkerID());
             disableFields();
@@ -548,7 +547,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
 
-        tblFamily.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblFamily.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
 
@@ -579,7 +578,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
 
-        tblWorker.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblWorker.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
 

@@ -441,7 +441,7 @@ public class ShiftManagementDlg extends javax.swing.JDialog {
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
 
-        tblShift.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblShift.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
 

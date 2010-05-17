@@ -377,7 +377,7 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
 
-        tblSalary.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblSalary.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
 
@@ -420,7 +420,7 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
 
-        tblSalary.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblSalary.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
 
@@ -463,7 +463,7 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
 
-        tblSalary.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblSalary.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
 
@@ -512,7 +512,7 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
 
-        tblSalary.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblSalary.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
 

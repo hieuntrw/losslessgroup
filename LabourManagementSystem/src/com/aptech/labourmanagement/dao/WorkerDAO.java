@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.aptech.labourmanagement.util.ConfigureDB;
+import java.sql.Statement;
 
 /**
  *
@@ -24,6 +25,7 @@ public class WorkerDAO {
     private ConfigureDB db = null;
     private Connection con = null;
     private PreparedStatement pst = null;
+    private Statement st = null;
     private ResultSet rs = null;
     private String lastError;
     //SQL statements
@@ -38,7 +40,6 @@ public class WorkerDAO {
     public WorkerDAO() {
         db = new ConfigureDB();
     }
-
 
     /**
      * create new worker
@@ -223,6 +224,90 @@ public class WorkerDAO {
             this.setLastError("Get worker by workerID fail, error: " + ex.getMessage());
             db.closeConnection();
             return null;
+        }
+    }
+
+    /**
+     * read worker list by first name
+     * @param firstname
+     * @return
+     */
+    public ArrayList<Worker> readByFirstName(String firstname) {
+        ArrayList<Worker> arr = new ArrayList<Worker>();
+        String SQL_READ_BY_FIRSTNAME;
+        try {
+            con = db.getConnection();
+            SQL_READ_BY_FIRSTNAME = "SELECT * FROM WORKER WHERE FirstName like '%" + firstname + "%'";
+            st = con.createStatement();
+            rs = st.executeQuery(SQL_READ_BY_FIRSTNAME);
+            while (rs.next()) {
+                Worker w = new Worker();
+                w.setWorkerID(rs.getInt("WorkerID"));
+                ReferDAO referDAO = new ReferDAO();
+                w.setRefer(referDAO.readByID(rs.getInt("ReferID")));
+                w.setFirstName(rs.getString("FirstName"));
+                w.setLastName(rs.getString("LastName"));
+                w.setAddress(rs.getString("Address"));
+                w.setDayOfBirth(rs.getDate("DayOfBirth"));
+                SalaryGradeDAO sgDAO = new SalaryGradeDAO();
+                w.setSalaryGrade(sgDAO.readByID(rs.getInt("SalaryGradeID")));
+                w.setContactNumber(rs.getString("ContactNumber"));
+                w.setExperience(rs.getInt("Experience"));
+                w.setIsTemporaryWorker(rs.getBoolean("IsTemporaryWorker"));
+                w.setWeight(rs.getFloat("Weight"));
+                w.setHeight(rs.getFloat("Height"));
+                w.setStatus(rs.getBoolean("Status"));
+                arr.add(w);
+            }
+            db.closeConnection();
+            return arr;
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkerDAO.class.getName()).log(Level.SEVERE, null, ex);
+            this.setLastError("Get worker by workerID fail, error: " + ex.getMessage());
+            db.closeConnection();
+            return arr;
+        }
+    }
+
+    /**
+     * read worker list by last name
+     * @param lastname
+     * @return
+     */
+    public ArrayList<Worker> readByLastName(String lastname) {
+        ArrayList<Worker> arr = new ArrayList<Worker>();
+        String SQL_READ_BY_LASTNAME;
+        try {
+            con = db.getConnection();
+            SQL_READ_BY_LASTNAME = "SELECT * FROM WORKER WHERE LastName like '%" + lastname + "%'";
+            st = con.createStatement();
+            rs = st.executeQuery(SQL_READ_BY_LASTNAME);
+            while (rs.next()) {
+                Worker w = new Worker();
+                w.setWorkerID(rs.getInt("WorkerID"));
+                ReferDAO referDAO = new ReferDAO();
+                w.setRefer(referDAO.readByID(rs.getInt("ReferID")));
+                w.setFirstName(rs.getString("FirstName"));
+                w.setLastName(rs.getString("LastName"));
+                w.setAddress(rs.getString("Address"));
+                w.setDayOfBirth(rs.getDate("DayOfBirth"));
+                SalaryGradeDAO sgDAO = new SalaryGradeDAO();
+                w.setSalaryGrade(sgDAO.readByID(rs.getInt("SalaryGradeID")));
+                w.setContactNumber(rs.getString("ContactNumber"));
+                w.setExperience(rs.getInt("Experience"));
+                w.setIsTemporaryWorker(rs.getBoolean("IsTemporaryWorker"));
+                w.setWeight(rs.getFloat("Weight"));
+                w.setHeight(rs.getFloat("Height"));
+                w.setStatus(rs.getBoolean("Status"));
+                arr.add(w);
+            }
+            db.closeConnection();
+            return arr;
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkerDAO.class.getName()).log(Level.SEVERE, null, ex);
+            this.setLastError("Get worker by workerID fail, error: " + ex.getMessage());
+            db.closeConnection();
+            return arr;
         }
     }
 
