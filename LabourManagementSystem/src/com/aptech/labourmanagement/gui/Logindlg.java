@@ -191,9 +191,8 @@ public class Logindlg extends javax.swing.JDialog {
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         // TODO add your handling code here:
-        login();
-        main.status.initAppStatusBar(acc.getUsername(), acc.getRole().getRoleName());
-        main.pnlStatus.validate();
+        login();       
+        
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -211,11 +210,13 @@ public class Logindlg extends javax.swing.JDialog {
                 acc = accSer.findByUsername(username);
                 main.acc = acc;
                 main.loadMenu();
+                main.initStatusBar(acc.getUsername(), acc.getRole().getRoleName());
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, accSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);
                 txtPassword.setText("");
                 txtUsername.setText("");
+                txtUsername.requestFocus();
             }
 
         } else {
