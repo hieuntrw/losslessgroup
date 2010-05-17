@@ -35,9 +35,9 @@ public class WorkerServices {
                 this.setLastError(woDao.getLastError());
                 return false;
             }
-        }else{
+        } else {
             this.setLastError(worker.getLastError());
-                return false;
+            return false;
         }
     }
 
@@ -55,9 +55,9 @@ public class WorkerServices {
                 this.setLastError(woDao.getLastError());
                 return false;
             }
-        }else{
+        } else {
             this.setLastError(worker.getLastError());
-                return false;
+            return false;
         }
     }
 
@@ -82,6 +82,26 @@ public class WorkerServices {
      */
     public ArrayList<Worker> findByAll() {
         ArrayList<Worker> listWorker = woDao.readByAll();
+        return listWorker;
+    }
+
+    /**
+     * read worker list by first name
+     * @param firstname
+     * @return
+     */
+    public ArrayList<Worker> findByFirstName(String firstname) {
+        ArrayList<Worker> listWorker = woDao.readByFirstName(firstname);
+        return listWorker;
+    }
+
+    /**
+     * read worker list by last name
+     * @param firstname
+     * @return
+     */
+    public ArrayList<Worker> findByLastName(String lastname) {
+        ArrayList<Worker> listWorker = woDao.readByLastName(lastname);
         return listWorker;
     }
 

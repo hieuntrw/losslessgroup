@@ -13,11 +13,15 @@ package com.aptech.labourmanagement.gui;
 import com.aptech.labourmanagement.component.ColumnData;
 import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.component.ObjectTableModel;
+import com.aptech.labourmanagement.entity.Family;
 import com.aptech.labourmanagement.entity.Worker;
+import com.aptech.labourmanagement.services.FamilyServices;
 import com.aptech.labourmanagement.services.WorkerServices;
+import com.aptech.labourmanagement.util.CheckForm;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.ListSelectionModel;
@@ -34,7 +38,9 @@ public class WorkerInforDlg extends javax.swing.JDialog {
     private JTable headerTable;
     private WorkerServices workerSer;
     private ArrayList<Worker> arrWorker = new ArrayList<Worker>();
-    int indexWorkerTAble = -1;
+    int indexWorkerTable = -1;
+    private FamilyServices familySer;
+    private ArrayList<Family> arrFamily = new ArrayList<Family>();
 
     /** Creates new form WorkerInforDlg */
     public WorkerInforDlg(java.awt.Frame parent, boolean modal) {
@@ -241,9 +247,14 @@ public class WorkerInforDlg extends javax.swing.JDialog {
 
             },
             new String [] {
-                "First name", "Last name", "Day of birth", "Contact", "Salary grade", "Refer", "Is temporary worker", "Is working"
+
             }
         ));
+        tblWorker.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblWorkerMouseClicked(evt);
+            }
+        });
         scrWorker.setViewportView(tblWorker);
 
         pnlWorker.add(scrWorker, java.awt.BorderLayout.CENTER);
@@ -259,7 +270,7 @@ public class WorkerInforDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(pnlWorker, gridBagConstraints);
 
-        pnlFamily.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ralate family list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlFamily.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Family members list", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         pnlFamily.setPreferredSize(new java.awt.Dimension(250, 200));
         pnlFamily.setLayout(new java.awt.BorderLayout(5, 5));
 
@@ -293,13 +304,19 @@ public class WorkerInforDlg extends javax.swing.JDialog {
         lblOption.setText("Option:");
         pnlOption.add(lblOption);
 
-        cbbOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "First name", "Last name", "Labor ID" }));
+        cbbOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All labor", "First name", "Last name", "Labor ID" }));
+        cbbOption.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbOptionItemStateChanged(evt);
+            }
+        });
         pnlOption.add(cbbOption);
 
         lblValue.setText("Value:");
         pnlOption.add(lblValue);
 
         txtValue.setColumns(20);
+        txtValue.setEditable(false);
         pnlOption.add(txtValue);
 
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/view.png"))); // NOI18N
@@ -349,21 +366,91 @@ public class WorkerInforDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
         int indexSelectOption = cbbOption.getSelectedIndex();
+        workerSer = new WorkerServices();
         if (indexSelectOption == 0) {
-            //tim theo last name
-            //loadData
-        }else{
-            if(indexSelectOption == 1){
-                //tim theo first name
-                //loadData
-            }else{
-                //tim theo laborID
-                //loadData
+            arrWorker = workerSer.findByAll();
+            loadDataOnTableWorker(arrWorker);
+        } else {
+            if (indexSelectOption == 1) {
+                arrWorker = workerSer.findByFirstName(txtValue.getText().trim());
+                loadDataOnTableWorker(arrWorker);
+            } else {
+                if (indexSelectOption == 2) {
+                    arrWorker = workerSer.findByLastName(txtValue.getText().trim());
+                    loadDataOnTableWorker(arrWorker);
+                } else {
+                    if (indexSelectOption == 3) {
+                        if (!CheckForm.isNumberic(txtValue.getText().trim())) {
+                            JOptionPane.showMessageDialog(this, "Labor ID must be digits!", "Warning", JOptionPane.WARNING_MESSAGE);
+                            txtValue.requestFocus();
+                            return;
+                        }
+                        Worker w = workerSer.readByID(Integer.parseInt(txtValue.getText().trim()));
+                        arrWorker.removeAll(arrWorker);
+                        arrWorker.add(w);
+                        loadDataOnTableWorker(arrWorker);
+                    }
+                }
             }
         }
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void tblWorkerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWorkerMouseClicked
+        indexWorkerTable = tblWorker.getSelectedRow();
+        if (indexWorkerTable > -1) {
+            txtAddress.setText(arrWorker.get(indexWorkerTable).getRefer().getAddress());
+            txtContactNumber.setText(arrWorker.get(indexWorkerTable).getRefer().getContactNumber());
+            txtFullName.setText(arrWorker.get(indexWorkerTable).getRefer().getFullName());
+            txtPosition.setText(arrWorker.get(indexWorkerTable).getRefer().getPosition());
+            txtWorkName.setText(arrWorker.get(indexWorkerTable).getRefer().getWorkName());
+            dcsDayOfBirth.setDate(arrWorker.get(indexWorkerTable).getRefer().getDayOfBirth());
+            loadDataOnFamilyTable(arrWorker.get(indexWorkerTable).getWorkerID());
+        }
+    }//GEN-LAST:event_tblWorkerMouseClicked
+
+    private void cbbOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbOptionItemStateChanged
+        // TODO add your handling code here:
+        if (cbbOption.getSelectedIndex() == 0) {
+            txtValue.setEditable(false);
+        }else{
+            txtValue.setEditable(true);
+        }
+
+    }//GEN-LAST:event_cbbOptionItemStateChanged
+
+    /**
+     * load data on ralate family
+     * @param workerID
+     */
+    private void loadDataOnFamilyTable(int workerID) {
+        familySer = new FamilyServices();
+        arrFamily = familySer.findFamilyByWorkerID(workerID);
+
+        ColumnData[] columns = {
+            new ColumnData("Full name", 150, SwingConstants.LEFT, 1),
+            new ColumnData("Day of birth", 90, SwingConstants.LEFT, 2),
+            new ColumnData("Ralate name", 90, SwingConstants.LEFT, 3),
+            new ColumnData("Address", 100, SwingConstants.LEFT, 4)
+        };
+        tableModel = new ObjectTableModel(tblFamily, columns, arrFamily);
+        headerTable = tableModel.getHeaderTable();
+
+        //tao cot stt tu dong
+        headerTable.createDefaultColumnsFromModel();
+
+        tblFamily.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        // Put it in a viewport that we can control a bit
+        JViewport viewport = new JViewport();
+
+        //hien thi du lieu cot stt
+        viewport.setView(headerTable);
+
+        viewport.setPreferredSize(headerTable.getMaximumSize());
+
+        scrFamily.setRowHeader(viewport);
+        scrFamily.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerTable.getTableHeader());
+    }
 
     private void loadDataOnTableWorker(ArrayList<Worker> arrWorker) {
 //        workerSer = new WorkerServices();
@@ -380,15 +467,14 @@ public class WorkerInforDlg extends javax.swing.JDialog {
             new ColumnData("Temporary worker", 60, SwingConstants.CENTER, 7),
             new ColumnData("Working", 40, SwingConstants.CENTER, 8),
             new ColumnData("Height", 25, SwingConstants.CENTER, 10),
-            new ColumnData("Weight", 25, SwingConstants.CENTER, 11),
-        };
+            new ColumnData("Weight", 25, SwingConstants.CENTER, 11),};
         tableModel = new ObjectTableModel(tblWorker, columns, arrWorker);
         headerTable = tableModel.getHeaderTable();
 
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
 
-        tblWorker.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblWorker.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
 

@@ -224,18 +224,12 @@
             <Component class="javax.swing.JTable" name="tblWorker">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="8" rowCount="0">
-                    <Column editable="true" title="First name" type="java.lang.Object"/>
-                    <Column editable="true" title="Last name" type="java.lang.Object"/>
-                    <Column editable="true" title="Day of birth" type="java.lang.Object"/>
-                    <Column editable="true" title="Contact" type="java.lang.Object"/>
-                    <Column editable="true" title="Salary grade" type="java.lang.Object"/>
-                    <Column editable="true" title="Refer" type="java.lang.Object"/>
-                    <Column editable="true" title="Is temporary worker" type="java.lang.Object"/>
-                    <Column editable="true" title="Is working" type="java.lang.Object"/>
-                  </Table>
+                  <Table columnCount="0" rowCount="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblWorkerMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -245,7 +239,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Ralate family list">
+            <TitledBorder title="Family members list">
               <Font PropertyName="font" name="Tahoma" size="11" style="1"/>
               <Color PropertyName="color" blue="0" green="0" red="0" type="rgb"/>
             </TitledBorder>
@@ -329,13 +323,17 @@
         <Component class="javax.swing.JComboBox" name="cbbOption">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="First name"/>
-                <StringItem index="1" value="Last name"/>
-                <StringItem index="2" value="Labor ID"/>
+              <StringArray count="4">
+                <StringItem index="0" value="All labor"/>
+                <StringItem index="1" value="First name"/>
+                <StringItem index="2" value="Last name"/>
+                <StringItem index="3" value="Labor ID"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbbOptionItemStateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblValue">
           <Properties>
@@ -345,6 +343,7 @@
         <Component class="javax.swing.JTextField" name="txtValue">
           <Properties>
             <Property name="columns" type="int" value="20"/>
+            <Property name="editable" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnSearch">

@@ -112,7 +112,6 @@ public class MainFrm extends javax.swing.JFrame {
         mnHelp = new javax.swing.JMenu();
         mniHelp = new javax.swing.JMenuItem();
         mniAbout = new javax.swing.JMenuItem();
-        mniContactUs = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Labour Management System");
@@ -204,15 +203,11 @@ public class MainFrm extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(jPanel2, gridBagConstraints);
 
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/Hinhnen.jpg"))); // NOI18N
         jLabel1.setPreferredSize(new java.awt.Dimension(1024, 580));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jPanel1.add(jLabel1, gridBagConstraints);
+        jPanel1.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -422,10 +417,6 @@ public class MainFrm extends javax.swing.JFrame {
             }
         });
         mnHelp.add(mniAbout);
-
-        mniContactUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/address_book.png"))); // NOI18N
-        mniContactUs.setText("Contact Us");
-        mnHelp.add(mniContactUs);
 
         jMenuBar1.add(mnHelp);
 
@@ -647,7 +638,6 @@ public class MainFrm extends javax.swing.JFrame {
     private javax.swing.JMenuItem mniAttendance;
     private javax.swing.JMenuItem mniAttendanceReport;
     private javax.swing.JMenuItem mniChangePass;
-    private javax.swing.JMenuItem mniContactUs;
     private javax.swing.JMenuItem mniExit;
     private javax.swing.JMenuItem mniFamily;
     private javax.swing.JMenuItem mniHelp;

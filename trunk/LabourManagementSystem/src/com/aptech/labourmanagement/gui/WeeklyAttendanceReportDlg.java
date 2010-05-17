@@ -285,7 +285,7 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
             dcsFromDay.requestFocus();
             dcsFromDay.setDate(null);
             return;
-        }
+        }      
 
         Calendar ca = Calendar.getInstance();
         ca.setTime(dcsFromDay.getDate());
@@ -362,7 +362,7 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
 
-        tblAttendance.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblAttendance.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
 
@@ -394,7 +394,7 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
 
-        tblAttendance.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblAttendance.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
 

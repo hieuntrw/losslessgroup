@@ -387,7 +387,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
         headerTable = tableModel.getHeaderTable();
         //tao cot stt tu dong
         headerTable.createDefaultColumnsFromModel();
-        tblSalaryGrade.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblSalaryGrade.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // Put it in a viewport that we can control a bit
         JViewport viewport = new JViewport();
