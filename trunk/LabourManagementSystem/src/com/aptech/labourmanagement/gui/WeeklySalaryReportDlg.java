@@ -36,10 +36,11 @@ import javax.swing.SwingConstants;
 public class WeeklySalaryReportDlg extends javax.swing.JDialog {
 
     private AttendanceServices atSer;
-    private ArrayList<HourTotal> arrHoueTotal = new ArrayList<HourTotal>();
+    public ArrayList<HourTotal> arrHoueTotal = new ArrayList<HourTotal>();
     private JTable headerTable;
     private ObjectTableModel tableModel;
-
+public Date dateFrom;
+public Date dateTo;
     /** Creates new form WeeklySalaryReportDlg */
     public WeeklySalaryReportDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -221,6 +222,11 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/printer2.png"))); // NOI18N
         btnPrint.setText("Print");
         btnPrint.setPreferredSize(new java.awt.Dimension(85, 25));
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnPrint);
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.SOUTH);
@@ -262,20 +268,20 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
                     txtLaborID.setEditable(false);
                     Calendar ca = Calendar.getInstance();
                     ca.setTime(dcsFromDay.getDate());
-                    Date dateFrom = new Date(ca.getTimeInMillis());
+                    dateFrom = new Date(ca.getTimeInMillis());
 
                     ca.setTime(dcsToDay.getDate());
-                    Date dateTo = new Date(ca.getTimeInMillis());
+                    dateTo = new Date(ca.getTimeInMillis());
                     loadTableMaxSalary(dateFrom, dateTo);
                 } else {
                     if (cbbOption.getSelectedIndex() == 3) {
                         txtLaborID.setEditable(false);
                         Calendar ca = Calendar.getInstance();
                         ca.setTime(dcsFromDay.getDate());
-                        Date dateFrom = new Date(ca.getTimeInMillis());
+                        dateFrom = new Date(ca.getTimeInMillis());
 
                         ca.setTime(dcsToDay.getDate());
-                        Date dateTo = new Date(ca.getTimeInMillis());
+                        dateTo = new Date(ca.getTimeInMillis());
                         loadTableMinSalary(dateFrom, dateTo);
                     }
                 }
@@ -299,10 +305,10 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
         }
         Calendar ca = Calendar.getInstance();
         ca.setTime(dcsFromDay.getDate());
-        Date dateFrom = new Date(ca.getTimeInMillis());
+        dateFrom = new Date(ca.getTimeInMillis());
 
         ca.setTime(dcsToDay.getDate());
-        Date dateTo = new Date(ca.getTimeInMillis());
+        dateTo = new Date(ca.getTimeInMillis());
 
         if (cbbOption.getSelectedIndex() == 0) {
             loadDataOnTableSalaryReport(dateFrom, dateTo);
@@ -320,6 +326,15 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
             loadTableMinSalary(dateFrom, dateTo);
         }
     }//GEN-LAST:event_btnComputingSalaryActionPerformed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        if(arrHoueTotal.size() >0){
+            new SalaryReportFrm(this).setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Date is empty!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     /**
      * @param args the command line arguments
