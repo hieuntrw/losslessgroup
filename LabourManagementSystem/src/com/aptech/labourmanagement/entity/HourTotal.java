@@ -5,6 +5,7 @@
 package com.aptech.labourmanagement.entity;
 
 import com.aptech.labourmanagement.component.PropertyIndex;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 /**
@@ -78,4 +79,6 @@ public class HourTotal implements PropertyIndex {
     public Class getPropertyClass(int index) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    
 }
