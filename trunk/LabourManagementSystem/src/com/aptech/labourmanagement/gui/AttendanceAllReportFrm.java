@@ -4,31 +4,28 @@
  */
 
 /*
- * SalaryReportFrm.java
+ * AttendanceAllReportFrm.java
  *
- * Created on May 18, 2010, 5:44:41 PM
+ * Created on May 19, 2010, 12:43:25 PM
  */
 
 package com.aptech.labourmanagement.gui;
 
-import com.aptech.labourmanagement.component.ReportSalary;
-import com.aptech.labourmanagement.entity.HourTotal;
-import java.util.ArrayList;
+import com.aptech.labourmanagement.component.ReportAttendanceAll;
+
 /**
  *
  * @author Noi Nho
  */
-public class SalaryReportFrm extends javax.swing.JFrame {
+public class AttendanceAllReportFrm extends javax.swing.JFrame {
 
-    WeeklySalaryReportDlg wsr;
-    /** Creates new form SalaryReportFrm */
-    public SalaryReportFrm(WeeklySalaryReportDlg wsr) {
+    WeeklyAttendanceReportDlg war;
+    /** Creates new form AttendanceAllReportFrm */
+    public AttendanceAllReportFrm(WeeklyAttendanceReportDlg war) {
         initComponents();
-        this.wsr = wsr;
-        ArrayList<HourTotal> arr = new ArrayList<HourTotal>();
-        arr = wsr.arrHoueTotal;
-        ReportSalary report = new ReportSalary();
-        this.add(report.getEnumerationViewer(arr, true, wsr.dateFrom, wsr.dateTo));
+        this.war = war;
+        ReportAttendanceAll report = new ReportAttendanceAll();
+        this.add(report.getEnumerationViewer(this.war.arrHoueTotal, true, this.war.dateFrom, this.war.dateTo));
         this.setSize(300, 400);
     }
 
@@ -42,7 +39,6 @@ public class SalaryReportFrm extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Salary Report");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -53,7 +49,7 @@ public class SalaryReportFrm extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SalaryReportFrm(new WeeklySalaryReportDlg(null, true)).setVisible(true);
+                new AttendanceAllReportFrm(new WeeklyAttendanceReportDlg(null, true)).setVisible(true);
             }
         });
     }

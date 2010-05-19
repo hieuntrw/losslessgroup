@@ -36,11 +36,13 @@ import javax.swing.SwingConstants;
 public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
 
     private AttendanceServices atSer;
-    private ArrayList<Attendance> arrAttendance = new ArrayList<Attendance>();
-    private ArrayList<HourTotal> arrHoueTotal = new ArrayList<HourTotal>();
+    public ArrayList<Attendance> arrAttendance = new ArrayList<Attendance>();
+    public ArrayList<HourTotal> arrHoueTotal = new ArrayList<HourTotal>();
     private JTable headerTable;
     private ObjectTableModel tableModel;
     int indexSelectOption;
+    public Date dateFrom;
+    public Date dateTo;
 
     /** Creates new form WeeklySalaryReportDlg */
     public WeeklyAttendanceReportDlg(java.awt.Frame parent, boolean modal) {
@@ -177,7 +179,7 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
         jPanel2.add(lblOption, gridBagConstraints);
 
-        cbbOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All labor", "A lalor" }));
+        cbbOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All labor", "One lalor" }));
         cbbOption.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbOptionItemStateChanged(evt);
@@ -227,6 +229,11 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/printer2.png"))); // NOI18N
         btnPrint.setText("Print");
         btnPrint.setPreferredSize(new java.awt.Dimension(85, 25));
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnPrint);
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.SOUTH);
@@ -285,14 +292,14 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
             dcsFromDay.requestFocus();
             dcsFromDay.setDate(null);
             return;
-        }      
+        }
 
         Calendar ca = Calendar.getInstance();
         ca.setTime(dcsFromDay.getDate());
-        Date dateFrom = new Date(ca.getTimeInMillis());
+        dateFrom = new Date(ca.getTimeInMillis());
 
         ca.setTime(dcsToDay.getDate());
-        Date dateTo = new Date(ca.getTimeInMillis());
+        dateTo = new Date(ca.getTimeInMillis());
 
         if (indexSelectOption == 0) {
             loadDataOnTableAllLabor(dateFrom, dateTo);
@@ -307,6 +314,23 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
             loadDataOnTableALabor(workerID, dateFrom, dateTo);
         }
     }//GEN-LAST:event_btnAttendanceReportActionPerformed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+
+        if (indexSelectOption == 0) {
+            //report All labor
+            if (arrHoueTotal.size() > 0) {
+                new AttendanceAllReportFrm(this).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Data is empty!", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+
+        }
+        if (indexSelectOption == 1) {
+            //report one labor
+        }
+
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     /**
      * @param args the command line arguments

@@ -174,7 +174,7 @@ public Date dateTo;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
         jPanel2.add(lblOption, gridBagConstraints);
 
-        cbbOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All labor", "A lalor", "Highest salary", "Lowest salary" }));
+        cbbOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All labor", "One lalor", "Highest salary", "Lowest salary" }));
         cbbOption.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbOptionItemStateChanged(evt);
@@ -331,7 +331,7 @@ public Date dateTo;
         if(arrHoueTotal.size() >0){
             new SalaryReportFrm(this).setVisible(true);
         }else{
-            JOptionPane.showMessageDialog(this, "Date is empty!", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Data is empty!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_btnPrintActionPerformed

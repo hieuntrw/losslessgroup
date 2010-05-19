@@ -191,15 +191,15 @@ public class Logindlg extends javax.swing.JDialog {
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         // TODO add your handling code here:
-        login();       
-        
+        login();
+
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
         txtPassword.setText("");
         txtUsername.setText("");
-
+        this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
     public void login() {
         AccountServives accSer = new AccountServives();
@@ -210,7 +210,7 @@ public class Logindlg extends javax.swing.JDialog {
                 acc = accSer.findByUsername(username);
                 main.acc = acc;
                 main.loadMenu();
-                main.initStatusBar(acc.getUsername(), acc.getRole().getRoleName());
+                main.initStatusBar();
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, accSer.getLastError(), "Warning", JOptionPane.WARNING_MESSAGE);

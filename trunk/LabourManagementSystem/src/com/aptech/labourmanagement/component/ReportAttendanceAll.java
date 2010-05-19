@@ -18,11 +18,12 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.view.JRViewer;
 
-public class ReportManager {
+public class ReportAttendanceAll {
 
     @SuppressWarnings(value = "unchecked")
     public JPanel getEnumerationViewer(ArrayList<HourTotal> arr, boolean isEnumeration, Date dateFrom, Date dateTo) {
         JPanel viewer = null;
+        int i = 0;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             //THONG TIN PARAMETER
@@ -32,8 +33,6 @@ public class ReportManager {
             parameterMap.put("LASTN", "Last Name");
             parameterMap.put("DAYOB", "Day Of Birth");
             parameterMap.put("HOUR", "Total Hours");
-            parameterMap.put("GRADE", "Salary Grade");
-            parameterMap.put("SALARY", "Total Salary");
             parameterMap.put("DATEFROM", dateFormat.format(dateFrom));
             parameterMap.put("DATETO", dateFormat.format(dateTo));
 
@@ -46,17 +45,17 @@ public class ReportManager {
                 rowMap.put("LASTN", ht.getWorker().getLastName());
                 rowMap.put("DAYOB", dateFormat.format(ht.getWorker().getDayOfBirth()));
                 rowMap.put("HOUR", ht.getHourTotal());
-                rowMap.put("GRADE", new Float(ht.getWorker().getSalaryGrade().getGradeNum()));
-                rowMap.put("SALARY", new Float(ht.getHourTotal() * ht.getWorker().getSalaryGrade().getGradeNum()));
-
+                //i++;
                 reportRows.add(rowMap);
             }
             //rowMap = new HashMap();
             // parameterMap.put("SO_LUONG", new Integer(reportRows.size()));
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(getInputStream("gr_salary.jasper"),
+            JasperPrint jasperPrint = JasperFillManager.fillReport(getInputStream("attendanceReport.jasper"),
                     parameterMap, new JRMapCollectionDataSource(reportRows));
+            //i++;
             viewer = new JRViewer(jasperPrint);
+            //i++;
             return viewer;
         } catch (Exception ex) {
             System.out.println("Error get report!" + ex.getMessage());
@@ -73,7 +72,7 @@ public class ReportManager {
             input = url.openStream();
             return input;
         } catch (IOException ex) {
-            System.out.println("Error get file gr_salary.jasper: " + ex.getMessage());
+            System.out.println("Error get file attendanceReport.jasper: " + ex.getMessage());
             return null;
         }
     }

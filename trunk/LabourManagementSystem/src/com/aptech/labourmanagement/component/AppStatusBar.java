@@ -11,17 +11,13 @@ import javax.swing.JLabel;
  * @author Noi Nho
  */
 public class AppStatusBar {
-    private String username;
-    private String permission;
     private StatusBarFactory statusBarFactory;
     private StatusBar bar;
-    private JLabel user = null;
-    private JLabel permi = null;
+    public JLabel user = null;
+    public JLabel permi = null;
     
     /** Creates a new instance of AppStatusBar */
-    public AppStatusBar(String username, String permission) {
-        this.username = username;
-        this.permission = permission;
+    public AppStatusBar() {
         this.initAppStatusBar();
     }
     
@@ -33,9 +29,9 @@ public class AppStatusBar {
         statusBarFactory = new StatusBarFactory("../icon/"); 
         
         //final JLabel statusZone = statusBarFactory.addZone("statusZone", "75%", "Ready");
-        user = statusBarFactory.addZone("user", "25%", "Username: "+username);
+        user = statusBarFactory.addZone("user", "25%", "Username: ");
         statusBarFactory.addSeparator("sepICone", "0.2%", "separator.png");
-        permi = statusBarFactory.addZone("permi", "50%", "Permission: "+permission);
+        permi = statusBarFactory.addZone("permi", "50%", "Permission: ");
         statusBarFactory.addSeparator("sepIZone", "0.2%", "separator.png");
         final JLabel timerZone = statusBarFactory.addZone("timerZone", "*", "Time: " + sdf.format(calCurrent.getTime()));
         
