@@ -35,7 +35,8 @@ import javax.swing.JOptionPane;
  */
 public class MainFrm extends javax.swing.JFrame {
 
-    public Account acc = new Account();
+    public Account acc = null;
+    private AppStatusBar status = null;
 
     /** Creates new form MainFrm */
     public MainFrm() {
@@ -49,15 +50,26 @@ public class MainFrm extends javax.swing.JFrame {
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);*/
         setIconImage(new ImageIcon(getClass().getResource("../../icon/LMSIcon.png")).getImage());
-        this.initStatusBar("", "");
+        this.initStatusBar();
         new LookAndFeel(this);
         this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         disableMenu();
 //        loadMenu();
     }
 
-    public void initStatusBar(String username, String permission) {
-        AppStatusBar status = new AppStatusBar(username, permission);
+    public void initStatusBar() {
+        status = new AppStatusBar();
+        if (acc != null) {
+            this.pnlStatus.removeAll();
+            this.status.user.setText("Username: " + acc.getUsername());
+            this.status.permi.setText("Permission: " + acc.getRole().getRoleName());
+            this.pnlStatus.validate();
+        }else{
+            this.pnlStatus.removeAll();
+            this.status.user.setText("Username: ");
+            this.status.permi.setText("Permission: ");
+            this.pnlStatus.validate();
+        }
         this.pnlStatus.add(status.getBar());
         this.pnlStatus.validate();
     }
@@ -439,6 +451,8 @@ public class MainFrm extends javax.swing.JFrame {
     private void mniLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniLogoutActionPerformed
         //hide roles
         disableMenu();
+        acc = null;
+        initStatusBar();
     }//GEN-LAST:event_mniLogoutActionPerformed
 
     private void mniExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniExitActionPerformed
