@@ -39,8 +39,9 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
     public ArrayList<HourTotal> arrHoueTotal = new ArrayList<HourTotal>();
     private JTable headerTable;
     private ObjectTableModel tableModel;
-public Date dateFrom;
-public Date dateTo;
+    public Date dateFrom;
+    public Date dateTo;
+
     /** Creates new form WeeklySalaryReportDlg */
     public WeeklySalaryReportDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -257,7 +258,6 @@ public Date dateTo;
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbbOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbOptionItemStateChanged
-        // TODO add your handling code here:
         if (cbbOption.getSelectedIndex() == 0) {
             txtLaborID.setEditable(false);
         } else {
@@ -290,7 +290,6 @@ public Date dateTo;
     }//GEN-LAST:event_cbbOptionItemStateChanged
 
     private void btnComputingSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComputingSalaryActionPerformed
-        // TODO add your handling code here:
         if (dcsToDay.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Date can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
             dcsToDay.requestFocus();
@@ -328,9 +327,9 @@ public Date dateTo;
     }//GEN-LAST:event_btnComputingSalaryActionPerformed
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-        if(arrHoueTotal.size() >0){
+        if (arrHoueTotal.size() > 0) {
             new SalaryReportFrm(this).setVisible(true);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Data is empty!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 

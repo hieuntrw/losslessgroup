@@ -33,7 +33,7 @@ public class AppStatusBar {
         statusBarFactory.addSeparator("sepICone", "0.2%", "separator.png");
         permi = statusBarFactory.addZone("permi", "50%", "Permission: ");
         statusBarFactory.addSeparator("sepIZone", "0.2%", "separator.png");
-        final JLabel timerZone = statusBarFactory.addZone("timerZone", "*", "Time: " + sdf.format(calCurrent.getTime()));
+        final JLabel timerZone = statusBarFactory.addZone("timerZone", "*", "Date time: " + sdf.format(calCurrent.getTime()));
         
         Runnable r = new Runnable() {
             public void run() {

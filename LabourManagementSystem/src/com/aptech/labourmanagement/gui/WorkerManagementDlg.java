@@ -464,30 +464,26 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
         disableFields();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
         clearFields();
         enableFields();
         selection = 1;
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
         enableFields();
         selection = 0;
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
         selection = -1;
         index = tblWorker.getSelectedRow();
         Worker worker = new Worker();
         worker = arrWorker.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to this worker. full name = " + worker.getFirstName() + " " + worker.getLastName(),"Question", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to this worker. full name = " + worker.getFirstName() + " " + worker.getLastName(), "Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             workerSer = new WorkerServices();
             if (workerSer.remove(worker.getWorkerID())) {
@@ -502,7 +498,6 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
         if (!CheckForm.isNumberic(txtExperienceYear.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Experience year must be numberic type!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtExperienceYear.requestFocus();
@@ -527,7 +522,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
             dcsDayOfBirth.setDate(null);
             return;
         }
-        if(!CheckForm.checkPhoneNumber(txtContact.getText().trim())){
+        if (!CheckForm.checkPhoneNumber(txtContact.getText().trim())) {
             JOptionPane.showMessageDialog(this, "contact number must be 10(11) digits!!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtContact.requestFocus();
             //txtContact.setText("");
@@ -586,7 +581,6 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void tblWorkerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWorkerMouseClicked
-        // TODO add your handling code here:
         index = tblWorker.getSelectedRow();
         if (index > -1) {
             btnEdit.setEnabled(true);
@@ -706,7 +700,7 @@ public class WorkerManagementDlg extends javax.swing.JDialog {
         ColumnData[] columns = {
             new ColumnData("Last name", 70, SwingConstants.LEFT, 2),
             new ColumnData("First name", 50, SwingConstants.LEFT, 1),
-             new ColumnData("Day of birth", 60, SwingConstants.LEFT, 3),
+            new ColumnData("Day of birth", 60, SwingConstants.LEFT, 3),
             new ColumnData("Contact", 60, SwingConstants.LEFT, 4),
             new ColumnData("Salary grade", 60, SwingConstants.LEFT, 5),
             new ColumnData("Refer", 70, SwingConstants.LEFT, 6),

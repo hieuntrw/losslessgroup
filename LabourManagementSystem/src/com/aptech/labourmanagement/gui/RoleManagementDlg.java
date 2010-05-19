@@ -335,7 +335,6 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
         clearFields();
         enableFields();
         selection = 1;
@@ -348,13 +347,10 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
-        
         disableFields();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void tblRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRoleMouseClicked
-        // TODO add your handling code here:
         index = tblRole.getSelectedRow();
         if (index > -1) {
             txtRoleName.setText(arrRole.get(index).getRoleName());
@@ -373,7 +369,6 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_tblRoleMouseClicked
 
     private void ckbAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbAllActionPerformed
-        // TODO add your handling code here:
         if (ckbAll.isSelected() == true) {
             ckbAccountManagement.setSelected(true);
             ckbAttendanceManagement.setSelected(true);
@@ -399,7 +394,6 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_ckbAllActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
         Role role = new Role();
         if (selection == 0) {
             index = tblRole.getSelectedRow();
@@ -439,12 +433,11 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
         selection = -1;
         index = tblRole.getSelectedRow();
         Role role = new Role();
         role = arrRole.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to role name = " + role.getRoleName(),"Question", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to role name = " + role.getRoleName(), "Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             roleSer = new RoleServices();
             if (roleSer.remove(role.getRoleID())) {

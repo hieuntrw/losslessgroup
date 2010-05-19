@@ -359,7 +359,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblWorkerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWorkerMouseClicked
-       indexLabor = tblWorker.getSelectedRow();
+        indexLabor = tblWorker.getSelectedRow();
         if (indexLabor > -1) {
             loadDataOnFamilyTable(arrWorker.get(indexLabor).getWorkerID());
             disableFields();
@@ -378,7 +378,6 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         cbbRalateName.addItem("Grandmother");
     }
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
         Family family = new Family();
         if (selection == 0) {
             indexFamily = tblFamily.getSelectedRow();
@@ -396,7 +395,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
         family.setAddress(txtAddress.getText().trim());
         family.setFullName(txtFullName.getText().trim());
         family.setWorkName(txtWorkName.getText().trim());
-        family.setRalateName((String)cbbRalateName.getSelectedItem());
+        family.setRalateName((String) cbbRalateName.getSelectedItem());
         //covert date calender to date sql
         Calendar ca = Calendar.getInstance();
         ca.setTime(dcsDayOfBirth.getDate());
@@ -430,13 +429,11 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
         disableFields();
         btnAdd.setEnabled(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void tblFamilyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFamilyMouseClicked
-        // TODO add your handling code here:
         indexFamily = tblFamily.getSelectedRow();
         if (indexFamily > -1) {
             btnEdit.setEnabled(true);
@@ -450,25 +447,22 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_tblFamilyMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
         selection = 0;
         enableFields();
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
         selection = 1;
         clearFields();
         enableFields();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
         selection = -1;
         indexFamily = tblFamily.getSelectedRow();
         Family family = new Family();
         family = arrFamily.get(indexFamily);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to family member have full name = " + family.getFullName(),"Question", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to family member have full name = " + family.getFullName(), "Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             familySer = new FamilyServices();
             if (familySer.remove(family.getFamilyID())) {
@@ -519,7 +513,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     /**
      *  clear fields
      */
-    private  void clearFields() {
+    private void clearFields() {
         txtAddress.setText("");
         txtFullName.setText("");
         txtWorkName.setText("");

@@ -358,7 +358,6 @@ public class ReferManagementDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblReferMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblReferMouseClicked
-        // TODO add your handling code here:
         index = tblRefer.getSelectedRow();
         if (index > -1) {
             btnDelete.setEnabled(true);
@@ -373,24 +372,21 @@ public class ReferManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_tblReferMouseClicked
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
         disableFields();
 
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
         selection = 0;
         enableFields();
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
         selection = -1;
         index = tblRefer.getSelectedRow();
         Refer refer = new Refer();
         refer = arrRefers.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to Refer Name = " + refer.getFullName(),"Question", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to Refer Name = " + refer.getFullName(), "Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             referSer = new ReferServices();
             if (referSer.remove(refer.getReferID())) {
@@ -405,13 +401,12 @@ public class ReferManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
         Refer refer = new Refer();
         if (selection == 0) {
             index = tblRefer.getSelectedRow();
             refer = arrRefers.get(index);
         }
-        if(!CheckForm.checkPhoneNumber(txtContactNumber.getText().trim())){
+        if (!CheckForm.checkPhoneNumber(txtContactNumber.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Contact number not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtContactNumber.requestFocus();
             return;
@@ -448,13 +443,12 @@ public class ReferManagementDlg extends javax.swing.JDialog {
                     }
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Day of birth can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
         enableFields();
         clearFields();
         selection = 1;
