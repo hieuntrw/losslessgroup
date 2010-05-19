@@ -442,19 +442,16 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbbShiftNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbShiftNameItemStateChanged
-        // TODO add your handling code here:
         indexSelectShiftName = cbbShiftName.getSelectedIndex();
         txtTimeIn.setText(arrShift.get(indexSelectShiftName).getTimeIn());
         txtTimeOut.setText(arrShift.get(indexSelectShiftName).getTimeOut());
     }//GEN-LAST:event_cbbShiftNameItemStateChanged
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
         disableFields();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void tblAttendanceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAttendanceMouseClicked
-        // TODO add your handling code here:
         indexAttendance = tblAttendance.getSelectedRow();
         if (indexAttendance > -1) {
             btnEdit.setEnabled(true);
@@ -470,7 +467,6 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_tblAttendanceMouseClicked
 
     private void tblWorkerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWorkerMouseClicked
-        // TODO add your handling code here:
         indexLabor = tblWorker.getSelectedRow();
         if (indexLabor > -1) {
             loadDataOnAttendanceTable(arrWorker.get(indexLabor).getWorkerID());
@@ -483,18 +479,16 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_tblWorkerMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
         selection = 0;
         enableFields();
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
         selection = -1;
         indexAttendance = tblAttendance.getSelectedRow();
         Attendance at = new Attendance();
         at = arrAttendance.get(indexAttendance);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to this attendance have ID = " + at.getID(),"Question", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to this attendance have ID = " + at.getID(), "Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             attendanceSer = new AttendanceServices();
             if (attendanceSer.remove(at.getID())) {
@@ -510,14 +504,12 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnTimekeepingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimekeepingActionPerformed
-        // TODO add your handling code here:
         selection = 1;
         clearFields();
         enableFields();
     }//GEN-LAST:event_btnTimekeepingActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
         Attendance at = new Attendance();
         if (selection == 0) {
             indexAttendance = tblAttendance.getSelectedRow();

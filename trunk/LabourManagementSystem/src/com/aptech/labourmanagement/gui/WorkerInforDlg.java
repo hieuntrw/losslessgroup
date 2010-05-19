@@ -410,10 +410,9 @@ public class WorkerInforDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_tblWorkerMouseClicked
 
     private void cbbOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbOptionItemStateChanged
-        // TODO add your handling code here:
         if (cbbOption.getSelectedIndex() == 0) {
             txtValue.setEditable(false);
-        }else{
+        } else {
             txtValue.setEditable(true);
         }
 

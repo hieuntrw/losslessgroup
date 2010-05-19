@@ -328,7 +328,6 @@ public class ShiftManagementDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblShiftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblShiftMouseClicked
-        // TODO add your handling code here:
         index = tblShift.getSelectedRow();
         if (index > -1) {
             btnDelete.setEnabled(true);
@@ -344,30 +343,26 @@ public class ShiftManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_tblShiftMouseClicked
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
         disableFields();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
         selection = 1;
         clearFields();
         enableFields();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
         selection = 0;
         enableFields();
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
         selection = -1;
         index = tblShift.getSelectedRow();
         Shift shift = new Shift();
         shift = arrShift.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to shift have shift name = " + shift.getShiftName(),"Question", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to shift have shift name = " + shift.getShiftName(), "Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             shiftSer = new ShiftServices();
             if (shiftSer.remove(shift.getShiftID())) {
@@ -382,7 +377,6 @@ public class ShiftManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
         Shift shift = new Shift();
         if (selection == 0) {
             index = tblShift.getSelectedRow();

@@ -13,6 +13,7 @@ package com.aptech.labourmanagement.gui.main;
 import com.aptech.labourmanagement.component.AppStatusBar;
 import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.entity.Account;
+import com.aptech.labourmanagement.gui.AboutDlg;
 import com.aptech.labourmanagement.gui.AccountManagementDlg;
 import com.aptech.labourmanagement.gui.AttendanceManagementDlg;
 import com.aptech.labourmanagement.gui.ChangePasswordDlg;
@@ -438,6 +439,7 @@ public class MainFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mniAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAboutActionPerformed
+        new AboutDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniAboutActionPerformed
 
     private void mniChangePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniChangePassActionPerformed
@@ -468,72 +470,58 @@ public class MainFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_mniRoleFunctionActionPerformed
 
     private void mniAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAccountActionPerformed
-        // TODO add your handling code here:
         new AccountManagementDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniAccountActionPerformed
 
     private void mniReferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniReferActionPerformed
-        // TODO add your handling code here:
         new ReferManagementDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniReferActionPerformed
 
     private void mniFamilyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniFamilyActionPerformed
-        // TODO add your handling code here:
         new FamilyRalateManagementDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniFamilyActionPerformed
 
     private void mniSalaryGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSalaryGradeActionPerformed
-        // TODO add your handling code here:
         new SalaryGradeManagementDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniSalaryGradeActionPerformed
 
     private void mniLaborActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniLaborActionPerformed
-        // TODO add your handling code here:
         new WorkerManagementDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniLaborActionPerformed
 
     private void mniShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniShiftActionPerformed
-        // TODO add your handling code here:
         new ShiftManagementDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniShiftActionPerformed
 
     private void mniAttendanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAttendanceActionPerformed
-        // TODO add your handling code here:
         new AttendanceManagementDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniAttendanceActionPerformed
 
     private void mniSalaryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSalaryReportActionPerformed
-        // TODO add your handling code here:
         new WeeklySalaryReportDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniSalaryReportActionPerformed
 
     private void mniAttendanceReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAttendanceReportActionPerformed
-        // TODO add your handling code here:
         new WeeklyAttendanceReportDlg(this, true).setVisible(true);
     }//GEN-LAST:event_mniAttendanceReportActionPerformed
 
     private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
-        // TODO add your handling code here:
         new AccountManagementDlg(this, true).setVisible(true);
     }//GEN-LAST:event_btnAccountActionPerformed
 
     private void btnLaborActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaborActionPerformed
-        // TODO add your handling code here:
         new WorkerManagementDlg(this, true).setVisible(true);
     }//GEN-LAST:event_btnLaborActionPerformed
 
     private void btnAttendanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAttendanceActionPerformed
-        // TODO add your handling code here:
         new AttendanceManagementDlg(this, true).setVisible(true);
     }//GEN-LAST:event_btnAttendanceActionPerformed
 
     private void btnWeeklySalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWeeklySalaryActionPerformed
-        // TODO add your handling code here:
         new WeeklySalaryReportDlg(this, true).setVisible(true);
     }//GEN-LAST:event_btnWeeklySalaryActionPerformed
 
     private void btnWeeklyAttendanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWeeklyAttendanceActionPerformed
-        // TODO add your handling code here:
         new WeeklyAttendanceReportDlg(this, true).setVisible(true);
     }//GEN-LAST:event_btnWeeklyAttendanceActionPerformed
 

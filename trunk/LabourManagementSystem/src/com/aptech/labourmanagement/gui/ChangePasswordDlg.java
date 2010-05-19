@@ -194,7 +194,6 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
-        // TODO add your handling code here:
         String oldPass = String.valueOf(txtOldPass.getPassword());
         String newPass = String.valueOf(txtNewPass.getPassword());
         String cofirmPass = String.valueOf(txtCofirmPass.getPassword());
@@ -227,7 +226,6 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
         txtCofirmPass.setText("");
         txtNewPass.setText("");
         txtOldPass.setText("");

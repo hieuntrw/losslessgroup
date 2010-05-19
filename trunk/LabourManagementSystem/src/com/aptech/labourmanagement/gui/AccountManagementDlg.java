@@ -363,19 +363,16 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        // TODO add your handling code here:
         clearFields();
         enableFields();
         selection = 1;
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
         disableFields();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
         Account acc = new Account();
         if (selection == 0) {
             index = tblAccount.getSelectedRow();
@@ -408,7 +405,6 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void tblAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAccountMouseClicked
-        // TODO add your handling code here:
         index = tblAccount.getSelectedRow();
         if (index > -1) {
             txtUsername.setText(arrAcc.get(index).getUsername());
@@ -421,18 +417,16 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_tblAccountMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
         enableFields();
         selection = 0;
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
         selection = -1;
         index = tblAccount.getSelectedRow();
         Account acc = new Account();
         acc = arrAcc.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to account have username = " + acc.getUsername(),"Question", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to account have username = " + acc.getUsername(), "Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             accSer = new AccountServives();
             if (accSer.remove(acc.getUsername())) {

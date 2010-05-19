@@ -254,7 +254,6 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblSalaryGradeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSalaryGradeMouseClicked
-        // TODO add your handling code here:
         index = tblSalaryGrade.getSelectedRow();
         if (index > -1) {
             btnDelete.setEnabled(true);
@@ -265,19 +264,16 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_tblSalaryGradeMouseClicked
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
         disableFields();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
         selection = 1;
         clearFields();
         enableFields();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
         SalaryGrade sg = new SalaryGrade();
         if (selection == 0) {
             index = tblSalaryGrade.getSelectedRow();
@@ -307,7 +303,7 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
                     }
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Grade value must be is numberic!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtValue.setText("");
             txtValue.requestFocus();
@@ -316,18 +312,16 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
         enableFields();
         selection = 0;
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
         selection = -1;
         index = tblSalaryGrade.getSelectedRow();
         SalaryGrade sg = new SalaryGrade();
         sg = arrSalaryGrade.get(index);
-        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to salary grade name = " + sg.getGradeName(),"Question", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(this, "Are you sure want to delete all data related to salary grade name = " + sg.getGradeName(), "Question", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             salaryGradeSer = new SalaryGradeServices();
             if (salaryGradeSer.remove(sg.getSalaryGradeID())) {

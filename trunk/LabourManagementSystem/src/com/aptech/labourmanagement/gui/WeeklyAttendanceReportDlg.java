@@ -266,7 +266,6 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbbOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbOptionItemStateChanged
-        // TODO add your handling code here:
         if (cbbOption.getSelectedIndex() == 0) {
             txtLaborID.setEditable(false);
         } else {
@@ -279,7 +278,6 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_cbbOptionItemStateChanged
 
     private void btnAttendanceReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAttendanceReportActionPerformed
-        // TODO add your handling code here:
         indexSelectOption = cbbOption.getSelectedIndex();
         if (dcsToDay.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Date can not empty or the date is not valid!", "Warning", JOptionPane.WARNING_MESSAGE);
