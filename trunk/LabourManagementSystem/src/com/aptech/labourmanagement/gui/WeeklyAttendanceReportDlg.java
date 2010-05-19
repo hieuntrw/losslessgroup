@@ -328,6 +328,12 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
         }
         if (indexSelectOption == 1) {
             //report one labor
+            if (arrAttendance.size() > 0) {
+                new AttendanceOneReportFrm(this).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Data is empty!", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+
         }
 
     }//GEN-LAST:event_btnPrintActionPerformed
