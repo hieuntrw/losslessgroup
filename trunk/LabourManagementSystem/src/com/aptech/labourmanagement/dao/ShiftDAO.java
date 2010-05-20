@@ -39,8 +39,6 @@ public class ShiftDAO {
         db = new ConfigureDB();
     }
 
-
-
     /**
      * create new shift
      * @param si, si to add into Shift table
@@ -182,13 +180,14 @@ public class ShiftDAO {
      * @return Shift
      */
     public Shift readByID(int shiftID) {
-        Shift si = new Shift();
+        Shift si = null;
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_BY_SHIFTID);
             pst.setInt(1, shiftID);
             rs = pst.executeQuery();
             if (rs.next()) {
+                new Shift();
                 si.setShiftID(rs.getInt("ShiftID"));
                 si.setShiftName(rs.getString("ShiftName"));
                 si.setTimeIn(rs.getString("TimeIn"));
