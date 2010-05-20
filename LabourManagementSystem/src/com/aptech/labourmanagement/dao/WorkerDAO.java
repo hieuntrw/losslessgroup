@@ -34,7 +34,7 @@ public class WorkerDAO {
     private final String SQL_UPDATE = "UPDATE WORKER set ReferID =?,FirstName =?,LastName =?,Address =?,DayOfBirth =?,SalaryGradeID =?,ContactNumber =?,Experience =?,IsTemporaryWorker =?,"
             + "Weight =?,Height =?,Status =? WHERE WorkerID=?";
     private final String SQL_DELETE = "DELETE FROM WORKER WHERE WorkerID =?";
-    private final String SQL_READ_ALL = "SELECT * FROM WORKER";
+    private final String SQL_READ_ALL = "SELECT * FROM WORKER order by FirstName, LastName";
     private final String SQL_READ_BY_WORKERID = "SELECT * FROM WORKER WHERE WorkerID =?";
 
     public WorkerDAO() {

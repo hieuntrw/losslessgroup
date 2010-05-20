@@ -7,7 +7,6 @@ package com.aptech.labourmanagement.dao;
 import com.aptech.labourmanagement.entity.Attendance;
 import com.aptech.labourmanagement.entity.Shift;
 import com.aptech.labourmanagement.entity.Worker;
-import com.aptech.labourmanagement.services.ShiftServices;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -33,11 +32,11 @@ public class AttendanceDAO {
     private final String SQL_CREATE = "INSERT INTO ATTENDANCE(ShiftID,WorkDay,WorkerID,Status,IsExtraShift) VALUES(?,?,?,?,?)";
     private final String SQL_UPDATE = "UPDATE ATTENDANCE set ShiftID =?,WorkDay =?,Status =?,IsExtraShift =? WHERE ID=?";
     private final String SQL_DELETE = "DELETE FROM ATTENDANCE WHERE ID =?";
-    private final String SQL_READ_BY_WORKERID = "SELECT * FROM ATTENDANCE WHERE WorkerID =?";
+    private final String SQL_READ_BY_WORKERID = "SELECT * FROM ATTENDANCE WHERE WorkerID =? order by WorkDay";
     private final String SQL_READ_BY_DATE = "SELECT * FROM ATTENDANCE WHERE WorkerID = ? and WorkDay =?";
     private final String SQL_READ_Worker_BY_SOME_DATES = "SELECT DISTINCT workerID FROM ATTENDANCE WHERE (WorkDay between ? and ?) and status = ?";
-    private final String SQL_READ_TOTAL_HOUR = "SELECT ShiftID, count(*) as 'Count' FROM ATTENDANCE WHERE WorkerID =? and (WorkDay between ? and ?) and Status =? group by shiftID ";
-    private final String SQL_READ_ATTENDANCE_WORKER_BY_SOME_DAYS = "SELECT * FROM ATTENDANCE WHERE WorkerID =? and (WorkDay between ? and ?)";
+    private final String SQL_READ_TOTAL_HOUR = "SELECT ShiftID, count(*) as 'Count' FROM ATTENDANCE WHERE WorkerID =? and (WorkDay between ? and ?) and Status =? group by shiftID";
+    private final String SQL_READ_ATTENDANCE_WORKER_BY_SOME_DAYS = "SELECT * FROM ATTENDANCE WHERE WorkerID =? and (WorkDay between ? and ?) order by WorkDay";
 
     public AttendanceDAO() {
         db = new ConfigureDB();

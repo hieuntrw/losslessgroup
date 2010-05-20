@@ -31,7 +31,7 @@ public class SalaryGradeDAO {
     private final String SQL_UPDATE = "UPDATE SalaryGrade set GradeName =?,GradeNum =? WHERE SalaryGradeID =?";
     private final String SQL_DELETE = "DELETE FROM SalaryGrade WHERE SalaryGradeID =?";
     private final String SQL_READ_GRADE_NUMBER = "SELECT * FROM SalaryGrade WHERE SalaryGradeID =?";
-    private final String SQL_READ_ALL = "SELECT * FROM SalaryGrade";
+    private final String SQL_READ_ALL = "SELECT * FROM SalaryGrade order by GradeName";
     private final String SQL_READ_ALL_GRADE_NAME = "SELECT * FROM SalaryGrade WHERE GradeName =?";
 
     public SalaryGradeDAO() {
