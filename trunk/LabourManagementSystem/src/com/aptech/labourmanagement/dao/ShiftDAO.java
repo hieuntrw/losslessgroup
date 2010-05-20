@@ -30,7 +30,7 @@ public class ShiftDAO {
     private final String SQL_CREATE = "INSERT INTO SHIFT(ShiftName,TimeIn,TimeOut) VALUES(?,?,?)";
     private final String SQL_UPDATE = "UPDATE SHIFT set ShiftName=?,TimeIn=?,TimeOut=? WHERE ShiftID=?";
     private final String SQL_DELETE = "DELETE FROM SHIFT WHERE ShiftID =?";
-    private final String SQL_READ_ALL = "SELECT * FROM SHIFT";
+    private final String SQL_READ_ALL = "SELECT * FROM SHIFT order by ShiftName";
     private final String SQL_READ_ALL_SHIFT_NAME = "SELECT ShiftName FROM SHIFT";
     private final String SQL_READ_BY_SHIFTID = "SELECT * FROM SHIFT WHERE ShiftID =?";
     private final String SQL_READ_BY_SHIFT_NAME = "SELECT * FROM SHIFT WHERE ShiftName =?";

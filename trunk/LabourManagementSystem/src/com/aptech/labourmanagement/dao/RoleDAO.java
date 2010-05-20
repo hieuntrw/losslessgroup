@@ -34,7 +34,7 @@ public class RoleDAO {
     private final String SQL_DELETE = "DELETE FROM RoleFunction WHERE RoleID =?";
     private final String SQL_READ = "SELECT * FROM RoleFunction WHERE RoleID =?";
     private final String SQL_IS_EXIST = "SELECT * FROM RoleFunction WHERE RoleName =?";
-    private final String SQL_READ_ALL = "SELECT * FROM RoleFunction";
+    private final String SQL_READ_ALL = "SELECT * FROM RoleFunction order by RoleName";
 
     public RoleDAO() {
         db = new ConfigureDB();

@@ -23,7 +23,7 @@ public class ReportAttendanceAll {
     @SuppressWarnings(value = "unchecked")
     public JPanel getEnumerationViewer(ArrayList<HourTotal> arr, boolean isEnumeration, Date dateFrom, Date dateTo) {
         JPanel viewer = null;
-        int i = 0;
+        //int i = 0;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             //THONG TIN PARAMETER
@@ -51,7 +51,7 @@ public class ReportAttendanceAll {
             //rowMap = new HashMap();
             // parameterMap.put("SO_LUONG", new Integer(reportRows.size()));
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(getInputStream("attendanceReport.jasper"),
+            JasperPrint jasperPrint = JasperFillManager.fillReport(getInputStream("AttendanceReportAll.jasper"),
                     parameterMap, new JRMapCollectionDataSource(reportRows));
             //i++;
             viewer = new JRViewer(jasperPrint);

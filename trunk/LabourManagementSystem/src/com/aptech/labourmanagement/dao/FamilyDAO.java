@@ -30,7 +30,7 @@ public class FamilyDAO {
     private final String SQL_CREATE = "INSERT INTO FAMILY(WorkerID, RalateName, FullName, WorkName, DayOfBirth, Address) VALUES(?,?,?,?,?,?)";
     private final String SQL_UPDATE = "UPDATE FAMILY set RalateName=?,FullName=?,WorkName=?,DayOfBirth=?, Address=?  where FamilyID=?";
     private final String SQL_DELETE = "DELETE FROM FAMILY WHERE FamilyID =?";
-    private final String SQL_READ = "SELECT * FROM FAMILY WHERE WorkerID =?";
+    private final String SQL_READ = "SELECT * FROM FAMILY WHERE WorkerID =? order by FullName";
 
     public FamilyDAO() {
         db = new ConfigureDB();

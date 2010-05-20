@@ -30,7 +30,7 @@ public class AccountDAO {
     private final String SQL_CREATE = "INSERT INTO ACCOUNT(Username, Password, RoleID, Status) VALUES(?,?,?,?)";
     private final String SQL_UPDATE = "UPDATE ACCOUNT set Username =?,Password=?,RoleID=?,Status=? where AccountID=?";
     private final String SQL_DELETE = "DELETE FROM ACCOUNT WHERE username =?";
-    private final String SQL_READ = "SELECT * FROM ACCOUNT";
+    private final String SQL_READ = "SELECT * FROM ACCOUNT order by Username";
     private final String SQL_CHECK_USER = "SELECT * FROM ACCOUNT WHERE username =?";
     private final String SQL_LOGIN = "SELECT * FROM ACCOUNT WHERE Username =? AND Password =? and Status =?";
 

@@ -10,7 +10,10 @@
  */
 package com.aptech.labourmanagement.gui;
 
+import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.component.ReportAttendanceOnce;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -27,6 +30,13 @@ public class AttendanceOneReportFrm extends javax.swing.JFrame {
         ReportAttendanceOnce report = new ReportAttendanceOnce();
         this.add(report.getEnumerationViewer(this.war.arrAttendance, true, this.war.dateFrom, this.war.dateTo));
         this.setSize(300, 400);
+         int width = this.getWidth();
+        int heigh = this.getHeight();
+        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
+        new LookAndFeel(this);
     }
 
     /** This method is called from within the constructor to
@@ -38,7 +48,7 @@ public class AttendanceOneReportFrm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
