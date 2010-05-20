@@ -319,6 +319,7 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
             //report All labor
             if (arrHoueTotal.size() > 0) {
                 new AttendanceAllReportFrm(this).setVisible(true);
+                this.setModal(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Data is empty!", "Warning", JOptionPane.WARNING_MESSAGE);
             }
@@ -328,6 +329,7 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
             //report one labor
             if (arrAttendance.size() > 0) {
                 new AttendanceOneReportFrm(this).setVisible(true);
+                this.setModal(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Data is empty!", "Warning", JOptionPane.WARNING_MESSAGE);
             }
