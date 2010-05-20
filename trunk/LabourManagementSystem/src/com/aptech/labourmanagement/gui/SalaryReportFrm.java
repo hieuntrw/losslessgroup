@@ -8,12 +8,12 @@
  *
  * Created on May 18, 2010, 5:44:41 PM
  */
-
 package com.aptech.labourmanagement.gui;
 
 import com.aptech.labourmanagement.component.ReportSalary;
 import com.aptech.labourmanagement.entity.HourTotal;
 import java.util.ArrayList;
+
 /**
  *
  * @author Noi Nho
@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class SalaryReportFrm extends javax.swing.JFrame {
 
     WeeklySalaryReportDlg wsr;
+
     /** Creates new form SalaryReportFrm */
     public SalaryReportFrm(WeeklySalaryReportDlg wsr) {
         initComponents();
@@ -48,17 +49,16 @@ public class SalaryReportFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new SalaryReportFrm(new WeeklySalaryReportDlg(null, true)).setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
 }
