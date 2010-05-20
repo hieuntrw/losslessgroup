@@ -329,6 +329,7 @@ public class WeeklySalaryReportDlg extends javax.swing.JDialog {
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         if (arrHoueTotal.size() > 0) {
             new SalaryReportFrm(this).setVisible(true);
+            this.setModal(false);
         } else {
             JOptionPane.showMessageDialog(this, "Data is empty!", "Warning", JOptionPane.WARNING_MESSAGE);
         }

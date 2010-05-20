@@ -187,7 +187,7 @@ public class ShiftDAO {
             pst.setInt(1, shiftID);
             rs = pst.executeQuery();
             if (rs.next()) {
-                new Shift();
+                si = new Shift();
                 si.setShiftID(rs.getInt("ShiftID"));
                 si.setShiftName(rs.getString("ShiftName"));
                 si.setTimeIn(rs.getString("TimeIn"));
