@@ -109,7 +109,7 @@ public class AboutDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel1.add(lblInfo3, gridBagConstraints);
 
-        lblDeverBy.setText("Deverlopment by:");
+        lblDeverBy.setText("Developed by:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;

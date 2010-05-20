@@ -156,13 +156,14 @@ public class SalaryGradeDAO {
      * @return float
      */
     public SalaryGrade readByID(int salaryGradeID) {
-        SalaryGrade sg = new SalaryGrade();
+        SalaryGrade sg = null;
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_GRADE_NUMBER);
             pst.setInt(1, salaryGradeID);
             rs = pst.executeQuery();
             if (rs.next()) {
+                sg = new SalaryGrade();
                 sg.setSalaryGradeID(rs.getInt("SalaryGradeID"));
                 sg.setGradeName(rs.getString("GradeName"));
                 sg.setGradeNum(rs.getFloat("GradeNum"));

@@ -25,6 +25,7 @@ import com.aptech.labourmanagement.gui.SalaryGradeManagementDlg;
 import com.aptech.labourmanagement.gui.ShiftManagementDlg;
 import com.aptech.labourmanagement.gui.WeeklyAttendanceReportDlg;
 import com.aptech.labourmanagement.gui.WeeklySalaryReportDlg;
+import com.aptech.labourmanagement.gui.WorkerInforDlg;
 import com.aptech.labourmanagement.gui.WorkerManagementDlg;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -361,6 +362,11 @@ public class MainFrm extends javax.swing.JFrame {
         mniLaborInfor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         mniLaborInfor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/user1_view.png"))); // NOI18N
         mniLaborInfor.setText("Labour Details");
+        mniLaborInfor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniLaborInforActionPerformed(evt);
+            }
+        });
         mnLaborManagement.add(mniLaborInfor);
 
         jMenuBar1.add(mnLaborManagement);
@@ -524,6 +530,10 @@ public class MainFrm extends javax.swing.JFrame {
     private void btnWeeklyAttendanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWeeklyAttendanceActionPerformed
         new WeeklyAttendanceReportDlg(this, true).setVisible(true);
     }//GEN-LAST:event_btnWeeklyAttendanceActionPerformed
+
+    private void mniLaborInforActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniLaborInforActionPerformed
+        new WorkerInforDlg(this, true).setVisible(true);
+    }//GEN-LAST:event_mniLaborInforActionPerformed
 
     /**
      * load menu with role of account

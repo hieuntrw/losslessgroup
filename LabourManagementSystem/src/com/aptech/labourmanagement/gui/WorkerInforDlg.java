@@ -19,6 +19,7 @@ import com.aptech.labourmanagement.services.FamilyServices;
 import com.aptech.labourmanagement.services.WorkerServices;
 import com.aptech.labourmanagement.util.CheckForm;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -317,6 +318,11 @@ public class WorkerInforDlg extends javax.swing.JDialog {
 
         txtValue.setColumns(20);
         txtValue.setEditable(false);
+        txtValue.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtValueKeyPressed(evt);
+            }
+        });
         pnlOption.add(txtValue);
 
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/view.png"))); // NOI18N
@@ -366,34 +372,7 @@ public class WorkerInforDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        int indexSelectOption = cbbOption.getSelectedIndex();
-        workerSer = new WorkerServices();
-        if (indexSelectOption == 0) {
-            arrWorker = workerSer.findByAll();
-            loadDataOnTableWorker(arrWorker);
-        } else {
-            if (indexSelectOption == 1) {
-                arrWorker = workerSer.findByFirstName(txtValue.getText().trim());
-                loadDataOnTableWorker(arrWorker);
-            } else {
-                if (indexSelectOption == 2) {
-                    arrWorker = workerSer.findByLastName(txtValue.getText().trim());
-                    loadDataOnTableWorker(arrWorker);
-                } else {
-                    if (indexSelectOption == 3) {
-                        if (!CheckForm.isNumberic(txtValue.getText().trim())) {
-                            JOptionPane.showMessageDialog(this, "Labor ID must be digits!", "Warning", JOptionPane.WARNING_MESSAGE);
-                            txtValue.requestFocus();
-                            return;
-                        }
-                        Worker w = workerSer.readByID(Integer.parseInt(txtValue.getText().trim()));
-                        arrWorker.removeAll(arrWorker);
-                        arrWorker.add(w);
-                        loadDataOnTableWorker(arrWorker);
-                    }
-                }
-            }
-        }
+        search();
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void tblWorkerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWorkerMouseClicked
@@ -418,6 +397,48 @@ public class WorkerInforDlg extends javax.swing.JDialog {
 
     }//GEN-LAST:event_cbbOptionItemStateChanged
 
+    private void txtValueKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValueKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            search();
+        }
+    }//GEN-LAST:event_txtValueKeyPressed
+
+    /**
+     * search with option
+     */
+    public void search(){
+        int indexSelectOption = cbbOption.getSelectedIndex();
+        workerSer = new WorkerServices();
+        if (indexSelectOption == 0) {
+            arrWorker = workerSer.findByAll();
+            loadDataOnTableWorker(arrWorker);
+        } else {
+            if (indexSelectOption == 1) {
+                arrWorker = workerSer.findByFirstName(txtValue.getText().trim());
+                loadDataOnTableWorker(arrWorker);
+            } else {
+                if (indexSelectOption == 2) {
+                    arrWorker = workerSer.findByLastName(txtValue.getText().trim());
+                    loadDataOnTableWorker(arrWorker);
+                } else {
+                    if (indexSelectOption == 3) {
+                        if (!CheckForm.isNumberic(txtValue.getText().trim())) {
+                            JOptionPane.showMessageDialog(this, "Labor ID must be digits!", "Warning", JOptionPane.WARNING_MESSAGE);
+                            txtValue.requestFocus();
+                            return;
+                        }
+                        Worker w = workerSer.readByID(Integer.parseInt(txtValue.getText().trim()));
+                        arrWorker.removeAll(arrWorker);
+                        if (w != null) {
+                            arrWorker.add(w);
+                        }
+
+                        loadDataOnTableWorker(arrWorker);
+                    }
+                }
+            }
+        }
+    }
     /**
      * load data on ralate family
      * @param workerID

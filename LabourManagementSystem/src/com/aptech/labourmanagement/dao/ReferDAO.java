@@ -132,13 +132,14 @@ public class ReferDAO {
      * @return
      */
     public Refer readByID(int referID){
-        Refer refer = new Refer();
+        Refer refer = null;
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_BY_ReferID);
             pst.setInt(1, referID);
             rs = pst.executeQuery();
             if (rs.next()) {
+                refer = new Refer();
                 refer.setReferID(rs.getInt("ReferID"));
                 refer.setFullName(rs.getString("FullName"));
                 refer.setDayOfBirth(rs.getDate("DayOfBirth"));

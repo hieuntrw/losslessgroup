@@ -194,13 +194,14 @@ public class WorkerDAO {
      * @return worker
      */
     public Worker readByID(int workerID) {
-        Worker w = new Worker();
+        Worker w = null;
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_BY_WORKERID);
             pst.setInt(1, workerID);
             rs = pst.executeQuery();
             if (rs.next()) {
+                w = new Worker();
                 w.setWorkerID(rs.getInt("WorkerID"));
                 ReferDAO referDAO = new ReferDAO();
                 w.setRefer(referDAO.readByID(rs.getInt("ReferID")));
@@ -223,7 +224,7 @@ public class WorkerDAO {
             Logger.getLogger(WorkerDAO.class.getName()).log(Level.SEVERE, null, ex);
             this.setLastError("Get worker by workerID fail, error: " + ex.getMessage());
             db.closeConnection();
-            return null;
+            return w;
         }
     }
 

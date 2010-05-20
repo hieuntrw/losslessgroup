@@ -155,13 +155,14 @@ public class AccountDAO {
      * @param username,the username to get account
      */
     public Account readByUsername(String username) {
-        Account ac = new Account();
+        Account ac = null;
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_CHECK_USER);
             pst.setString(1, username);
             rs = pst.executeQuery();
             if (rs.next()) {
+                ac = new Account();
                 RoleDAO roleDAO = new RoleDAO();
                 ac.setAccountID(rs.getInt("AccountID"));
                 ac.setUsername(rs.getString("Username"));

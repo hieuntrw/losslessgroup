@@ -198,13 +198,14 @@ public class RoleDAO {
 
     //get role by roleID
     public Role getRoleByID(int roleID) {
-        Role role = new Role();
+        Role role = null;
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ);
             pst.setInt(1, roleID);
             rs = pst.executeQuery();
             if (rs.next()) {
+                role = new Role();
                 role.setRoleID(rs.getInt("RoleID"));
                 role.setRoleName(rs.getString("RoleName"));
                 role.setIsAccountManagement(rs.getBoolean("IsAccountManagement"));
@@ -232,13 +233,14 @@ public class RoleDAO {
      * @return Role
      */
     public Role getRoleByName(String roleName) {
-        Role role = new Role();
+        Role role = null;
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_IS_EXIST);
             pst.setString(1, roleName);
             rs = pst.executeQuery();
             if (rs.next()) {
+                role = new Role();
                 role.setRoleID(rs.getInt("RoleID"));
                 role.setRoleName(rs.getString("RoleName"));
                 role.setIsAccountManagement(rs.getBoolean("IsAccountManagement"));
