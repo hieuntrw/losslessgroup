@@ -504,11 +504,12 @@ public class MainFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_mniAttendanceActionPerformed
 
     private void mniSalaryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSalaryReportActionPerformed
-        new WeeklySalaryReportDlg(this, true).setVisible(true);
+        new WeeklySalaryReportDlg(this, false).setVisible(true);
+
     }//GEN-LAST:event_mniSalaryReportActionPerformed
 
     private void mniAttendanceReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAttendanceReportActionPerformed
-        new WeeklyAttendanceReportDlg(this, true).setVisible(true);
+        new WeeklyAttendanceReportDlg(this, false).setVisible(true);
     }//GEN-LAST:event_mniAttendanceReportActionPerformed
 
     private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
