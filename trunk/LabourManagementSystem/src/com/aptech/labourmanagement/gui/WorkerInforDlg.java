@@ -402,13 +402,28 @@ public class WorkerInforDlg extends javax.swing.JDialog {
             search();
         }
     }//GEN-LAST:event_txtValueKeyPressed
+    /**
+     * clear fields
+     * @return
+     */
+    private void clearFields() {
+        loadDataOnFamilyTable(-1);
+        txtAddress.setText("");
+        txtContactNumber.setText("");
+        txtFullName.setText("");
+        txtPosition.setText("");
+        txtWorkName.setText("");
+        dcsDayOfBirth.setDate(null);
+
+    }
 
     /**
      * search with option
      */
-    public void search(){
+    public void search() {
         int indexSelectOption = cbbOption.getSelectedIndex();
         workerSer = new WorkerServices();
+        clearFields();
         if (indexSelectOption == 0) {
             arrWorker = workerSer.findByAll();
             loadDataOnTableWorker(arrWorker);
@@ -432,13 +447,13 @@ public class WorkerInforDlg extends javax.swing.JDialog {
                         if (w != null) {
                             arrWorker.add(w);
                         }
-
                         loadDataOnTableWorker(arrWorker);
                     }
                 }
             }
         }
     }
+
     /**
      * load data on ralate family
      * @param workerID
