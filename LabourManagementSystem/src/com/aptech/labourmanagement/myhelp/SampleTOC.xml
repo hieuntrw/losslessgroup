@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE toc
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
+         "../dtd/toc_2_0.dtd">
+<toc version="2.0">
+<tocitem text="Labour Management System" image="openbook">
+
+   <tocitem text="Welcome" target="intro" image="topic"/>
+
+   <tocitem text="Tutorial" target="start" expand="true" image="chapter">
+       <tocitem text="Tutorial Login" target="login" image="topic"/>
+       <tocitem text="Tutorial Change Password" target="changpass" image="topic"/>
+       <tocitem text="Tutorial Account Management" target="accountMana" image="topic"/>
+       <tocitem text="Tutorial Role Management" target="roleMana" image="topic"/>
+       <tocitem text="Tutorial Refer Management" target="referMana" image="topic"/>
+       <tocitem text="Tutorial Family Management" target="familyMana" image="topic"/>
+       <tocitem text="Tutorial Salary Grade Management" target="salaryGrade" image="topic"/>
+       <tocitem text="Tutorial Labor Management" target="laborMana" image="topic"/>
+       <tocitem text="Tutorial Labor Information" target="laborInfor" image="topic"/>
+       <tocitem text="Tutorial Shift Management" target="shiftMana" image="topic"/>
+       <tocitem text="Tutorial Attendance Management" target="attendanceMana" image="topic"/>
+       <tocitem text="Tutorial Weekly Salary Report" target="salaryReport" image="topic"/>
+       <tocitem text="Tutorial Weekly Attendance Report" target="attendanceReport" image="topic"/>
+   </tocitem>
+</tocitem>
+</toc>

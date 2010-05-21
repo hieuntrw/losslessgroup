@@ -27,6 +27,10 @@ import com.aptech.labourmanagement.gui.WeeklyAttendanceReportDlg;
 import com.aptech.labourmanagement.gui.WeeklySalaryReportDlg;
 import com.aptech.labourmanagement.gui.WorkerInforDlg;
 import com.aptech.labourmanagement.gui.WorkerManagementDlg;
+import java.net.URL;
+import javax.help.CSH;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -43,22 +47,42 @@ public class MainFrm extends javax.swing.JFrame {
     /** Creates new form MainFrm */
     public MainFrm() {
         initComponents();
-
-        // Cach lam cho form xuat hien giua man hinh
-        /*this.setSize(1000, 735);
-        int width = this.getWidth();
-        int heigh = this.getHeight();
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);*/
+       
         setIconImage(new ImageIcon(getClass().getResource("../../icon/LMSIcon.png")).getImage());
         this.initStatusBar();
         new LookAndFeel(this);
         this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         disableMenu();
+        // 1. create HelpSet and HelpBroker objects
+        HelpSet hs = getHelpSet("com/aptech/labourmanagement/myhelp/sample.hs");
+        HelpBroker hb = hs.createHelpBroker();
+
+        // 2. assign help to components
+        CSH.setHelpIDString(mniHelp, "top");
+        mniHelp.addActionListener(new CSH.DisplayHelpFromSource(hb));
 //        loadMenu();
     }
 
+    /**
+     * get help set
+     * @param helpsetfile
+     * @return HelpSet
+     */
+    public HelpSet getHelpSet(String helpsetfile) {
+      HelpSet hs = null;
+      ClassLoader cl = this.getClass().getClassLoader();
+      try {
+        URL hsURL = HelpSet.findHelpSet(cl, helpsetfile);
+        hs = new HelpSet(null, hsURL);
+      } catch(Exception ee) {
+        System.out.println("HelpSet: "+ee.getMessage());
+        System.out.println("HelpSet: "+ helpsetfile + " not found");
+      }
+      return hs;
+   }
+    /**
+     * load status bar
+     */
     public void initStatusBar() {
         status = new AppStatusBar();
         if (acc != null) {
@@ -66,7 +90,7 @@ public class MainFrm extends javax.swing.JFrame {
             this.status.user.setText("Username: " + acc.getUsername());
             this.status.permi.setText("Permission: " + acc.getRole().getRoleName());
             this.pnlStatus.validate();
-        }else{
+        } else {
             this.pnlStatus.removeAll();
             this.status.user.setText("Username: ");
             this.status.permi.setText("Permission: ");
