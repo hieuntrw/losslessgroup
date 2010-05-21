@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+         "http://java.sun.com/javase/technologies/desktop/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+        <mapID target="toplevelfolder" url="images/toplevel.gif" />
+        <mapID target="intro" url="help/Main.htm" />
+    <mapID target="top" url="help/Main.htm" />
+
+      <mapID target="topic" url="image/topic.gif" />
+      <mapID target="openbook" url="image/openbook.gif" />
+      <mapID target="chapter" url="image/chapTopic.gif" />
+
+       <mapID target="start" url="help/Main.htm" />
+       <mapID target="login" url="help/Login.htm" />
+       <mapID target="changpass" url="help/ChangePassword.htm" />
+       <mapID target="accountMana" url="help/AccountManagement.htm" />
+        <mapID target="roleMana" url="help/RoleManagement.htm" />
+        <mapID target="referMana" url="help/ReferManagement.htm" />
+        <mapID target="familyMana" url="help/FamilyManagement.htm" />
+        <mapID target="salaryGrade" url="help/SalaryGradeManagement.htm" />
+        <mapID target="laborMana" url="help/LaborManagement.htm" />
+        <mapID target="laborInfor" url="help/Laborinformation.htm" />
+        <mapID target="shiftMana" url="help/ShiftManagement.htm" />
+        <mapID target="attendanceMana" url="help/AttendanceManagerment.htm" />
+        <mapID target="salaryReport" url="help/WeeklySalaryReport.htm" />
+        <mapID target="attendanceReport" url="help/WeeklyAttendanceReport.htm" />
+</map>
