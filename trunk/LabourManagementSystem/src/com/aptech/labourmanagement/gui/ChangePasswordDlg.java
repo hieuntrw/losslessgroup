@@ -67,6 +67,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
         btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Change password");
         setName(""); // NOI18N
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
