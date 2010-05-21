@@ -49,6 +49,7 @@ public class AttendanceOneReportFrm extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Attendance Report");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
