@@ -39,7 +39,7 @@ public class FamilyDAO {
     /**
      * create new the family
      * @return true or false
-     * @param fa, the fa to add into Family table
+     * @param fa
      */
     public boolean create(Family fa) {
         try {
@@ -70,7 +70,7 @@ public class FamilyDAO {
     /**
      * edit the family
      *@return true or false
-     *@param fa, the ac to update into Family table
+     *@param fa
      */
     public boolean update(Family fa) {
         try {
@@ -101,7 +101,7 @@ public class FamilyDAO {
     /**
      * delete the family
      * @return true or false
-     * @param WorkerID,the WorkerID to delete Family
+     * @param WorkerID
      */
     public boolean delete(int familyID) {
         try {

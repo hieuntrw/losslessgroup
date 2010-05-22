@@ -115,7 +115,7 @@ public class RoleDAO {
     /**
      * delete the role
      * @param roleID
-     * @return
+     * @return true or false
      */
     public boolean delete(int roleID) {
         try {

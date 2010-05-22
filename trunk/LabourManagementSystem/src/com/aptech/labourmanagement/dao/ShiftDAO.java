@@ -41,7 +41,7 @@ public class ShiftDAO {
 
     /**
      * create new shift
-     * @param si, si to add into Shift table
+     * @param si
      * @return true or false
      */
     public boolean create(Shift si) {
@@ -70,7 +70,7 @@ public class ShiftDAO {
     /**
      * update the shift
      * @return true or false
-     * @param si, the si to update into Shift table
+     * @param si
      */
     public boolean update(Shift si) {
         try {
@@ -99,7 +99,7 @@ public class ShiftDAO {
     /**
      * delete the shift
      * @return true or false
-     * @param shiftID,the shiftID to delete Shift
+     * @param shiftID
      */
     public boolean delete(int shiftID) {
         try {
