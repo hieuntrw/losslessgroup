@@ -45,7 +45,7 @@ public class AttendanceDAO {
     /**
      * create new an attendance
      * @return true or false
-     * @param at, the at to create into Attendance table
+     * @param at
      */
     public boolean create(Attendance at) {
         try {
@@ -105,7 +105,7 @@ public class AttendanceDAO {
     /**
      * delete the attendance
      * @return true or false
-     * @param ID,the ID to delete Attendance
+     * @param ID
      */
     public boolean delete(int ID) {
         try {

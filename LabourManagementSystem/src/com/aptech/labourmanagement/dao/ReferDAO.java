@@ -40,7 +40,7 @@ public class ReferDAO {
     /**
      * create new refer
      *@return true or false
-     *@param fa, the re to update into Refer table
+     *@param fa
      */
     public boolean create(Refer re) {
         try {
@@ -71,7 +71,7 @@ public class ReferDAO {
     /**
      * update the refer
      *@return true or false
-     *@param fa, the ac to update into Family table
+     *@param fa
      */
     public boolean update(Refer re) {
         try {
@@ -128,7 +128,7 @@ public class ReferDAO {
     /**
      * get refer by refer id
      * @param referID
-     * @return
+     * @return Refer
      */
     public Refer readByID(int referID) {
         Refer refer = null;

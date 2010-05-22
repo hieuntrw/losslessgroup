@@ -40,8 +40,8 @@ public class AccountDAO {
 
     /**
      * Add new an account
+     * @param ac
      * @return true or false
-     * @param ac, the ac to add into Account table
      */
     public boolean create(Account ac) {
         try {
@@ -66,11 +66,11 @@ public class AccountDAO {
         return false;
     }
 
-    /**
-     * edit the account
-     *@return true or false
-     *@param ac, the ac to update into Account table
-     */
+   /**
+    * edit the account
+    * @param ac
+    * @return true or false
+    */
     public boolean update(Account ac) {
         try {
             con = db.getConnection();
@@ -99,7 +99,7 @@ public class AccountDAO {
     /**
      * delete the account
      * @return true or false
-     * @param username,the username to delete account
+     * @param username
      */
     public boolean delete(String username) {
         try {
@@ -126,7 +126,7 @@ public class AccountDAO {
     /**
      * check the username has exist
      * @return true or false
-     * @param username,the username to check account
+     * @param username
      */
     public boolean isExist(String username) {
         try {
@@ -153,7 +153,7 @@ public class AccountDAO {
     /**
      * get account by username
      * @return account
-     * @param username,the username to get account
+     * @param username
      */
     public Account readByUsername(String username) {
         Account ac = null;
@@ -184,7 +184,7 @@ public class AccountDAO {
 
     /**
      * get all account
-     *@return a list account
+     *@return ArrayList<Account>
      */
     public ArrayList<Account> readByAll() {
         ArrayList<Account> list = new ArrayList<Account>();
@@ -213,9 +213,9 @@ public class AccountDAO {
     }
 
     /**
-     * login into system
+     * login into the system
      * @return true or false
-     * @param username, password. username, password to check 
+     * @param username, password
      */
     public boolean loginSystem(String username, String password) {
         //String pass = pe.encryptPass(password);encrypt in services
