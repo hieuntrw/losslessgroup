@@ -36,9 +36,8 @@ public class FamilyDAO {
         db = new ConfigureDB();
     }
 
-
-    //create famlily
     /**
+     * create new the family
      * @return true or false
      * @param fa, the fa to add into Family table
      */
@@ -68,8 +67,8 @@ public class FamilyDAO {
         return false;
     }
 
-    //edit
     /**
+     * edit the family
      *@return true or false
      *@param fa, the ac to update into Family table
      */
@@ -99,8 +98,8 @@ public class FamilyDAO {
         return false;
     }
 
-    //delete
     /**
+     * delete the family
      * @return true or false
      * @param WorkerID,the WorkerID to delete Family
      */
@@ -126,8 +125,8 @@ public class FamilyDAO {
         return false;
     }
 
-    //getFamilyByWorkerID
     /**
+     * get all family by worker id
      * @param workerID
      * @return list Family
      */
@@ -162,6 +161,7 @@ public class FamilyDAO {
     }
 
     /**
+     * get the last error
      * @return the lastError
      */
     public String getLastError() {
@@ -169,6 +169,7 @@ public class FamilyDAO {
     }
 
     /**
+     * set last error
      * @param lastError the lastError to set
      */
     public void setLastError(String lastError) {

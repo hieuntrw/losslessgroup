@@ -19,14 +19,14 @@ import com.aptech.labourmanagement.util.ConfigureDB;
  * @author Noi Nho
  */
 public class ReferDAO {
-    //khai bao cac bien
+    //variable declaration
 
     private ConfigureDB db = null;
     private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
     private String lastError = null;
-    //khai bao ca cau lenh SQL
+    //SQL statements
     private final String SQL_CREATE = "INSERT INTO REFER(FullName,DayOfBirth,Address,WorkName,Position,ContactNumber) VALUES(?,?,?,?,?,?)";
     private final String SQL_UPDATE = "UPDATE REFER set FullName=?,DayOfBirth=?,Address=?,WorkName=?,Position=?,ContactNumber=?  where ReferID=?";
     private final String SQL_DELETE = "DELETE FROM REFER WHERE ReferID =?";
@@ -36,7 +36,6 @@ public class ReferDAO {
     public ReferDAO() {
         db = new ConfigureDB();
     }
-
 
     /**
      * create new refer
@@ -70,7 +69,7 @@ public class ReferDAO {
     }
 
     /**
-     * update refer
+     * update the refer
      *@return true or false
      *@param fa, the ac to update into Family table
      */
@@ -101,7 +100,7 @@ public class ReferDAO {
     }
 
     /**
-     * delete refer
+     * delete the refer
      * @param referID
      * @return true or false
      */
@@ -127,11 +126,11 @@ public class ReferDAO {
     }
 
     /**
-     * Read by all refer
+     * get refer by refer id
      * @param referID
      * @return
      */
-    public Refer readByID(int referID){
+    public Refer readByID(int referID) {
         Refer refer = null;
         try {
             con = db.getConnection();
@@ -157,13 +156,18 @@ public class ReferDAO {
             return null;
         }
     }
-    public ArrayList<Refer> readByAll(){
+
+    /**
+     * get all refer
+     * @return ArrayList<Refer>
+     */
+    public ArrayList<Refer> readByAll() {
         ArrayList<Refer> referList = new ArrayList<Refer>();
         try {
             con = db.getConnection();
             pst = con.prepareStatement(SQL_READ_BY_ALL);
             rs = pst.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 Refer refer = new Refer();
                 refer.setReferID(rs.getInt("ReferID"));
                 refer.setFullName(rs.getString("FullName"));
@@ -183,8 +187,9 @@ public class ReferDAO {
             return referList;
         }
     }
-    
+
     /**
+     * get the last error
      * @return the lastError
      */
     public String getLastError() {
@@ -192,6 +197,7 @@ public class ReferDAO {
     }
 
     /**
+     * set last error
      * @param lastError the lastError to set
      */
     public void setLastError(String lastError) {
