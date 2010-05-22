@@ -66,7 +66,7 @@ public class ReportSalary {
     }
 
     private InputStream getInputStream(String reportName) {
-        URL url = getClass().getResource("../report/" + reportName);
+        URL url = getClass().getResource("/com/aptech/labourmanagement/report/" + reportName);
         InputStream input = null;
 
         try {
