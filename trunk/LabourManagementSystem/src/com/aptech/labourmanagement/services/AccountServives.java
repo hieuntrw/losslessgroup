@@ -100,8 +100,9 @@ public class AccountServives {
     }
 
     /**
-     * @return account
-     * @param username,the username to get account
+     * get account by username
+     * @param username
+     * @return
      */
     public Account findByUsername(String username) {
         Account ac = accDao.readByUsername(username);
@@ -118,8 +119,10 @@ public class AccountServives {
     }
 
     /**
+     * login system
+     * @param username
+     * @param password
      * @return true or false
-     * @param username, password. username, password to check
      */
     public boolean loginSystem(String username, String password) {
         if (accDao.loginSystem(username, pe.encryptPass(password))) {

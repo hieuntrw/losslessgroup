@@ -36,8 +36,9 @@ public class ReferServices {
     }
 
     /**
-     *@return true or false
-     *@param fa, the re to store into Refer table
+     * create refer 
+     * @param re
+     * @return true or false
      */
     public boolean create(Refer re) {
         if (re.validateRefer()) {
@@ -54,10 +55,11 @@ public class ReferServices {
         }
     }
 
-    /**
-     *@return true or false
-     *@param fa, the ac to store into Family table
-     */
+   /**
+    * update the refer
+    * @param re
+    * @return true or false
+    */
     public boolean store(Refer re) {
         if (re.validateRefer()) {
             if (reDao.update(re)) {
@@ -74,8 +76,9 @@ public class ReferServices {
     }
 
     /**
+     * remove refer by refer id
+     * @param referID
      * @return true or false
-     * @param referID, the referID to delete from table refer
      */
     public boolean remove(int referID) {
         if (reDao.delete(referID)) {

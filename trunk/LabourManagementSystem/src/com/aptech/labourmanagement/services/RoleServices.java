@@ -69,7 +69,7 @@ public class RoleServices {
 
     /**
      * remove role by role id
-     * @param roleName
+     * @param roleID
      * @return true or false
      */
     public boolean remove(int roleID) {

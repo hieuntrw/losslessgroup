@@ -97,7 +97,7 @@ public class WorkerServices {
 
     /**
      * read worker list by last name
-     * @param firstname
+     * @param lastname
      * @return ArrayList<Worker>
      */
     public ArrayList<Worker> findByLastName(String lastname) {
