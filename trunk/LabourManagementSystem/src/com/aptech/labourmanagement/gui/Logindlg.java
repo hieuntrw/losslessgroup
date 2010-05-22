@@ -14,7 +14,6 @@ import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.entity.Account;
 import com.aptech.labourmanagement.gui.main.MainFrm;
 import com.aptech.labourmanagement.services.AccountServives;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -33,13 +32,8 @@ public class Logindlg extends javax.swing.JDialog {
         super(main, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
-        // Cach lam cho form xuat hien giua man hinh
         this.setSize(350, 300);
-        int width = this.getWidth();
-        int heigh = this.getHeight();
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+        this.setLocationRelativeTo(null);
         this.main = main;
         new LookAndFeel(this);
 

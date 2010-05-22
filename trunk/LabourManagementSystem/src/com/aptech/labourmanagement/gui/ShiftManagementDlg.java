@@ -15,7 +15,6 @@ import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.component.ObjectTableModel;
 import com.aptech.labourmanagement.entity.Shift;
 import com.aptech.labourmanagement.services.ShiftServices;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -44,13 +43,8 @@ public class ShiftManagementDlg extends javax.swing.JDialog {
     public ShiftManagementDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        // Cach lam cho form xuat hien giua man hinh
         this.setSize(710, 410);
-        int width = this.getWidth();
-        int heigh = this.getHeight();
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+        this.setLocationRelativeTo(null);
         new LookAndFeel(this);
         setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
         loadDataOnTable();

@@ -19,7 +19,6 @@ import com.aptech.labourmanagement.entity.Worker;
 import com.aptech.labourmanagement.services.AttendanceServices;
 import com.aptech.labourmanagement.services.ShiftServices;
 import com.aptech.labourmanagement.services.WorkerServices;
-import java.awt.Toolkit;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,13 +55,8 @@ public class AttendanceManagementDlg extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
-        // Cach lam cho form xuat hien giua man hinh
         this.setSize(860, 660);
-        int width = this.getWidth();
-        int heigh = this.getHeight();
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+        this.setLocationRelativeTo(null);
         new LookAndFeel(this);
         dcsWorkDate.setDate(new java.util.Date());
         loadDataOnLaborTable();

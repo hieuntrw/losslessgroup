@@ -48,13 +48,8 @@ public class ReferManagementDlg extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
-        // Cach lam cho form xuat hien giua man hinh
         this.setSize(780, 450);
-        int width = this.getWidth();
-        int heigh = this.getHeight();
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+        this.setLocationRelativeTo(null);
         new LookAndFeel(this);
         //dcsDayOfBirth.getDate();
         loadDataOnTable();
