@@ -26,7 +26,7 @@ public class Splasher {
     public static void main(String[] args) {
         try {
             SplashWindow.splash(Splasher.class.getResource("/com/aptech/labourmanagement/icon/splash.jpg"));
-            Thread.sleep(5000);
+            Thread.sleep(2000);
             SplashWindow.invokeMain("com.aptech.labourmanagement.gui.main.MainFrm", args);
             SplashWindow.disposeSplash();
         } catch (InterruptedException ex) {
