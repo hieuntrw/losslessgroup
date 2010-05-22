@@ -44,7 +44,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
     public RoleManagementDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
         loadDataOnTable();
 
         this.setSize(780, 500);

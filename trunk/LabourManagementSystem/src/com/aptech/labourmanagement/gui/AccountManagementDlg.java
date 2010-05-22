@@ -46,7 +46,7 @@ public class AccountManagementDlg extends javax.swing.JDialog {
     public AccountManagementDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
         this.setSize(750, 450);
         int width = this.getWidth();
         int heigh = this.getHeight();

@@ -32,7 +32,7 @@ public class Logindlg extends javax.swing.JDialog {
     public Logindlg(MainFrm main, boolean modal) {
         super(main, modal);
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
         // Cach lam cho form xuat hien giua man hinh
         this.setSize(350, 300);
         int width = this.getWidth();
