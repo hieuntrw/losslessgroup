@@ -21,12 +21,12 @@ import com.aptech.labourmanagement.util.ConfigureDB;
 public class SalaryGradeDAO {
 
     private String lastError;
-    //Khai bao cac bien
+    //variable declaration
     private ConfigureDB db = null;
     private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
-    //SQL
+    //SQL statements
     private final String SQL_CREATE = "INSERT INTO SalaryGrade(GradeName,GradeNum) VALUES(?,?)";
     private final String SQL_UPDATE = "UPDATE SalaryGrade set GradeName =?,GradeNum =? WHERE SalaryGradeID =?";
     private final String SQL_DELETE = "DELETE FROM SalaryGrade WHERE SalaryGradeID =?";
@@ -123,7 +123,7 @@ public class SalaryGradeDAO {
     }
 
     /**
-     * check grade name
+     * check grade name is exist
      * @param gradeName
      * @return true or false
      */
@@ -183,7 +183,7 @@ public class SalaryGradeDAO {
 
     /**
      * get all salary grade
-     * @return list Salary Grade
+     * @return ArrayList<SalaryGrade>
      */
     public ArrayList<SalaryGrade> readByAll() {
         ArrayList<SalaryGrade> listSalaryGrade = new ArrayList<SalaryGrade>();
@@ -209,6 +209,7 @@ public class SalaryGradeDAO {
     }
 
     /**
+     * get the last error
      * @return the lastError
      */
     public String getLastError() {
@@ -216,6 +217,7 @@ public class SalaryGradeDAO {
     }
 
     /**
+     * set last error
      * @param lastError the lastError to set
      */
     public void setLastError(String lastError) {
