@@ -43,7 +43,7 @@ public class AttendanceDAO {
     }
 
     /**
-     * create attendance
+     * create new an attendance
      * @return true or false
      * @param at, the at to create into Attendance table
      */
@@ -73,7 +73,7 @@ public class AttendanceDAO {
     }
 
     /**
-     *update attendance
+     *  update the attendance
      * @param at at to update
      * @return true or false
      */
@@ -103,7 +103,7 @@ public class AttendanceDAO {
     }
 
     /**
-     * delete attendance
+     * delete the attendance
      * @return true or false
      * @param ID,the ID to delete Attendance
      */
@@ -307,6 +307,7 @@ public class AttendanceDAO {
     }
 
     /**
+     * get the last error
      * @return the lastError
      */
     public String getLastError() {
@@ -314,6 +315,7 @@ public class AttendanceDAO {
     }
 
     /**
+     * set last error
      * @param lastError the lastError to set
      */
     public void setLastError(String lastError) {
