@@ -48,7 +48,7 @@ public class MainFrm extends javax.swing.JFrame {
     public MainFrm() {
         initComponents();
        
-        setIconImage(new ImageIcon(getClass().getResource("../../icon/LMSIcon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
         this.initStatusBar();
         new LookAndFeel(this);
         this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);

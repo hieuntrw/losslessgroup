@@ -51,7 +51,7 @@ public class FamilyRalateManagementDlg extends javax.swing.JDialog {
     public FamilyRalateManagementDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
         // Cach lam cho form xuat hien giua man hinh
         this.setSize(855, 640);
         int width = this.getWidth();

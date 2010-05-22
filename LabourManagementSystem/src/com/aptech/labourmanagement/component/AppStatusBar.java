@@ -26,7 +26,7 @@ public class AppStatusBar {
         final SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT);
         Calendar calCurrent = Calendar.getInstance(TimeZone.getDefault());
         sdf.setTimeZone(TimeZone.getDefault());
-        statusBarFactory = new StatusBarFactory("../icon/"); 
+        statusBarFactory = new StatusBarFactory("/com/aptech/labourmanagement/icon/"); 
         
         //final JLabel statusZone = statusBarFactory.addZone("statusZone", "75%", "Ready");
         user = statusBarFactory.addZone("user", "25%", "Username: ");

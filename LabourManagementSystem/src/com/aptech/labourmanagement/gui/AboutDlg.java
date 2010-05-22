@@ -31,7 +31,7 @@ public class AboutDlg extends javax.swing.JDialog {
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
-        setIconImage(new ImageIcon(getClass().getResource("../icon/LMSIcon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
         new LookAndFeel(this);
     }
 
