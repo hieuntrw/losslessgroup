@@ -204,8 +204,8 @@ public class ShiftDAO {
     }
 
     /**
-     * get shift by shift name
-     * @param ShiftName
+     * get all shift name
+     * @param shiftName
      * @return Shift
      */
     public Shift readByShiftName(String shiftName) {

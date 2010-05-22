@@ -24,7 +24,7 @@ public class WorkerServices {
     /**
      * create worker
      * @param worker
-     * @return
+     * @return true or false
      */
     public boolean create(Worker worker) {
         if (worker.validate()) {
@@ -44,7 +44,7 @@ public class WorkerServices {
     /**
      * update worker
      * @param worker
-     * @return
+     * @return true or false
      */
     public boolean store(Worker worker) {
         if (worker.validate()) {
@@ -62,9 +62,9 @@ public class WorkerServices {
     }
 
     /**
-     *
+     * remove the workrt by worker id
      * @param workerID
-     * @return
+     * @return true or false
      */
     public boolean remove(int workerID) {
         if (woDao.delete(workerID)) {
@@ -88,7 +88,7 @@ public class WorkerServices {
     /**
      * read worker list by first name
      * @param firstname
-     * @return
+     * @return ArrayList<Worker>
      */
     public ArrayList<Worker> findByFirstName(String firstname) {
         ArrayList<Worker> listWorker = woDao.readByFirstName(firstname);
@@ -98,7 +98,7 @@ public class WorkerServices {
     /**
      * read worker list by last name
      * @param firstname
-     * @return
+     * @return ArrayList<Worker>
      */
     public ArrayList<Worker> findByLastName(String lastname) {
         ArrayList<Worker> listWorker = woDao.readByLastName(lastname);
@@ -106,9 +106,9 @@ public class WorkerServices {
     }
 
     /**
-     * 
+     * get worker by worker id
      * @param workerID
-     * @return
+     * @return Worker
      */
     public Worker readByID(int workerID) {
         Worker wo = woDao.readByID(workerID);

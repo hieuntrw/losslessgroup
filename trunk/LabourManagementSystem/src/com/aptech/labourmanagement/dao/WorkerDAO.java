@@ -119,7 +119,7 @@ public class WorkerDAO {
     /**
      * delete the worker
      * @param workerID
-     * @return
+     * @return true or false
      */
     public boolean delete(int workerID) {
         try {
