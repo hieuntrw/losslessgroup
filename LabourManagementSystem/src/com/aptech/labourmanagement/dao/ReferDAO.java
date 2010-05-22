@@ -71,7 +71,7 @@ public class ReferDAO {
    /**
     * update the refer
     * @param re
-    * @return
+    * @return true or false
     */
     public boolean update(Refer re) {
         try {
