@@ -15,7 +15,6 @@ import com.aptech.labourmanagement.entity.Role;
 import com.aptech.labourmanagement.services.RoleServices;
 import com.aptech.labourmanagement.component.ColumnData;
 import com.aptech.labourmanagement.component.ObjectTableModel;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -48,11 +47,7 @@ public class RoleManagementDlg extends javax.swing.JDialog {
         loadDataOnTable();
 
         this.setSize(780, 500);
-        int width = this.getWidth();
-        int heigh = this.getHeight();
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+        this.setLocationRelativeTo(null);
         new LookAndFeel(this);
 
         disableFields();

@@ -17,7 +17,6 @@ import com.aptech.labourmanagement.entity.SalaryGrade;
 import com.aptech.labourmanagement.services.SalaryGradeServices;
 import com.aptech.labourmanagement.util.CheckForm;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -46,13 +45,9 @@ public class SalaryGradeManagementDlg extends javax.swing.JDialog {
     public SalaryGradeManagementDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        // Cach lam cho form xuat hien giua man hinh
+        
         this.setSize(new Dimension(654, 410));
-        int width = this.getWidth();
-        int heigh = this.getHeight();
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+        this.setLocationRelativeTo(null);
         new LookAndFeel(this);
         setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
         loadDataOnTable();

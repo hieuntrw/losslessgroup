@@ -18,7 +18,6 @@ import com.aptech.labourmanagement.entity.Worker;
 import com.aptech.labourmanagement.services.FamilyServices;
 import com.aptech.labourmanagement.services.WorkerServices;
 import com.aptech.labourmanagement.util.CheckForm;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -48,13 +47,8 @@ public class WorkerInforDlg extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
-        // Cach lam cho form xuat hien giua man hinh
         this.setSize(845, 620);
-        int width = this.getWidth();
-        int heigh = this.getHeight();
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+        this.setLocationRelativeTo(null);
         new LookAndFeel(this);
         workerSer = new WorkerServices();
         arrWorker = workerSer.findByAll();

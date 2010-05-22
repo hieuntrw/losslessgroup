@@ -14,7 +14,6 @@ import com.aptech.labourmanagement.component.LookAndFeel;
 import com.aptech.labourmanagement.entity.Account;
 import com.aptech.labourmanagement.gui.main.MainFrm;
 import com.aptech.labourmanagement.services.AccountServives;
-import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -33,11 +32,7 @@ public class ChangePasswordDlg extends javax.swing.JDialog {
         setIconImage(new ImageIcon(getClass().getResource("/com/aptech/labourmanagement/icon/LMSIcon.png")).getImage());
         // Cach lam cho form xuat hien giua man hinh
         this.setSize(450, 350);
-        int width = this.getWidth();
-        int heigh = this.getHeight();
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.setBounds((screenWidth - width) / 2, (screenHeight - heigh) / 2, width, heigh);
+       this.setLocationRelativeTo(null);
         new LookAndFeel(this);
         this.acc = main.acc;
 
