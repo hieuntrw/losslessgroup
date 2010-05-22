@@ -179,10 +179,11 @@ public class AttendanceServices {
 
     }
 
-    /**
-     * @return true or false
-     * @param at
-     */
+   /**
+    * remove attendance by attendance id
+    * @param ID
+    * @return true or false
+    */
     public boolean remove(int ID) {
         if (atDao.delete(ID)) {
             this.setLastError(atDao.getLastError());

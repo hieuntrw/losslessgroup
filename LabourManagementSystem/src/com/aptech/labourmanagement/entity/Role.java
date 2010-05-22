@@ -97,7 +97,7 @@ public class Role implements PropertyIndex {
     }
 
     /**
-     * @param isRoleManagement
+     * @param isRoleFunctionManagement
      */
     public void setIsRoleManagement(boolean isRoleFunctionManagement) {
         this.isRoleManagement = isRoleFunctionManagement;

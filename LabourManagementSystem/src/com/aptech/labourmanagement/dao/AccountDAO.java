@@ -213,9 +213,10 @@ public class AccountDAO {
     }
 
     /**
-     * login into the system
+     * login system
+     * @param username
+     * @param password
      * @return true or false
-     * @param username, password
      */
     public boolean loginSystem(String username, String password) {
         //String pass = pe.encryptPass(password);encrypt in services

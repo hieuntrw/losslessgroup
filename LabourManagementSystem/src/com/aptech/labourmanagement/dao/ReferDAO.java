@@ -39,8 +39,8 @@ public class ReferDAO {
 
     /**
      * create new refer
-     *@return true or false
-     *@param fa
+     * @param re
+     * @return true or false
      */
     public boolean create(Refer re) {
         try {
@@ -68,11 +68,11 @@ public class ReferDAO {
         return false;
     }
 
-    /**
-     * update the refer
-     *@return true or false
-     *@param fa
-     */
+   /**
+    * update the refer
+    * @param re
+    * @return
+    */
     public boolean update(Refer re) {
         try {
             con = db.getConnection();

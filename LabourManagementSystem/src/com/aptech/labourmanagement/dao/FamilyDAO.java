@@ -99,9 +99,9 @@ public class FamilyDAO {
     }
 
     /**
-     * delete the family
+     * delete family by family id
+     * @param familyID
      * @return true or false
-     * @param WorkerID
      */
     public boolean delete(int familyID) {
         try {

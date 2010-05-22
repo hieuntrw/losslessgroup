@@ -73,10 +73,11 @@ public class FamilyServices {
         }
     }
 
-    /**
-     * @return true or false
-     * @param fa the ac to insert into table Family
-     */
+   /**
+    * remove the family by family id
+    * @param familyID
+    * @return true or false
+    */
     public boolean remove(int familyID) {
         if (faDao.delete(familyID)) {
             this.setLastError(faDao.getLastError());
