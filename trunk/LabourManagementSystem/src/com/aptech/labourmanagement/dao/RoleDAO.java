@@ -21,7 +21,7 @@ import com.aptech.labourmanagement.util.ConfigureDB;
 public class RoleDAO {
 
     private String lastError;
-    //Khai bao cac bien
+    //variable declaration
     private ConfigureDB db = null;
     private Connection con = null;
     private PreparedStatement pst = null;
@@ -40,8 +40,8 @@ public class RoleDAO {
         db = new ConfigureDB();
     }
 
-    //add new role
     /**
+     * create new a role
      * @param role
      * @return true or false
      */
@@ -74,9 +74,9 @@ public class RoleDAO {
         db.closeConnection();
         return false;
     }
-    //edit role
 
     /**
+     * edit the role
      * @param role
      * @return true or false
      */
@@ -111,8 +111,12 @@ public class RoleDAO {
         db.closeConnection();
         return false;
     }
-    //delete role
 
+    /**
+     * delete the role
+     * @param roleID
+     * @return
+     */
     public boolean delete(int roleID) {
         try {
             con = db.getConnection();
@@ -135,7 +139,7 @@ public class RoleDAO {
     }
 
     /**
-     * check role name
+     * check role name is exist
      * @param roleName
      * @return true or false
      */
@@ -164,7 +168,7 @@ public class RoleDAO {
 
     /**
      * get all role name
-     * @return role name list
+     * @return ArrayList<Role>
      */
     public ArrayList<Role> readByAll() {
         ArrayList<Role> listRole = new ArrayList<Role>();
@@ -196,7 +200,11 @@ public class RoleDAO {
         }
     }
 
-    //get role by roleID
+    /**
+     * get role by roleID
+     * @param roleID
+     * @return Role
+     */
     public Role getRoleByID(int roleID) {
         Role role = null;
         try {
@@ -263,6 +271,7 @@ public class RoleDAO {
     }
 
     /**
+     * get the last error
      * @return the lastError
      */
     public String getLastError() {
@@ -270,6 +279,7 @@ public class RoleDAO {
     }
 
     /**
+     * set last error
      * @param lastError the lastError to set
      */
     public void setLastError(String lastError) {
