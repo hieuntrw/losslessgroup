@@ -21,7 +21,7 @@ import java.sql.Statement;
  */
 public class WorkerDAO {
 
-    //khai bao cac bien
+    //variable declaration
     private ConfigureDB db = null;
     private Connection con = null;
     private PreparedStatement pst = null;
@@ -117,7 +117,7 @@ public class WorkerDAO {
     }
 
     /**
-     * delete worker
+     * delete the worker
      * @param workerID
      * @return
      */
@@ -144,7 +144,7 @@ public class WorkerDAO {
 
     /**
      * get worker list
-     * @return arraylist worker
+     * @return ArrayList<Worker>
      */
     public ArrayList<Worker> readByAll() {
         ArrayList<Worker> listWorker = new ArrayList<Worker>();
@@ -182,6 +182,7 @@ public class WorkerDAO {
     }
 
     /**
+     * get the last error
      * @return the lastError
      */
     public String getLastError() {
@@ -191,7 +192,7 @@ public class WorkerDAO {
     /**
      * read worker by id
      * @param workerID
-     * @return worker
+     * @return Worker
      */
     public Worker readByID(int workerID) {
         Worker w = null;
@@ -231,7 +232,7 @@ public class WorkerDAO {
     /**
      * read worker list by first name
      * @param firstname
-     * @return
+     * @return ArrayList<Worker>
      */
     public ArrayList<Worker> readByFirstName(String firstname) {
         ArrayList<Worker> arr = new ArrayList<Worker>();
@@ -273,7 +274,7 @@ public class WorkerDAO {
     /**
      * read worker list by last name
      * @param lastname
-     * @return
+     * @return ArrayList<Worker>
      */
     public ArrayList<Worker> readByLastName(String lastname) {
         ArrayList<Worker> arr = new ArrayList<Worker>();
@@ -313,6 +314,7 @@ public class WorkerDAO {
     }
 
     /**
+     * set last error
      * @param lastError the lastError to set
      */
     public void setLastError(String lastError) {

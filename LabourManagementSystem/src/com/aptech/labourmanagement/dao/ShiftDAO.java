@@ -20,7 +20,7 @@ import com.aptech.labourmanagement.util.ConfigureDB;
  */
 public class ShiftDAO {
 
-    //khai bao cac bien
+    //variable declaration
     private ConfigureDB db = null;
     private Connection con = null;
     private PreparedStatement pst = null;
@@ -68,7 +68,7 @@ public class ShiftDAO {
     }
 
     /**
-     * update shift
+     * update the shift
      * @return true or false
      * @param si, the si to update into Shift table
      */
@@ -97,7 +97,7 @@ public class ShiftDAO {
     }
 
     /**
-     * delete shift
+     * delete the shift
      * @return true or false
      * @param shiftID,the shiftID to delete Shift
      */
@@ -124,8 +124,8 @@ public class ShiftDAO {
     }
 
     /**
-     * get shiftName
-     * @return list shift name
+     * get list Shift name
+     * @return ArrayList<String>
      */
     public ArrayList<String> readByName() {
         ArrayList<String> listNameShift = new ArrayList<String>();
@@ -148,7 +148,7 @@ public class ShiftDAO {
 
     /**
      * get all shift
-     * @return Shift list
+     * @return ArrayList<Shift>
      */
     public ArrayList<Shift> readByAll() {
         ArrayList<Shift> list = new ArrayList<Shift>();
@@ -232,9 +232,9 @@ public class ShiftDAO {
     }
 
     /**
-     * read Hour By ID
+     * read Hour By shift id
      * @param shiftID
-     * @return
+     * @return int
      */
     public int readHourByID(int shiftID) {
         Shift si = new Shift();
@@ -293,6 +293,7 @@ public class ShiftDAO {
     }
 
     /**
+     * get the last error
      * @return the lastError
      */
     public String getLastError() {
@@ -300,6 +301,7 @@ public class ShiftDAO {
     }
 
     /**
+     * set last error
      * @param lastError the lastError to set
      */
     public void setLastError(String lastError) {
