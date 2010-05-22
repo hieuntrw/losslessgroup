@@ -22,9 +22,9 @@ public class RoleServices {
     }
 
     /**
-     *
+     * create new role
      * @param role
-     * @return
+     * @return true or false
      */
     public boolean create(Role role) {
         if (role.validateRole()) {
@@ -48,9 +48,9 @@ public class RoleServices {
 
     }
     /**
-     *
+     * update role
      * @param role
-     * @return
+     * @return true or false
      */
     public boolean store(Role role) {
         if (role.validateRole()) {
@@ -68,9 +68,9 @@ public class RoleServices {
     }
 
     /**
-     *
+     * remove role by role id
      * @param roleName
-     * @return
+     * @return true or false
      */
     public boolean remove(int roleID) {
         if (roDao.delete(roleID)) {
@@ -83,8 +83,8 @@ public class RoleServices {
     }
 
     /**
-     * 
-     * @return
+     * get all role
+     * @return ArrayList<Role>
      */
     public ArrayList<Role> findRoleAll() {
         ArrayList<Role> listRole = roDao.readByAll();
@@ -92,15 +92,20 @@ public class RoleServices {
     }
 
     /**
-     *
+     * get role by role id
      * @param roleID
-     * @return
+     * @return Role
      */
     public Role findRoleByID(int roleID) {
         Role ro = roDao.getRoleByID(roleID);
         return ro;
     }
 
+    /**
+     * get role by role name
+     * @param roleName
+     * @return Role
+     */
     public Role findRoleByName(String roleName) {
         Role ro = roDao.getRoleByName(roleName);
         return ro;

@@ -45,7 +45,7 @@ public class Account implements PropertyIndex {
     }
 
     /**
-     * @param accountID, the accountID to set
+     * @param accountID
      */
     public void setAccountID(int accountID) {
         this.accountID = accountID;
@@ -59,7 +59,7 @@ public class Account implements PropertyIndex {
     }
 
     /**
-     * @param username, the username to set
+     * @param username
      */
     public void setUsername(String username) {
         this.username = username;
@@ -73,7 +73,7 @@ public class Account implements PropertyIndex {
     }
 
     /**
-     * @param password, the password to set
+     * @param password
      */
     public void setPassword(String password) {
         this.password = password;
@@ -87,7 +87,7 @@ public class Account implements PropertyIndex {
     }
 
     /**
-     * @param status, the status to set
+     * @param status
      */
     public void setStatus(boolean status) {
         this.status = status;
@@ -101,7 +101,7 @@ public class Account implements PropertyIndex {
     }
 
     /**
-     * @param lastError, the lastError to set
+     * @param lastError
      */
     public void setLastError(String lastError) {
         this.lastError = lastError;

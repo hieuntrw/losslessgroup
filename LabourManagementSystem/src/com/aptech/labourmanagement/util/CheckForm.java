@@ -30,7 +30,7 @@ public class CheckForm {
     /**
      * check phone number
      * @param value
-     * @return
+     * @return true or false
      */
     public static boolean checkPhoneNumber(String value) {
         Pattern pattern = Pattern.compile("[0-9]{10,11}");

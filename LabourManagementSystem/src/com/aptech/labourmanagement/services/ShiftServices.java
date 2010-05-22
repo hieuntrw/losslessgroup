@@ -65,8 +65,9 @@ public class ShiftServices {
     }
 
     /**
+     * remove shift by shift id
+     * @param shiftID
      * @return true or false
-     * @param si the ac to insert into table Shift
      */
     public boolean remove(int shiftID) {
         if (siDao.delete(shiftID)) {

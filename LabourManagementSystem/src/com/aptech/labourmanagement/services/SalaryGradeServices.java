@@ -25,7 +25,7 @@ public class SalaryGradeServices {
     /**
      * create Salary Grade
      * @param sg
-     * @return
+     * @return true or false
      */
     public boolean create(SalaryGrade sg) {
         if (sg.validateSalaryGrade()) {
@@ -50,7 +50,7 @@ public class SalaryGradeServices {
     /**
      * update Salary Grade
      * @param sg
-     * @return
+     * @return true or false
      */
     public boolean store(SalaryGrade sg) {
         if (sg.validateSalaryGrade()) {
@@ -68,9 +68,9 @@ public class SalaryGradeServices {
     }
 
     /**
-     *
+     * remove salary grade by salry grade id
      * @param salaryGradeID
-     * @return
+     * @return true or false
      */
     public boolean remove(int salaryGradeID) {
         if (saDao.delete(salaryGradeID)) {
@@ -83,9 +83,9 @@ public class SalaryGradeServices {
     }
 
     /**
-     * 
+     * get salary grade by salary grade if
      * @param salaryGradeID
-     * @return
+     * @return SalaryGrade
      */
     public SalaryGrade findByID(int salaryGradeID) {
         SalaryGrade sa = saDao.readByID(salaryGradeID);
@@ -93,8 +93,8 @@ public class SalaryGradeServices {
     }
 
     /**
-     * 
-     * @return
+     * get all salary grade
+     * @return ArrayList<SalaryGrade>
      */
     public ArrayList<SalaryGrade> finfByAll() {
         ArrayList<SalaryGrade> listSalaryGrade = saDao.readByAll();

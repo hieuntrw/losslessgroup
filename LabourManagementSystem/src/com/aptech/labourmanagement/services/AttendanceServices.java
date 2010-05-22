@@ -42,7 +42,7 @@ public class AttendanceServices {
 
     /**
      * @return true or false
-     * @param at the ac to insert into table Attendance
+     * @param at
      */
     public boolean create(Attendance at) {
         //validate at
@@ -130,7 +130,7 @@ public class AttendanceServices {
     /**
      * update attendance
      * @return true or false
-     * @param at the ac to insert into table Attendance
+     * @param at
      */
     public boolean store(Attendance at) {
         //
@@ -181,7 +181,7 @@ public class AttendanceServices {
 
     /**
      * @return true or false
-     * @param at the ac to insert into table Attendance
+     * @param at
      */
     public boolean remove(int ID) {
         if (atDao.delete(ID)) {
