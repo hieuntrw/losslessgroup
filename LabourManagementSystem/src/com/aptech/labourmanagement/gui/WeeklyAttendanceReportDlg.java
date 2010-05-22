@@ -266,6 +266,7 @@ public class WeeklyAttendanceReportDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbbOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbOptionItemStateChanged
+        txtLaborID.setText("");
         if (cbbOption.getSelectedIndex() == 0) {
             txtLaborID.setEditable(false);
         } else {
