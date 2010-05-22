@@ -38,8 +38,8 @@ public class AccountDAO {
         db = new ConfigureDB();
     }
 
-    //add new account
     /**
+     * Add new an account
      * @return true or false
      * @param ac, the ac to add into Account table
      */
@@ -66,8 +66,8 @@ public class AccountDAO {
         return false;
     }
 
-    //edit account
     /**
+     * edit the account
      *@return true or false
      *@param ac, the ac to update into Account table
      */
@@ -96,8 +96,8 @@ public class AccountDAO {
         return false;
     }
 
-    //delete account
     /**
+     * delete the account
      * @return true or false
      * @param username,the username to delete account
      */
@@ -123,8 +123,8 @@ public class AccountDAO {
 
     }
 
-    //Check username exist
     /**
+     * check the username has exist
      * @return true or false
      * @param username,the username to check account
      */
@@ -151,6 +151,7 @@ public class AccountDAO {
     }
 
     /**
+     * get account by username
      * @return account
      * @param username,the username to get account
      */
@@ -181,8 +182,8 @@ public class AccountDAO {
 
     }
 
-    //readByAll
     /**
+     * get all account
      *@return a list account
      */
     public ArrayList<Account> readByAll() {
@@ -197,7 +198,7 @@ public class AccountDAO {
                 ac.setAccountID(rs.getInt("AccountID"));
                 ac.setUsername(rs.getString("Username"));
                 ac.setPassword(rs.getString("Password"));
-                ac.setRole((Role)roleDAO.getRoleByID(rs.getInt("RoleID")));
+                ac.setRole((Role) roleDAO.getRoleByID(rs.getInt("RoleID")));
                 ac.setStatus(rs.getBoolean("Status"));
                 list.add(ac);
             }
@@ -211,8 +212,8 @@ public class AccountDAO {
         }
     }
 
-//Login system
     /**
+     * login into system
      * @return true or false
      * @param username, password. username, password to check 
      */
@@ -232,7 +233,7 @@ public class AccountDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
-            this.setLastError("Erro connection! "+ex.getMessage());
+            this.setLastError("Erro connection! " + ex.getMessage());
             db.closeConnection();
             return false;
         }
@@ -243,6 +244,7 @@ public class AccountDAO {
     }
 
     /**
+     * get last error
      * @return the lassError
      */
     public String getLastError() {
@@ -250,6 +252,7 @@ public class AccountDAO {
     }
 
     /**
+     * set last error
      * @param lassError the lassError to set
      */
     public void setLastError(String lassError) {

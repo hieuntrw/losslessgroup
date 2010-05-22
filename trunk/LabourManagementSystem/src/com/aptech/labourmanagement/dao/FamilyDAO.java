@@ -20,7 +20,7 @@ import com.aptech.labourmanagement.util.ConfigureDB;
  */
 public class FamilyDAO {
 
-    //Khai bao ca bien
+    //variable declaration
     private ConfigureDB db = null;
     private Connection con = null;
     private PreparedStatement pst = null;
