@@ -240,7 +240,6 @@ public class AccountDAO {
         }
         this.setLastError("Username or password wrong!");
         db.closeConnection();
-
         return false;
     }
 
